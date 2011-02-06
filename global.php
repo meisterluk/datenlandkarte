@@ -1,61 +1,53 @@
 <?php
-    #error_reporting(E_ALL);
-    #ini_set('display_errors', 'on');
-
+    // Ordner
     $location_creation = './upload/';
     $location_pattern_svgs = './svgs/';
 
-
-
+    // Initialisierung
     $color_gradients = array();
+
+    // Zahl-Farbe Zuordnung
     $color_allocation = array(
         0 => 'Rot', 1 => 'Orange', 2 => 'Gelb', 3 => 'Grün',
         4 => 'Türkis',5 => 'Blau', 6 => 'Pink', 7 => 'Schwarz'
     );
 
-    // 0 = rot
     $color_gradients[0] = array(
-        '#CC0000', '#D11919', '#D63333', '#DB4C4C', '#E06666', '#E67F7F',
-        '#EB9999', '#F0B2B2', '#F5CCCC', '#FAE6E6', '#FFFFFF'
+        '#CC0000', '#D01616', '#D52C2C', '#D94242', '#DE5858', '#E26E6E',
+        '#E78484', '#EB9A9A', '#F0B0B0', '#F4C6C6', '#F4C6C6'
     );
-    // 1 = orange
     $color_gradients[1] = array(
-        '#FF9900', '#FFA319', '#FFAD33', '#FFB84C', '#FFC266', '#FFCC7F',
-        '#FFD699', '#FFE0B2', '#FFEBCC', '#FFF5E6', '#FFFFFF'
+        '#FF9900', '#FFA216', '#FFAB2C', '#FFB342', '#FFBC58', '#FFC56E',
+        '#FFCE84', '#FFD69A', '#FFDFB0', '#FFE8C6', '#FFFFFF'
     );
-    // 2 = gelb
     $color_gradients[2] = array(
-        '#FFCC00', '#FFD119', '#FFD633', '#FFDB4C', '#FFE066', '#FFE67F',
-        '#FFEB99', '#FFF0B2', '#FFF5CC', '#FFFAE6', '#FFFFFF'
+        '#FFCC00', '#FFD016', '#FFD52C', '#FFD942', '#FFDE58', '#FFE26E',
+        '#FFE784', '#FFEB9A', '#FFF0B0', '#FFF4C6', '#FFFFFF'
     );
-    // 3 = gruen
     $color_gradients[3] = array(
-        '#33CC00', '#47D119', '#5CD633', '#70DB4C', '#85E066', '#99E67F',
-        '#ADEB99', '#C2F0B2', '#D6F5CC', '#EBFAE6', '#FFFFFF'
+        '#33CC00', '#45D016', '#56D52C', '#68D942', '#7ADE58', '#8BE26E',
+        '#9DE784', '#AFEB9A', '#C0F0B0', '#D2F4C6', '#FFFFFF'
     );
-    // 4 = tuerkis
     $color_gradients[4] = array(
-        '#00CCCC', '#19D1D1', '#33D6D6', '#4CDBDB', '#66E0E0', '#7FE6E6',
-        '#99EBEB', '#B2F0F0', '#CCF5F5', '#E6FAFA', '#FFFFFF'
+        '#00CCCC', '#16D0D0', '#2CD5D5', '#42D9D9', '#58DEDE', '#6EE2E2',
+        '#84E7E7', '#9AEBEB', '#B0F0F0', '#C6F4F4', '#FFFFFF'
     );
-    // 5 = blau
     $color_gradients[5] = array(
-        '#0000CC', '#1919D1', '#3333D6', '#4C4CDB', '#6666E0', '#7F7FE6',
-        '#9999EB', '#B2B2F0', '#CCCCF5', '#E6E6FA', '#FFFFFF'
+        '#0000CC', '#1616D0', '#2C2CD5', '#4242D9', '#5858DE', '#6E6EE2',
+        '#8484E7', '#9A9AEB', '#B0B0F0', '#C6C6F4', '#FFFFFF'
     );
-    // 6 = pink
     $color_gradients[6] = array(
-        '#CC00CC', '#D119D1', '#D633D6', '#DB4CDB', '#E066E0', '#E67FE6',
-        '#EB99EB', '#F0B2F0', '#F5CCF5', '#FAE6FA', '#FFFFFF'
+        '#CC00CC', '#D016D0', '#D52CD5', '#D942D9', '#DE58DE', '#E26EE2',
+        '#E784E7', '#EB9AEB', '#F0B0F0', '#F4C6F4', '#FFFFFF'
     );
-    // 7 = schwarz
     $color_gradients[7] = array(
-        '#000000', '#191919', '#333333', '#4C4C4C', '#666666', '#7F7F7F',
-        '#999999', '#B2B2B2', '#CCCCCC', '#E6E6E6', '#FFFFFF'
+        '#000000', '#161616', '#2C2C2C', '#424242', '#585858', '#6E6E6E',
+        '#848484', '#9A9A9A', '#B0B0B0', '#C6C6C6', '#FFFFFF'
     );
 
 
-    // Avoid memory exhaustion
+    // A stupid getter function to access geographical information
+    // This is only to avoid memory exhaustion
     function get($type, $index=false) {
         switch ($type) {
             case 'bundeslaender':
@@ -78,7 +70,6 @@
 
             case 'bl_files':
 
-    // parameter
     $bl_files = array(
         1 => 'burgenland',
         2 => 'carinthia',

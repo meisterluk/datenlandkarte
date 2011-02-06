@@ -58,6 +58,7 @@
 
         if (file_exists($image))
         {
+            // Create SVG
             $svg = substitute($image, $title, $subtitle,
                 $dec, $colors, (int)$_POST['grad'], $data);
 

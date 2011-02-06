@@ -1,12 +1,14 @@
 <?php
-    #if (basename($_SERVER['REQUEST_URI']) == 'create.php')
-    #    header('Location: input.php');
-    
+    if (basename($_SERVER['REQUEST_URI']) == 'lib.php')
+        header('Location: input.php');
+
     include 'global.php';
 
     // a very evil global variable
     $tmp = array();
 
+    // Function to detect non-public files in upload folder
+    // and try to delete them
     function delete_old_created_file($folder, $time=false)
     {
         if ($time === false)
@@ -16,6 +18,7 @@
         chdir($folder);
         $date = date('Ymd');
         $files = glob(date('Ymd', $time).'-*.{svg,png,txt}', GLOB_BRACE);
+
         foreach ($files as $file)
         {
             $status = unlink($file);
@@ -26,6 +29,9 @@
         return true;
     }
 
+    // Function to check input by user
+    // Takes eg. $_POST and returns array of keys,
+    // which values were invalid.
     function check_userinput($post)
     {
         $invalid = array();
@@ -65,8 +71,13 @@
         {
             $invalid[] = 'data';
         }
+
+        return $invalid;
     }
 
+    // Function to create svg filename of pattern svg
+    // Take eg. $_POST and returns filename or false,
+    // if $_POST has invalid structure.
     function select_svg_file($post)
     {
         global $location_pattern_svgs;
@@ -93,6 +104,8 @@
         return false;
     }
 
+    // Function to return the array of data which
+    // will become the base for data.
     function get_keys_by_vis($post)
     {
         $input = select_input_data($post);
@@ -111,6 +124,9 @@
         return false;
     }
 
+    // Function to detect which data the user will enter
+    // Takes $_POST and returns a two-key array, which
+    // states "$1's $2 will be entered by user".
     function select_input_data($post)
     {
         global $bl_files;
@@ -135,6 +151,7 @@
         return false;
     }
 
+    // Function to reduce color palette to $count_colors colors.
     function color_palette_adjustment($palette, $count_colors)
     {
         $count_colors = (int)$count_colors;
@@ -183,6 +200,8 @@
         return $new_palette;
     }
 
+    // Creates a arithmetic ranges of integers between min and
+    // max. It will create $count_ranges ranges.
     function create_ranges($min, $max, $count_ranges)
     {
         if ($max < $min) return -1;
@@ -199,6 +218,8 @@
         return $ranges;
     }
 
+    // Function to parse user entered delimiter
+    // \n becomes newline.
     function parse_delimiter($delim)
     {
         $delim = str_replace('\r\n', "\n", $delim);
@@ -209,6 +230,7 @@
         return $delim;
     }
 
+    // Function to sanitize user's input values (of all visualisations)
     function check_input_value($value)
     {
         // if it is a real zero
@@ -228,6 +250,9 @@
         }
     }
 
+    // If user enters an additional newline, it does not mean
+    // he wanted to enter an additional "invalid value".
+    // Remove last (empty) line, if it looks like this.
     function remove_trailing_line($input, $count_lines)
     {
         $input = explode("\n", $input);
@@ -238,6 +263,7 @@
         return $input;
     }
 
+    // Multiply each value with $fac ("Hebefaktor")
     function include_factor($data, $fac)
     {
         foreach ($data as $key => $value)
@@ -250,6 +276,9 @@
         return $data;
     }
 
+    // Main function to extract data from $_POST
+    // Takes eg. $_POST and a list of keys.
+    // Returns data to be inserted in SVG.
     function get_data($post, $keys)
     {
         $error_invalid_value = -2;
@@ -365,6 +394,8 @@
         }
     }
 
+    // Helper function
+    // Return error message for status code of get_data()
     function _error_msg_for_data($status)
     {
         switch((int)$status)
@@ -393,6 +424,13 @@
         }
     }
 
+    // Function to execute the substitution in SVG source code
+    // $image = path to SVG pattern file
+    // $title, $subtitle = title and subtitle of SVG file
+    // $dec = Number of decimal points
+    // $colors = Number of colors to be used
+    // $grad = Color gradient to be used
+    // $data = The data to be inserted
     function substitute($image, $title, $subtitle,
         $dec, $colors, $grad, $data)
     {
@@ -431,6 +469,9 @@
         return $svg;
     }
 
+    // Helper function
+    // Stupid function using globals to get color for an entered data
+    // Don't ever use this by hand
     function _get_appropriate_color($value)
     {
         global $tmp;
@@ -448,6 +489,8 @@
         return false;
     }
 
+    // Helper function
+    // Stupid callback using globals to replace colors.
     function _replace_colors($match)
     {
         global $tmp;
@@ -460,6 +503,8 @@
         return 'fill="'.$color.'"';
     }
 
+    // Helper function
+    // Stupid callback using globals to replace colors of rectangles
     function _replace_rects($match)
     {
         global $tmp;

@@ -1,12 +1,13 @@
 <?php
     include 'lib.php';
 
+    // Remove any old created files if there are any
     if (!delete_old_created_file($location_creation))
     {
         die('Could not delete old files. Don\'t want to continue!');
     }
 
-    // AJAX Request
+    // AJAX Request handler
     if ($_GET['method'] === 'get_data' && !empty($_GET['vis']))
     {
         $keys = get_keys_by_vis($_GET);
@@ -79,6 +80,9 @@
         }
     }
 
+    // Defaultvalues
+    // Will be overwritten, if there was an POST Request
+    // with invalid data.
     $defaults = array(
         'title' => '',
         'subtitle' => '',
@@ -99,6 +103,7 @@
         'kvalloc_delim1' => '\n',
         'kvalloc_delim2' => ';'
     );
+    // Overwrite defaults now
     if ($_POST)
     {
         $invalid = check_userinput($_POST);
@@ -127,7 +132,7 @@
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript">
     <!--
-
+        /* jQuery ftw */
         $(document).ready(function () {
             var selected = (function (name) {
                 return $('input[name=' + name + ']:checked').attr('value');
@@ -200,6 +205,7 @@
             </p>
           </noscript>
 <?php
+    // a stupid error handler
     $invalid  = check_userinput($_POST);
     function o($msg) { echo '            <li>'.$msg."</li>\n"; }
     if ($invalid) {
@@ -226,8 +232,11 @@
             }
 ?>
           </ul>
-<?php } ?>
-          
+<?php
+    }
+    // I am sorry for the following source code:
+?>
+
           <form action="select.php" method="post">
           <table cellpadding="6">
             <tr>
@@ -370,7 +379,7 @@
                   </div>
                   <textarea name="data" rows="5" id="data_list"></textarea>
                   <div id="list">
-                    Trennzeichen zwischen Datensätzen:
+                    Trennzeichen zwischen Datensätzen: (\n für Zeilenumbruch, \\ für Backslash)
                     <input type="text" name="list_delim" value="\n" size="1" style="float:right; height:15px">
                   </div>
                   <div id="kvalloc">
