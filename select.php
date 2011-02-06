@@ -73,13 +73,13 @@
             @unlink($img_path.'_big.png');
 
             $fp = fopen($img_path.'.svg', 'w');
-            if (!$fp)
+            if ($fp)
             {
                 $a = fwrite($fp, $svg);
-                if (!$a)
+                if (!$a) {
                     $error[] = 'Konnte Datei nicht schreiben. '.
                             'Keine Zugriffsrechte.';
-                else {
+                } else {
                     // PNG1 aus SVG erzeugen
                     exec('convert '.$img_path.'.svg '.$img_path.'.png');
                     // PNG2 aus SVG erzeugen
