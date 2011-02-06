@@ -1,0 +1,31 @@
+@media all {
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 100%;
+        margin: auto;
+        width: 60%;
+    }
+    table {
+        width: 100%;
+    }
+    td {
+        vertical-align: top;
+    }
+    select {
+        min-width: 50%;
+    }
+    textarea {
+        width: 100%;
+    }
+    input, textarea { background-color: #CCC; }
+    input:hover, textarea:hover { background-color: #EEE; }
+    
+    .subselect {
+        margin-left: 30px;
+    }
+    .download {
+        background-color: #EEE;
+        margin: 20px;
+        clear: both;
+    }
+}
