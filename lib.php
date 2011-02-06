@@ -224,7 +224,7 @@
     {
         $delim = str_replace('\r\n', "\n", $delim);
         $delim = str_replace('\n', "\n", $delim);
-        $delim = str_replace('\t', "\n", $delim);
+        $delim = str_replace('\t', "\t", $delim);
         $delim = preg_replace('/\\\\([\\\\]+)/', '$1', $delim);
 
         return $delim;
@@ -256,9 +256,11 @@
     function remove_trailing_line($input, $count_lines)
     {
         $input = explode("\n", $input);
-        if (count($input) == count($count_lines)+1 && $input[-1] == '')
+        if (count($input) == count($count_lines)+1
+            && $input[count($input)-1] == '')
         {
-            return implode("\n", substr($input, 0, -1));
+            array_pop($input);
+            return implode("\n", $input);
         }
         return $input;
     }
@@ -362,11 +364,16 @@
                     || empty($post['kvalloc_delim2']))
                     return -15;
 
-                $delim1 = parse_delimiter($post['kvalloc_delim1']);
-                $delim2 = parse_delimiter($post['kvalloc_delim2']);
+                $delim1 = stripslashes($post['kvalloc_delim1']);
+                $delim2 = stripslashes($post['kvalloc_delim2']);
+                $delim1 = parse_delimiter($delim1);
+                $delim2 = parse_delimiter($delim2);
+
+                $post['data'] = remove_trailing_line($post['data'], $keys);
 
                 $data = array();
                 $d = explode($delim1, $post['data']);
+
                 if (count($d) != count($keys))
                     return $error_invalid_count;
 
@@ -382,7 +389,10 @@
                 $data = array();
                 foreach ($keys as $key)
                 {
-                    $data = (float)$kv_alloc[$key];
+                    if (!isset($kv_alloc[$key]))
+                        $data[] = true;
+                    else
+                        $data[] = (float)$kv_alloc[$key];
                 }
 
                 if (count($data) != count($keys))
