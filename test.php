@@ -1,6 +1,6 @@
 <?php
     header('Content-type: image/svg+xml; charset=utf-8');
-    include 'lib.php';
+    require_once('lib.php');
 
     $image = 'svgs/bundeslaender.svg';
     echo substitute($image, 'Carinthia', 'A small part of Austria',

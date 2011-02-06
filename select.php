@@ -1,7 +1,7 @@
 <?php
     if (!$_POST) header('Location: input.php');
 
-    include 'lib.php';
+    require_once('lib.php');
 
     $keys = get_keys_by_vis($_POST);
     $error = array();
