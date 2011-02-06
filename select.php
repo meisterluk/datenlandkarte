@@ -4,6 +4,7 @@
     require_once('lib.php');
 
     $keys = get_keys_by_vis($_POST);
+
     $error = array();
     if (!$keys)
     {
@@ -65,6 +66,12 @@
             $date = date('Ymd');
             $img_path = $location_creation.
                 $date.$file_title.$file_subtitle;
+
+            // Delete old files
+            @unlink($img_path.'.svg');
+            @unlink($img_path.'.png');
+            @unlink($img_path.'_big.png');
+
             $fp = fopen($img_path.'.svg', 'w');
             if (!$fp)
             {

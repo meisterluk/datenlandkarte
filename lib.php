@@ -18,6 +18,8 @@
         chdir($folder);
         $date = date('Ymd');
         $files = glob(date('Ymd', $time).'-*.{svg,png,txt}', GLOB_BRACE);
+        if (!$files)
+            $files = array();
 
         foreach ($files as $file)
         {
@@ -67,7 +69,8 @@
         }
     
         $check = strlen($post['data']);
-        if ($check == 0)
+        if ($check == 0 && ($post['format'] == 'list' ||
+            $post['format'] == 'json' || $post['format'] == 'kvalloc'))
         {
             $invalid[] = 'data';
         }
