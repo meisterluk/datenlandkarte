@@ -19,16 +19,15 @@
     if ($_GET['method'] === 'get_data' && !empty($_GET['vis']))
     {
         $keys = get_keys_by_vis($_GET);
+        $error_msg_keys_missing = 'Die notwendigen Datensätze sind leider '.
+            'noch nicht verfügbar';
+        $error_msg_keys_missing_html = '        <p class="error">'."\n".
+            '          '.$error_msg_keys_missing."\n".'        </p>'."\n";
         if ($_GET['interface'] == 'manual')
         {
             // 'No key values found' case
             if (empty($keys)) {
-?>
-        <p class="error">
-          Die ausgewählte Visualisierungsform ist nicht verfügbar.
-        </p>
-<?php
-                die(); 
+                die($error_msg_keys_missing_html); 
             }
 ?>
         <table cellpadding="6">
@@ -49,8 +48,7 @@
             elseif ($_GET['interface'] == 'kvalloc')
         {
             if (empty($keys)) {
-                die('Die ausgewählte Visualisierungsform ist '.
-                    'nicht verfügbar');
+                die($error_msg_keys_missing);
             }
             $i = 1;
             foreach ($keys as $key => $value) {
@@ -65,8 +63,7 @@
             elseif ($_GET['interface'] == 'list')
         {
             if (empty($keys)) {
-                die('Die ausgewählte Visualisierungsform ist '.
-                    'nicht verfügbar');
+                die($error_msg_keys_missing);
             }
             foreach ($keys as $key => $value) {
                 echo 'Wert für '.$value."\n";
@@ -76,8 +73,7 @@
             elseif ($_GET['interface'] == 'json')
         {
             if (empty($keys)) {
-                die('Die ausgewählte Visualisierungsform ist '.
-                    'nicht verfügbar');
+                die($error_msg_keys_missing);
             }
             echo "{\n";
             foreach ($keys as $key => $value) {
