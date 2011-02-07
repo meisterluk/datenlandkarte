@@ -341,9 +341,19 @@
               Sie Javascript in ihrem Browser, wenn möglich.
             </p>
           </noscript>
-          <p>
-            <strong>Hinweis!</strong> Dieses Werkzeug ist noch in Entwicklung.
+          <p style="border:1px solid #000000;padding:10px;background:#e59a9a;margin-bottom:10px;font-size:1.3em;line-height:100%;">
+            <strong>Hinweis:</strong> <br/>
+            <span style="text-style:italic">
+              An diesem Feature wird derzeit noch gearbeitet &ndash;
+              bitte abonnieren Sie unseren
+              <a class="liexternal" target="_blank" href="http://feeds.feedburner.com/datenlandkarten">RSS-Feed</a> <br />
+              oder folgen Sie uns auf
+              <a class="liexternal" target="_blank"
+              href="http://twitter.com/datenlandkarten">Twitter</a>, um
+              über die Fertigstellung informiert zu werden!
+            </span>
           </p>
+
 <?php
     // a stupid error handler
     function o($msg) { echo '            <li>'.$msg."</li>\n"; }
