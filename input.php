@@ -188,10 +188,15 @@
     /* jQuery ftw */
     jQuery(document).ready(function () {
         var selected = (function (name) {
-            return jQuery('input[name=' + name + ']:checked').attr('value');
+            return jQuery('input[name=' + name + ']:checked').val();
         });
-        var write_manual = (function(data) { jQuery('#manual').html(data); });
-        var write_data_area = (function(data) { jQuery('textarea[name=data]').val(data); });
+        var write = (function(interfac) {
+            if (interfac == 'manual')
+                return (function(data) { jQuery('#manual').html(data); });
+            else
+                return (function(data) {
+                    jQuery('textarea[name=data]').val(data); });
+        });
 
         var update_data_form = (function (todo, interfac) {
             var vis = selected('vis');
@@ -204,7 +209,7 @@
                 'vis' : vis, 'bz_spec' : bz_spec, 'gm_spec' : gm_spec,
                 'bz_bl' : bz_bl, 'gm_bl' : gm_bl };
 
-            jQuery.get('/tool/input.php', data, todo);
+            jQuery.get('input.php', data, todo);
         });
 
         // hide specialized input field
@@ -215,15 +220,12 @@
         jQuery('input').click(function () {
             jQuery('#' + jQuery(this).attr('id') + '_select').show();
         });
-        jQuery('input[type=radio]').change(function () {
-            update_data_form(write_manual, 'manual');
-        });
-        jQuery('#format').change(function () {
-            var v = jQuery('#format option:selected').attr('value');
+        jQuery('#format, input[type=radio]').change(function () {
+            var v = jQuery('#format option:selected').val();
+            update_data_form(write(v), v);
             switch (v)
             {
                 case 'manual':
-                    update_data_form(write_manual, v);
                     jQuery('#manual').show();
                     jQuery('#data_list, #kvalloc, #list').hide();
                     break;
@@ -231,12 +233,10 @@
                     jQuery('#list').show();
                 case 'json':
                     if (v == 'json') jQuery('#list').hide();
-                    update_data_form(write_data_area, v);
                     jQuery('#data_list').show();
                     jQuery('#kvalloc, #manual').hide();
                     break;
                 case 'kvalloc':
-                    update_data_form(write_data_area, v);
                     jQuery('#data_list, #kvalloc').show();
                     jQuery('#manual, #list').hide();
                     break;
