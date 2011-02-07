@@ -418,23 +418,31 @@
               <td>Visualisierung:</td>
               <td>
 <?php if ($defaults['vis'] === 'bl') { ?>
-                  <input type="radio" name="vis" value="bl" id="bls" checked="checked"> Bundesländer Österreichs <br>
+                  <input type="radio" name="vis" value="bl" id="bls" checked="checked">
+                    <label for="bls">Bundesländer Österreichs</label> <br>
 <?php } else { ?>
-                  <input type="radio" name="vis" value="bl" id="bls"> Bundesländer Österreichs <br>
+                  <input type="radio" name="vis" value="bl" id="bls">
+                    <label for="bls">Bundesländer Österreichs</label> <br>
 <?php } if ($defaults['vis'] === 'eu') { ?>
-                  <input type="radio" name="vis" value="eu" id="eu" checked="checked"> Europas Staaten <br>
+                  <input type="radio" name="vis" value="eu" id="eu" checked="checked">
+                    <label for="eu">Europas Staaten</label> <br>
 <?php } else { ?>
-                  <input type="radio" name="vis" value="eu" id="eu"> Europas Staaten <br>
+                  <input type="radio" name="vis" value="eu" id="eu">
+                    <label for="eu">Europas Staaten</label> <br>
 <?php } if ($defaults['vis'] === 'bz') { ?>
-                  <input type="radio" name="vis" value="bz" id="bz" checked="checked"> Bezirke <br>
+                  <input type="radio" name="vis" value="bz" id="bz" checked="checked">
+                    <label for="bz">Bezirke</label> <br>
 <?php } else { ?>
-                  <input type="radio" name="vis" value="bz" id="bz"> Bezirke <br>
+                  <input type="radio" name="vis" value="bz" id="bz">
+                    <label for="bz">Bezirke</label> <br>
 <?php } ?>
                   <div id="bz_select" class="subselect">
 <?php if ($defaults['bz_spec'] === 'bl') { ?>
-                      <input type="radio" name="bz_spec" value="bl" id="bl" checked="checked"> eines Bundeslands <br>
+                      <input type="radio" name="bz_spec" value="bl" id="bl" checked="checked">
+                        <label for="bl">eines Bundeslands</label> <br>
 <?php } else { ?>
-                      <input type="radio" name="bz_spec" value="bl" id="bl"> eines Bundeslands <br>
+                      <input type="radio" name="bz_spec" value="bl" id="bl">
+                        <label for="bl">eines Bundeslands</label> <br>
 <?php } ?>
                       <div id="bz_bl_select" class="subselect">
 <?php
@@ -444,25 +452,32 @@
         else
             $ch = '';
 ?>
-                          <input type="radio" name="bz_bl" value="<?=$key; ?>"<?=$ch; ?>> <?=$bl; ?><br>
+                          <input type="radio" name="bz_bl" id="bz_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
+                            <label for="bz_bl<?=$key; ?>"><?=$bl; ?></label> <br>
 <?php } ?>
                       </div>
 <?php if ($defaults['bz_spec'] === 'oe') { ?>
-                      <input type="radio" name="bz_spec" value="oe" checked="checked"> von Österreich
+                      <input type="radio" name="bz_spec" id="oe" value="oe" checked="checked">
+                        <label for="oe">von Österreich</label>
 <?php } else { ?>
-                      <input type="radio" name="bz_spec" value="oe"> von Österreich
+                      <input type="radio" name="bz_spec" id="oe" value="oe">
+                        <label for="oe">von Österreich</label>
 <?php } ?>
                   </div>
 <?php if ($defaults['vis'] === 'gm') { ?>
-                  <input type="radio" name="vis" value="gm" id="gm" checked="checked"> Gemeinden <br>
+                  <input type="radio" name="vis" value="gm" id="gm" checked="checked">
+                    <label for="gm">Gemeinden</label> <br>
 <?php } else { ?>
-                  <input type="radio" name="vis" value="gm" id="gm"> Gemeinden <br>
+                  <input type="radio" name="vis" value="gm" id="gm">
+                    <label for="gm">Gemeinden</label> <br>
 <?php } ?>
                   <div id="gm_select" class="subselect">
 <?php if ($defaults['gm_spec'] === 'bl') { ?>
-                      <input type="radio" name="gm_spec" value="bl" checked="checked"> eines Bundeslands <br>
+                      <input type="radio" name="gm_spec" id="gm_spec" value="bl" checked="checked">
+                        <label for="gm_spec">eines Bundeslands</label> <br>
 <?php } else { ?>
-                      <input type="radio" name="gm_spec" value="bl"> eines Bundeslands <br>
+                      <input type="radio" name="gm_spec" id="gm_spec" value="bl">
+                        <label for="gm_spec">eines Bundeslands</label> <br>
 <?php } ?>
                       <div id="gm_bl_select" class="subselect">
 <?php
@@ -472,13 +487,16 @@
         else
             $ch = '';
 ?>
-                          <input type="radio" name="gm_bl" value="<?=$key; ?>"<?=$ch; ?>> <?=$bl; ?><br>
+                          <input type="radio" name="gm_bl" id="gm_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
+                            <label for="gm_bl<?=$key; ?>"><?=$bl; ?></label> <br>
 <?php } ?>
                       </div>
 <?php if ($defaults['gm_spec'] === 'oe') { ?>
-                      <input type="radio" name="gm_spec" value="oe" checked="checked"> von Österreich
+                      <input type="radio" name="gm_spec" id="gm_spec" value="oe" checked="checked">
+                        <label for="gm_spec">von Österreich</label>
 <?php } else { ?>
-                      <input type="radio" name="gm_spec" value="oe"> von Österreich
+                      <input type="radio" name="gm_spec" id="gm_spec" value="oe">
+                        <label for="gm_spec">von Österreich</label>
 <?php } ?>
                   </div>
                   <div id="svg_error" class="error"></div>
