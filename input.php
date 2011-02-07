@@ -16,8 +16,12 @@
     }
 
     // AJAX Request handler
-    if ($_GET['method'] === 'get_data' && !empty($_GET['vis']))
-    {
+    if ($_GET['method'] === 'check_svg') {
+        if (!file_exists(select_svg_file($_GET) || ''))
+        {
+            die('Leider ist keine Basiskarte für diese Auswahl verfügbar.');
+        }
+    } else if ($_GET['method'] === 'get_data' && !empty($_GET['vis'])) {
         $keys = get_keys_by_vis($_GET);
         $error_msg_keys_missing = 'Die notwendigen Datensätze sind leider '.
             'noch nicht verfügbar';
@@ -186,6 +190,7 @@
         var selected = (function (name) {
             return jQuery('input[name=' + name + ']:checked').val();
         });
+        var write_svg_error = function(data) {jQuery('#svg_error').text(data);};
         var write = (function(interfac) {
             if (interfac == 'manual')
                 return (function(data) { jQuery('#manual').html(data); });
@@ -207,6 +212,19 @@
 
             jQuery.get('input.php', data, todo);
         });
+        var check_svg_exist = (function (todo) {
+            var vis = selected('vis');
+            var bz_spec = selected('bz_spec');
+            var gm_spec = selected('gm_spec');
+            var bz_bl = selected('bz_bl');
+            var gm_bl = selected('gm_bl');
+
+            var data = { 'method' : 'check_svg', 'vis' : vis,
+                'bz_spec' : bz_spec, 'gm_spec' : gm_spec,
+                'bz_bl' : bz_bl, 'gm_bl' : gm_bl };
+
+            jQuery.get('input.php', data, todo);
+        });
 
         // hide specialized input field
         jQuery('#bz_select, #gm_select, #list').hide();
@@ -219,6 +237,7 @@
         jQuery('#format, input[type=radio]').change(function () {
             var v = jQuery('#format option:selected').val();
             update_data_form(write(v), v);
+            check_svg_exist(write_svg_error);
             switch (v)
             {
                 case 'manual':
@@ -459,6 +478,7 @@
                       <input type="radio" name="gm_spec" value="oe"> von Österreich
 <?php } ?>
                   </div>
+                  <div id="svg_error" class="error"></div>
               </td>
             </tr>
             <tr>
