@@ -18,8 +18,8 @@ ToDos
 
 * Browser compatibility check
 * 2-directional folding
-* <for> elements for radio buttons
 * SVG Upload if SVG not available
+* Use ImageMagick PHP API instead of shell command
 * txt-file save raw data
 * txt-file raw data directory listing
 
