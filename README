@@ -28,6 +28,12 @@ ToDos
     * Check error messages
     * Rendering
 
+Features
+--------
+
+* User-defined color palettes
+* Google Chart API binding
+* Public API offering
 
 Bugs
 ----
