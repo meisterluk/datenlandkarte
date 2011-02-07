@@ -13,6 +13,22 @@ Setup
 1. Upload all files and folder
 2. Give a+w permission for upload folder.
 
+ToDos
+-----
+
+* Browser compatibility check
+* 2-directional folding
+* <for> elements for radio buttons
+* SVG Upload if SVG not available
+* txt-file save raw data
+* txt-file raw data directory listing
+
+* Testing
+
+    * Check error messages
+    * Rendering
+
+
 Bugs
 ----
 
