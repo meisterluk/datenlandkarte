@@ -301,6 +301,7 @@
         background-color: #EEE;
         margin: 20px;
         clear: both;
+        padding: 10px;
     }
 -->
 </style>

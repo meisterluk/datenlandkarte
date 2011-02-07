@@ -184,6 +184,7 @@
         background-color: #EEE;
         margin: 20px;
         clear: both;
+        padding: 10px;
     }
 -->
 </style>
@@ -276,21 +277,27 @@
 ?>
 
           <div class="download">
-           <img src="<?=$img_path; ?>.svg" alt="SVG Graphic Datenlandkarte" style="float:left">
-           <a href="<?=$img_path; ?>.svg">Download SVG</a> <br>
-           Scalable Vector Graphics
+           <a href="<?=$img_path; ?>.svg">
+             <img src="img/svg.png" alt="SVG Graphic Datenlandkarte" style="float:left">
+           </a>
+           <h5><a href="<?=$img_path; ?>.svg">Download SVG</a></h5>
+           <p>Scalable Vector Graphics</p>
           </div>
 
           <div class="download">
-           <img src="<?=$img_path; ?>.png" alt="PNG Graphic Datenlandkarte" style="float:left">
-           <a href="<?=$img_path; ?>.png">Download PNG</a> <br>
-           Portable Network Graphics
+           <a href="<?=$img_path; ?>.png">
+             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
+           </a>
+           <h5><a href="<?=$img_path; ?>.png">Download PNG</a></h5>
+           <p>Portable Network Graphics</p>
           </div>
 
           <div class="download">
-           <img src="<?=$img_path; ?>_big.png" alt="PNG Graphic Datenlandkarte" style="float:left">
-           <a href="<?=$img_path; ?>_big.png">Download PNG (3fache Größe)</a> <br>
-           Portable Network Graphics
+           <a href="<?=$img_path; ?>_big.png">
+             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
+           </a>
+           <h5><a href="<?=$img_path; ?>_big.png">Download PNG (3fache Größe)</a></h5>
+           <p>Portable Network Graphics</p>
           </div>
       </div>
 <?php } ?>
