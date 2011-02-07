@@ -518,14 +518,15 @@
               <td>Farbrichtung:</td>
               <td>
                 <select name="grad">
-                  <option value="<?=$defaults['grad']; ?>"><?=$color_allocation[(int)$defaults['grad']]; ?></option>
 <?php
     foreach ($color_allocation as $key => $c)
     {
         if ($key == (int)$defaults['grad']) 
-            continue;
+            $ch = ' selected="selected"';
+        else
+            $ch = '';
 ?>
-                  <option value="<?=$key; ?>"><?=$c; ?></option>
+                  <option value="<?=$key; ?>"<?=$ch?>><?=$c; ?></option>
 <?php } ?>
                 </select>
               </td>
