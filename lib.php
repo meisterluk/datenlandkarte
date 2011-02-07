@@ -345,6 +345,7 @@
             case 'json':
                 if (empty($post['data']))
                     return -10;
+                $post['data'] = stripslashes($post['data']);
 
                 $json_array = json_decode($post['data'], true);
                 if ($json_array === NULL)
@@ -361,6 +362,8 @@
                     else
                         $data[] = (float)$value;
                 }
+
+                return $data;
             case 'kvalloc':
                 if (empty($post['kvalloc_delim1'])
                     || empty($post['kvalloc_delim2']))

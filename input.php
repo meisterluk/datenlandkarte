@@ -85,9 +85,9 @@
             $i = 0;
             foreach ($keys as $key => $value) {
                 if ($i != count($keys)-1)
-                    echo '    \''.$value.'\' : \'Wert für '.$value.'\','."\n";
+                    echo '    "'.$value.'" : "Wert für '.$value.'",'."\n";
                 else
-                    echo '    \''.$value.'\' : \'Wert für '.$value.'\''."\n";
+                    echo '    "'.$value.'" : "Wert für '.$value.'"'."\n";
                 $i++;
             }
             die('}');
@@ -302,6 +302,9 @@
         margin: 20px;
         clear: both;
         padding: 10px;
+    }
+    #data_list {
+        font-family: "Courier New", Courier, monospace;
     }
 -->
 </style>
