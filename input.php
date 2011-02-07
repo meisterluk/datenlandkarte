@@ -277,7 +277,10 @@
     }
     input, textarea { background-color: #CCC; }
     input:hover, textarea:hover { background-color: #EEE; }
-    
+
+    .error {
+        color: #F00;
+    }
     .subselect {
         margin-left: 30px;
     }
