@@ -17,10 +17,12 @@
 
     // AJAX Request handler
     if ($_GET['method'] === 'check_svg') {
-        if (!file_exists(select_svg_file($_GET) || ''))
+        $path = (string)select_svg_file($_GET);
+        if (!file_exists($path))
         {
             die('Leider ist keine Basiskarte für diese Auswahl verfügbar.');
         }
+        die();
     } else if ($_GET['method'] === 'get_data' && !empty($_GET['vis'])) {
         $keys = get_keys_by_vis($_GET);
         $error_msg_keys_missing = 'Die notwendigen Datensätze sind leider '.
@@ -80,8 +82,13 @@
                 die($error_msg_keys_missing);
             }
             echo "{\n";
+            $i = 0;
             foreach ($keys as $key => $value) {
-                echo '    \''.$value.'\' : \'Wert für '.$value.'\''."\n";
+                if ($i != count($keys)-1)
+                    echo '    \''.$value.'\' : \'Wert für '.$value.'\','."\n";
+                else
+                    echo '    \''.$value.'\' : \'Wert für '.$value.'\''."\n";
+                $i++;
             }
             die('}');
         }
@@ -256,6 +263,13 @@
                     jQuery('#manual, #list').hide();
                     break;
             }
+        });
+        jQuery('#submit').click(function () {
+            if (jQuery('#manual').text().substring(0, 14) == 'Die notwendigen'
+                || jQuery('#svg_error').text().length != 0)
+                return false;
+            else
+                return true;
         });
         jQuery('#format').change();
     });
@@ -579,7 +593,7 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><input type="submit" value="Erstellen"></td>
+              <td><input type="submit" id="submit" value="Erstellen"></td>
             </tr>
           </table>
           </form>
