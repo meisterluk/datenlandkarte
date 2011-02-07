@@ -150,7 +150,7 @@
 
     $gemeinden = array();
     $gemeinden[2] = array(
-        'Gemeinden', 'Albeck', 'Feldkirchen in Kärnten','Glanegg', 'Gnesau',
+        'Albeck', 'Feldkirchen in Kärnten','Glanegg', 'Gnesau',
         'Himmelberg', 'Ossiach', 'Reichenau', 'Sankt Urban',
         'Steindorf am Ossiachersee', 'Steuerberg', 'Klagenfurt am Wörtherse',
         'Ebenthal in Kärnten','Feistritz im Rosental', 'Ferlach',
