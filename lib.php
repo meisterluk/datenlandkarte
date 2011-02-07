@@ -259,13 +259,12 @@
     function remove_trailing_line($input, $count_lines)
     {
         $input = explode("\n", $input);
-        if (count($input) == count($count_lines)+1
+        if (count($input) == ($count_lines+1)
             && $input[count($input)-1] == '')
         {
             array_pop($input);
-            return implode("\n", $input);
         }
-        return $input;
+        return implode("\n", $input);
     }
 
     // Multiply each value with $fac ("Hebefaktor")
@@ -372,7 +371,7 @@
                 $delim1 = parse_delimiter($delim1);
                 $delim2 = parse_delimiter($delim2);
 
-                $post['data'] = remove_trailing_line($post['data'], $keys);
+                $post['data'] = remove_trailing_line($post['data'], count($keys));
 
                 $data = array();
                 $d = explode($delim1, $post['data']);
