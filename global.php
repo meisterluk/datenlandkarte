@@ -50,6 +50,31 @@
     // This is only to avoid memory exhaustion
     function get($type, $index=false) {
         switch ($type) {
+            case 'laender':
+
+    $laender = array(
+        1 => 'Albanien', 2 => 'Andorra', 3 => 'Belgien',
+        4 => 'Bosnien und Herzegowina', 5 => 'Bulgarien', 6 => 'Dänemark',
+        7 => 'Deutschland', 8 => 'Estland', 9 => 'Finnland',
+        10 => 'Frankreich', 11 => 'Griechenland', 12 => 'Irland',
+        13 => 'Island', 14 => 'Italien', 15 => 'Kasachstan',
+        16 => 'Kosovo', 17 => 'Kroatien', 18 => 'Lettland',
+        19 => 'Liechtenstein', 20 => 'Litauen', 21 => 'Luxemburg',
+        22 => 'Malta', 23 => 'Mazedonien', 24 => 'Moldawien', 25 => 'Monaco',
+        26 => 'Montenegro', 27 => 'Niederlande', 28 => 'Norwegen',
+        29 => 'Österreich', 30 => 'Polen', 31 => 'Portugal',
+        23 => 'Rumänien', 24 => 'Russland', 25 => 'San Marino',
+        26 => 'Schweden', 27 => 'Schweiz', 28 => 'Serbien', 29 => 'Slowakei',
+        30 => 'Slowenien', 31 => 'Spanien', 32 => 'Tschechien',
+        33 => 'Türkei', 34 => 'Ukraine', 35 => 'Ungarn', 36 => 'Vatikanstadt',
+        37 => 'Vereinigtes Königreich', 38 => 'Weißrussland'
+    );
+                if ($index === false)
+                    return $laender;
+                else
+                    return $laender[$index];
+
+
             case 'bundeslaender':
 
     $bundeslaender = array(
