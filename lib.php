@@ -37,8 +37,10 @@
     function check_userinput($post)
     {
         $invalid = array();
-    
-        $check = strlen($post['title']);
+
+        // a sooo stupid hack for correct evaluation of strlen in PHP
+        $title = preg_replace('/[[^:alnum:]]/', '_', $post['title']);
+        $check = strlen($title);
         if ($check > 50)
         {
             $invalid[] = 'title';
