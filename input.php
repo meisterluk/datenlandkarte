@@ -343,7 +343,7 @@
           </noscript>
           <p style="border:1px solid #000000;padding:10px;background:#e59a9a;margin-bottom:10px;font-size:1.3em;line-height:100%;">
             <strong>Hinweis:</strong> <br/>
-            <span style="text-style:italic">
+            <span style="font-style:italic">
               An diesem Feature wird derzeit noch gearbeitet &ndash;
               bitte abonnieren Sie unseren
               <a class="liexternal" target="_blank" href="http://feeds.feedburner.com/datenlandkarten">RSS-Feed</a> <br />
