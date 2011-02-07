@@ -557,16 +557,14 @@
         'manual' => 'Manuell', 'list' => 'Liste',
         'json' => 'Javascript Object Notation (JSON)', 'kvalloc' => 'Schlüssel-Wert-Zuordnung'
     );
-?>
-                    <option value="<?=htmlspecialchars($defaults['format'], ENT_NOQUOTES); ?>">
-                        <?=$formats[$defaults['format']]; ?>
-                    </option>
-<?php
+
     foreach ($formats as $key => $f) {
         if ($key === $defaults['format']) 
-            continue;
+            $ch = ' selected="selected"';
+        else
+            $ch = '';
 ?>
-                    <option value="<?=$key; ?>"><?=htmlspecialchars($f, ENT_NOQUOTES); ?></option>
+                    <option value="<?=$key; ?>"<?=$ch?>><?=htmlspecialchars($f, ENT_NOQUOTES); ?></option>
 <?php } ?>
                   </select> <br>
 
