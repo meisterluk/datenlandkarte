@@ -56,10 +56,10 @@
             if (empty($keys)) {
                 die($error_msg_keys_missing);
             }
-            $i = 1;
+            $i = 0;
             foreach ($keys as $key => $value) {
-                if ($i == count($keys))
-                    echo $value.';Wert für '.$value."\n";
+                if ($i == (count($keys)-1))
+                    echo $value.';Wert für '.$value;
                 else
                     echo $value.';Wert für '.$value."\n";
                 $i++;
@@ -71,8 +71,13 @@
             if (empty($keys)) {
                 die($error_msg_keys_missing);
             }
+            $i = 0;
             foreach ($keys as $key => $value) {
-                echo 'Wert für '.$value."\n";
+                if ($i == (count($keys)-1))
+                    echo 'Wert für '.$value;
+                else
+                    echo 'Wert für '.$value."\n";
+                $i++;
             }
             die();
         }
