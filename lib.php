@@ -17,15 +17,18 @@
         $base = getcwd();
         chdir($folder);
         $date = date('Ymd');
-        $files = glob(date('Ymd', $time).'-*.{svg,png,txt}', GLOB_BRACE);
+        $files = glob(date('Y', $time).'*-*.{svg,png,txt}', GLOB_BRACE);
         if (!$files)
             $files = array();
 
         foreach ($files as $file)
         {
-            $status = unlink($file);
-            if ($status === false)
-                return false;
+            if (substr($file, 0, 8) != date('Ymd', $time))
+            {
+                $status = unlink($file);
+                if ($status === false)
+                    return false;
+            }
         }
         chdir($base);
         return true;
@@ -290,13 +293,13 @@
         $file = select_input_data($post);
         if (!$file) return false;
         $json = array(
-            'file' : implode(',', $file),
-            'title' : $title,
-            'subtitle' : $subtitle,
-            'dec' : $dec,
-            'colors' : $colors,
-            'grad' : $grad,
-            'data' : $data // TODO: prefer JSON object to list
+            'file' => implode(',', $file),
+            'title' => $title,
+            'subtitle' => $subtitle,
+            'dec' => $dec,
+            'colors' => $colors,
+            'grad' => $grad,
+            'data' => $data // TODO: prefer JSON object to list
         );
         $json = json_encode($json);
         return $json;
