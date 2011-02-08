@@ -67,11 +67,6 @@
             $img_path = $location_creation.
                 $date.$file_title.$file_subtitle;
 
-            // Delete old files
-            @unlink($img_path.'.svg');
-            @unlink($img_path.'.png');
-            @unlink($img_path.'_big.png');
-
             $fp = fopen($img_path.'.svg', 'w');
             if ($fp)
             {
