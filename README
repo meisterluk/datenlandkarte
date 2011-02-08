@@ -34,6 +34,7 @@ Features
 * User-defined color palettes
 * Google Chart API binding
 * Public API offering
+* manual\d should become manual[]
 
 Bugs
 ----
