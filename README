@@ -17,6 +17,7 @@ ToDos
 -----
 
 * Browser compatibility check
+* W3C compatibility
 * 2-directional folding
 * SVG Upload if SVG not available
 * Use ImageMagick PHP API instead of shell command
