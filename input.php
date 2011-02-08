@@ -1,12 +1,18 @@
 <?php
     require_once('lib.php');
 
-    if ($_POST)
+    if ($_POST) {
         $invalid = check_userinput($_POST);
-    if ($_POST && !$invalid)
-    {
-        include 'select.php';
-        die();
+        $keys = get_keys_by_vis($_GET);
+        $data = get_data($_POST, $keys);
+
+        if (!$invalid && is_array($data))
+        {
+            unset($keys);
+            unset($data);
+            include 'select.php';
+            die();
+        }
     }
 
     // Remove any old created files if there are any
@@ -123,7 +129,7 @@
         'kvalloc_delim2' => ';'
     );
     // Overwrite defaults now
-    if ($_POST)
+    if ($_POST && $invalid)
     {
         foreach ($invalid as $i)
         {
@@ -397,10 +403,11 @@
 <?php
     // a stupid error handler
     function o($msg) { echo '            <li>'.$msg."</li>\n"; }
-    if ($_POST && $invalid) {
+    if ($_POST && ($invalid || !is_array($data))) {
 ?>
           <ul class="error">
 <?php
+        if ($invalid) {
             foreach ($invalid as $field) {
                 if ($field == 'title')
                     o('Invalider Titel-Parameter. Darf maximal '.
@@ -419,6 +426,13 @@
                 if ($field == 'data')
                     o('Bitte füllen Sie das Feld "Daten" aus');
             }
+        } else {
+            $msg = _error_msg_for_data($data);
+            if ($msg !== false)
+            {
+                o(htmlspecialchars($msg, ENT_NOQUOTES));
+            }
+        }
 ?>
           </ul>
 <?php
@@ -426,7 +440,7 @@
     // I am sorry for the following source code:
 ?>
 
-          <form action="#" method="post">
+          <form action="input.php" method="post">
           <table cellpadding="6">
             <tr>
               <td>Titel:</td>
