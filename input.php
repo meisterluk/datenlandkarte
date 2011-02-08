@@ -10,7 +10,7 @@
         {
             unset($keys);
             unset($data);
-            include 'select.php';
+            require_once('select.php');
             die();
         }
     }

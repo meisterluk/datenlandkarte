@@ -2,7 +2,7 @@
     if (basename($_SERVER['REQUEST_URI']) == 'lib.php')
         header('Location: input.php');
 
-    include 'global.php';
+    require_once('global.php');
 
     // a very evil global variable
     $tmp = array();
