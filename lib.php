@@ -173,6 +173,7 @@
     }
 
     // Function to reduce color palette to $count_colors colors.
+    // Note: Direction of color palette is swapped
     function color_palette_adjustment($palette, $count_colors)
     {
         $count_colors = (int)$count_colors;
@@ -215,7 +216,7 @@
         $new_palette = array();
         foreach ($pa as $index)
         {
-            $new_palette[] = $palette[$index];
+            $new_palette[] = $palette[10-$index];
         }
 
         return $new_palette;
