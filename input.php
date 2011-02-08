@@ -343,6 +343,9 @@
     #cc_header_text {
         margin-left: 80px;
     }
+    #form {
+        margin-top: 40px;
+    }
 -->
 </style>
 </head>
@@ -449,10 +452,6 @@
             </div>
           </div>
 
-          <p>
-            Fehlende (leere) Angaben werden in der Graphik weiß dargestellt.
-          </p>
-
 <?php
     // a stupid error handler
     function o($msg) { echo '            <li>'.$msg."</li>\n"; }
@@ -494,7 +493,7 @@
     // I am sorry for the following source code:
 ?>
 
-          <table cellpadding="6">
+          <table cellpadding="6" id="form">
             <tr>
               <td>Titel:</td>
               <td><input type="text" maxlength="50" tabindex="1" name="title" value="<?=$defaults['title']; ?>"></td>
@@ -620,10 +619,11 @@
                 </select>
               </td>
             </tr>
+            <tr><td colspan="2">&nbsp;</td></tr>
             <tr>
               <td colspan="2">
                   <strong>Eingabeformat:</strong>
-                  <select name="format" id="format">
+                  <select name="format" id="format" style="float:right">
 <?php
     $formats = array(
         'manual' => 'Manuell', 'list' => 'Liste',
@@ -640,7 +640,8 @@
 <?php } ?>
                   </select> <br>
 
-                  <strong>Daten:</strong><br>
+                  <strong>Daten:</strong> (fehlende Angabe werden weiß dargestellt) <br /><br />
+
                   <div id="manual">
                     <table cellpadding="6">
 <?php
@@ -649,7 +650,7 @@
     foreach ($keys as $key => $bl) {
 ?>
                       <tr>
-                        <td><?=htmlspecialchars($bl, ENT_NOQUOTES); ?>:</td>
+                        <td style="padding-left:30px"><?=htmlspecialchars($bl, ENT_NOQUOTES); ?>:</td>
                         <td><input type="text" name="manual<?=$key; ?>" value="<?=$defaults['manual'.$key]; ?>"></td>
                       </tr>
 <?php } ?>
