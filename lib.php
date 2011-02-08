@@ -289,11 +289,12 @@
     {
         $error_invalid_value = -2;
         $error_invalid_count = -3;
+        $error_invalid_data = -20;
 
         switch ($post['format'])
         {
             case 'manual':
-                if (!$post['manual1'])
+                if ($post['manual1'] === '')
                     return -1;
 
                 $i = 1;
@@ -309,6 +310,9 @@
                         $data[] = (float)$val;
                     $i++;
                 }
+
+                if (min($data) == max($data))
+                    return $error_invalid_data;
 
                 return $data;
             case 'list':
@@ -343,6 +347,9 @@
                         $data[] = (float)$i;
                 }
 
+                if (min($data) == max($data))
+                    return $error_invalid_data;
+
                 return $data;
             case 'json':
                 if (empty($post['data']))
@@ -364,6 +371,9 @@
                     else
                         $data[] = (float)$value;
                 }
+
+                if (min($data) == max($data))
+                    return $error_invalid_data;
 
                 return $data;
             case 'kvalloc':
@@ -404,6 +414,8 @@
 
                 if (count($data) != count($keys))
                     return $error_invalid_count;
+                if (min($data) == max($data))
+                    return $error_invalid_data;
 
                 return $data;
             default:
@@ -434,6 +446,9 @@
             case -11:
                 return 'Kein valides JSON-Objekt. Konnte es nicht '.
                     'verarbeiten';
+            case -20:
+                return 'Keine sinnvollen Daten eingegeben. Die Werte '.
+                    'müssen verschieden sein.';
             case false:
                 return 'Kein valides Eingabeformat gewählt.';
             case 1:
@@ -500,8 +515,13 @@
         {
             if ($value === true)
                 return $palette[count($palette)-1];
-            if ($range[0] <= $value && $range[1] >= $value)
-                return $palette[$nr];
+            if ($nr == count($ranges)-1) {
+                if ($range[0] <= $value && $range[1] >= $value)
+                    return $palette[$nr];
+            } else {
+                if ($range[0] <= $value && $range[1] > $value)
+                    return $palette[$nr];
+            }
         }
         return false;
     }

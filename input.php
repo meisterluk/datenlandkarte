@@ -129,11 +129,11 @@
         'kvalloc_delim2' => ';'
     );
     // Overwrite defaults now
-    if ($_POST && $invalid)
+    if ($_POST)
     {
-        foreach ($invalid as $i)
+        foreach ($defaults as $key => $d)
         {
-            if (!array_key_exists($i, $defaults))
+            if (array_key_exists($key, $_POST) && !in_array($key, $invalid))
             {
                 $defaults[$i] = htmlspecialchars($_POST[$i]);
             }
@@ -405,7 +405,8 @@
     function o($msg) { echo '            <li>'.$msg."</li>\n"; }
     if ($_POST && ($invalid || !is_array($data))) {
 ?>
-          <ul class="error">
+          <p style="font-size:120%" class="error">Es traten Fehler auf:</p>
+          <ul>
 <?php
         if ($invalid) {
             foreach ($invalid as $field) {
