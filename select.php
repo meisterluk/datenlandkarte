@@ -283,7 +283,7 @@
 
           <div class="download">
            <a href="<?=$files['svg']; ?>">
-             <img src="img/svg.png" alt="SVG Graphic Datenlandkarte" style="float:left">
+             <img src="img/svg.png" alt="SVG Graphic Datenlandkarte" style="float:left" />
            </a>
            <h5><a href="<?=$files['svg']; ?>">Download SVG</a></h5>
            <p>Scalable Vector Graphics</p>
@@ -291,7 +291,7 @@
 
           <div class="download">
            <a href="<?=$files['png']; ?>">
-             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
+             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left" />
            </a>
            <h5><a href="<?=$files['png']; ?>">Download PNG</a></h5>
            <p>Portable Network Graphics</p>
@@ -299,7 +299,7 @@
 
           <div class="download">
            <a href="<?=$files['bpng']; ?>">
-             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
+             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left" />
            </a>
            <h5><a href="<?=$files['bpng']; ?>">Download PNG (3fache Größe)</a></h5>
            <p>Portable Network Graphics</p>
@@ -324,8 +324,8 @@
 
 
                   <div class="art-footer-text">
-                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" width="177" height="33"></a></div>
-<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition "Offenes Wissen" auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" width="80" height="15"> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" width="80" height="15"> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" width="80" height="15"></a><br/>
+                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" width="177" height="33" /></a></div>
+<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition "Offenes Wissen" auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" width="80" height="15" /></a><br/>
 <a href="/impressum" style="text-decoration:none;" title="Impressum anzeigen">Ein Projekt von open3, dem Netzwerk zur Förderung von openSociety, openGovernment und OpenData</a></p></div>                  </div>
                     <div class="cleared"></div>
                 </div>
