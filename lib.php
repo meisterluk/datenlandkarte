@@ -292,14 +292,26 @@
     {
         $file = select_input_data($post);
         if (!$file) return false;
+
+        $keys = get_keys_by_vis($post);
+        if (!$keys) return false;
+
+        $d = array();
+        $i = 0;
+        foreach ($keys as $value)
+        {
+            $d[$value] = $data[$i];
+            $i++;
+        }
+
         $json = array(
-            'file' => implode(',', $file),
+            'file' => $file,
             'title' => $title,
             'subtitle' => $subtitle,
             'dec' => $dec,
             'colors' => $colors,
             'grad' => $grad,
-            'data' => $data // TODO: prefer JSON object to list
+            'data' => $d
         );
         $json = json_encode($json);
         return $json;
@@ -319,7 +331,13 @@
         switch ($post['format'])
         {
             case 'manual':
-                if ($post['manual1'] === '')
+                $flag = false;
+                foreach (array_keys($post) as $key)
+                {
+                    if (preg_match('/manual\d+/', $key))
+                        $flag = true;
+                }
+                if (!$flag)
                     return -1;
 
                 $i = 1;
