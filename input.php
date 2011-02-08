@@ -452,6 +452,10 @@
     // I am sorry for the following source code:
 ?>
 
+          <p>
+            Fehlende (leere) Angaben werden in der Graphik weiß dargestellt.
+          </p>
+
           <form action="input.php" method="post">
           <table cellpadding="6">
             <tr>

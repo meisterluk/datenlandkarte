@@ -523,7 +523,8 @@
                     return $palette[$nr];
             }
         }
-        return false;
+        // default color = white
+        return '#FFFFFF';
     }
 
     // Helper function
