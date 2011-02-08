@@ -67,23 +67,24 @@
             $img_path = $location_creation.
                 $date.$file_title.$file_subtitle;
 
-            $fp = fopen($img_path.'.svg', 'w');
-            if ($fp)
+            $status = create_file($svg, $img_path);
+            switch ($status)
             {
-                $a = fwrite($fp, $svg);
-                if (!$a) {
+                case -1:
+                    $error[] = 'Konnte Datei nicht öffnen. '.
+                        'Keine Zugriffsrechte.';
+                    break;
+                case -2:
                     $error[] = 'Konnte Datei nicht schreiben. '.
                             'Keine Zugriffsrechte.';
-                } else {
-                    // PNG1 aus SVG erzeugen
-                    exec('convert '.$img_path.'.svg '.$img_path.'.png');
-                    // PNG2 aus SVG erzeugen
-                    exec('convert -scale 300% '.$img_path.'.svg '.$img_path.'_big.png');
-                }
-                fclose($fp);
-            } else {
-                $error[] = 'Konnte Datei nicht öffnen. '.
-                        'Keine Zugriffsrechte.';
+                    break;
+                case -3:
+                    $error[] = 'Konnte PNG Datei nicht erzeugen. '.
+                        'Systeminterner Fehler. Tut uns leid.';
+                    break;
+                case true:
+                    // yepee!
+                    break;
             }
         } else {
             $error[] = 'Konnte Basiskarte ('.

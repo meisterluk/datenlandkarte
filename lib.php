@@ -317,6 +317,31 @@
         return $json;
     }
 
+    // Create files as defined by user
+    function create_file($svg, $img_path)
+    {
+        $fp = fopen($img_path.'.svg', 'w');
+        if (!$fp)
+            return -1;
+
+        $w = fwrite($fp, $svg);
+        if (!$w) 
+            return -2;
+
+        // PNG1 aus SVG erzeugen
+        exec('convert '.$img_path.'.svg '.$img_path.'.png');
+        // PNG2 aus SVG erzeugen
+        exec('convert -scale 300% '.$img_path.'.svg '.$img_path.'_big.png');
+
+        if (!(file_exists($img_path.'.png')
+            && file_exists($img_path.'_big.png')))
+        {
+            return -3;
+        }
+
+        return true;
+    }
+
     function json2svg($json) {} // TODO: {substitute();}
 
     // Main function to extract data from $_POST
