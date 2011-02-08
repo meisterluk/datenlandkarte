@@ -20,8 +20,6 @@ ToDos
 * W3C compatibility
 * 2-directional folding
 * SVG Upload if SVG not available
-* Bug: Wrong filename.
-* API
 
 * Testing
 
@@ -35,6 +33,7 @@ Features
 * Google Chart API binding
 * Public API offering
 * manual\d should become manual[]
+* SVG filename and selection allocation sucks
 
 Bugs
 ----

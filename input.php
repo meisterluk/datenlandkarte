@@ -10,7 +10,7 @@
         {
             unset($keys);
             unset($data);
-            include 'select.php';
+            require_once('select.php');
             die();
         }
     }
@@ -48,7 +48,7 @@
 ?>
           <tr>
             <td><?=htmlspecialchars($value, ENT_NOQUOTES); ?>:</td>
-            <td><input type="text" name="manual<?=$key; ?>"></td>
+            <td><input type="text" name="manual<?=$key; ?>" /></td>
           </tr>
 <?php
             }
@@ -419,7 +419,7 @@
             </p>
           </noscript>
           <p style="border:1px solid #000000;padding:10px;background:#e59a9a;margin-bottom:10px;font-size:1.3em;line-height:100%;">
-            <strong>Hinweis:</strong> <br/>
+            <strong>Hinweis:</strong> <br />
             <span style="font-style:italic">
               An diesem Feature wird derzeit noch gearbeitet &ndash;
               bitte abonnieren Sie unseren
@@ -433,14 +433,14 @@
 
           <div id="cc_header">
             <div id="cc_header_img">
-              <img src="img/cc.png" alt="Creative Commons" width="64">
+              <img src="img/cc.png" alt="Creative Commons" width="64" />
             </div>
             <div id="cc_header_text">
               <p>
-                <input type="checkbox" name="shareit" id="check_share"<?=$defaults['shareit']; ?>>
+                <input type="checkbox" name="shareit" id="check_share"<?=$defaults['shareit']; ?> />
                 <strong><label for="check_share">
                   Ja, ich möchte meine Daten öffentlich teilen.
-                </label></strong><br><br>
+                </label></strong><br /><br />
 
                 Ich stimme zu, dass ich die Daten zuverlässig gesammelt oder
                 aus einer verlässlichen Quelle gewonnen habe. Ebenso
@@ -498,41 +498,41 @@
           <table cellpadding="6" id="form">
             <tr>
               <td>Titel:</td>
-              <td><input type="text" maxlength="50" tabindex="1" name="title" value="<?=$defaults['title']; ?>"></td>
+              <td><input type="text" maxlength="50" tabindex="1" name="title" value="<?=$defaults['title']; ?>" /></td>
             </tr>
             <tr>
               <td>Untertitel:</td>
-              <td><input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['subtitle']; ?>"></td>
+              <td><input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['subtitle']; ?>" /></td>
             </tr>
             <tr>
               <td>Visualisierung:</td>
               <td>
 <?php if ($defaults['vis'] === 'bl') { ?>
-                  <input type="radio" name="vis" value="bl" id="bls" checked="checked">
-                    <label for="bls">Bundesländer Österreichs</label> <br>
+                  <input type="radio" name="vis" value="bl" id="bls" checked="checked" />
+                    <label for="bls">Bundesländer Österreichs</label> <br />
 <?php } else { ?>
-                  <input type="radio" name="vis" value="bl" id="bls">
-                    <label for="bls">Bundesländer Österreichs</label> <br>
+                  <input type="radio" name="vis" value="bl" id="bls" />
+                    <label for="bls">Bundesländer Österreichs</label> <br />
 <?php } if ($defaults['vis'] === 'eu') { ?>
-                  <input type="radio" name="vis" value="eu" id="eu" checked="checked">
-                    <label for="eu">Europas Staaten</label> <br>
+                  <input type="radio" name="vis" value="eu" id="eu" checked="checked" />
+                    <label for="eu">Europas Staaten</label> <br />
 <?php } else { ?>
-                  <input type="radio" name="vis" value="eu" id="eu">
-                    <label for="eu">Europas Staaten</label> <br>
+                  <input type="radio" name="vis" value="eu" id="eu" />
+                    <label for="eu">Europas Staaten</label> <br />
 <?php } if ($defaults['vis'] === 'bz') { ?>
-                  <input type="radio" name="vis" value="bz" id="bz" checked="checked">
-                    <label for="bz">Bezirke</label> <br>
+                  <input type="radio" name="vis" value="bz" id="bz" checked="checked" />
+                    <label for="bz">Bezirke</label> <br />
 <?php } else { ?>
-                  <input type="radio" name="vis" value="bz" id="bz">
-                    <label for="bz">Bezirke</label> <br>
+                  <input type="radio" name="vis" value="bz" id="bz" />
+                    <label for="bz">Bezirke</label> <br />
 <?php } ?>
                   <div id="bz_select" class="subselect">
 <?php if ($defaults['bz_spec'] === 'bl') { ?>
-                      <input type="radio" name="bz_spec" value="bl" id="bl" checked="checked">
-                        <label for="bl">eines Bundeslands</label> <br>
+                      <input type="radio" name="bz_spec" value="bl" id="bl" checked="checked" />
+                        <label for="bl">eines Bundeslands</label> <br />
 <?php } else { ?>
-                      <input type="radio" name="bz_spec" value="bl" id="bl">
-                        <label for="bl">eines Bundeslands</label> <br>
+                      <input type="radio" name="bz_spec" value="bl" id="bl" />
+                        <label for="bl">eines Bundeslands</label> <br />
 <?php } ?>
                       <div id="bz_bl_select" class="subselect">
 <?php
@@ -543,7 +543,7 @@
             $ch = '';
 ?>
                           <input type="radio" name="bz_bl" id="bz_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
-                            <label for="bz_bl<?=$key; ?>"><?=$bl; ?></label> <br>
+                            <label for="bz_bl<?=$key; ?>"><?=$bl; ?></label> <br />
 <?php } ?>
                       </div>
 <?php if ($defaults['bz_spec'] === 'oe') { ?>
@@ -556,18 +556,18 @@
                   </div>
 <?php if ($defaults['vis'] === 'gm') { ?>
                   <input type="radio" name="vis" value="gm" id="gm" checked="checked">
-                    <label for="gm">Gemeinden</label> <br>
+                    <label for="gm">Gemeinden</label> <br />
 <?php } else { ?>
                   <input type="radio" name="vis" value="gm" id="gm">
-                    <label for="gm">Gemeinden</label> <br>
+                    <label for="gm">Gemeinden</label> <br />
 <?php } ?>
                   <div id="gm_select" class="subselect">
 <?php if ($defaults['gm_spec'] === 'bl') { ?>
                       <input type="radio" name="gm_spec" id="gm_spec" value="bl" checked="checked">
-                        <label for="gm_spec">eines Bundeslands</label> <br>
+                        <label for="gm_spec">eines Bundeslands</label> <br />
 <?php } else { ?>
                       <input type="radio" name="gm_spec" id="gm_spec" value="bl">
-                        <label for="gm_spec">eines Bundeslands</label> <br>
+                        <label for="gm_spec">eines Bundeslands</label> <br />
 <?php } ?>
                       <div id="gm_bl_select" class="subselect">
 <?php
@@ -578,14 +578,14 @@
             $ch = '';
 ?>
                           <input type="radio" name="gm_bl" id="gm_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
-                            <label for="gm_bl<?=$key; ?>"><?=$bl; ?></label> <br>
+                            <label for="gm_bl<?=$key; ?>"><?=$bl; ?></label> <br />
 <?php } ?>
                       </div>
 <?php if ($defaults['gm_spec'] === 'oe') { ?>
-                      <input type="radio" name="gm_spec" id="gm_spec" value="oe" checked="checked">
+                      <input type="radio" name="gm_spec" id="gm_spec" value="oe" checked="checked" />
                         <label for="gm_spec">von Österreich</label>
 <?php } else { ?>
-                      <input type="radio" name="gm_spec" id="gm_spec" value="oe">
+                      <input type="radio" name="gm_spec" id="gm_spec" value="oe" />
                         <label for="gm_spec">von Österreich</label>
 <?php } ?>
                   </div>
@@ -594,15 +594,15 @@
             </tr>
             <tr>
               <td>Hebefaktor:</td>
-              <td><input type="text" name="fac" value="<?=$defaults['fac']; ?>"></td>
+              <td><input type="text" name="fac" value="<?=$defaults['fac']; ?>" /></td>
             </tr>
             <tr>
               <td>Anzahl der Nachkommastellen (0-3):</td>
-              <td><input type="text" name="dec" maxlength="1" value="<?=$defaults['dec']; ?>"></td>
+              <td><input type="text" name="dec" maxlength="1" value="<?=$defaults['dec']; ?>" /></td>
             </tr>
             <tr>
               <td>Anzahl der Farben (2-10):</td>
-              <td><input type="text" name="colors" maxlength="2" value="<?=$defaults['colors']; ?>"></td>
+              <td><input type="text" name="colors" maxlength="2" value="<?=$defaults['colors']; ?>" /></td>
             </tr>
             <tr>
               <td>Farbrichtung:</td>
@@ -653,7 +653,7 @@
 ?>
                       <tr>
                         <td style="padding-left:30px"><?=htmlspecialchars($bl, ENT_NOQUOTES); ?>:</td>
-                        <td><input type="text" name="manual<?=$key; ?>" value="<?=$defaults['manual'.$key]; ?>"></td>
+                        <td><input type="text" name="manual<?=$key; ?>" value="<?=$defaults['manual'.$key]; ?>" /></td>
                       </tr>
 <?php } ?>
                     </table>
@@ -661,19 +661,19 @@
                   <textarea name="data" rows="5" id="data_list"></textarea>
                   <div id="list">
                     Trennzeichen zwischen Datensätzen: (\n für Zeilenumbruch, \\ für Backslash)
-                    <input type="text" name="list_delim" value="<?=$defaults['list_delim']; ?>" size="1" style="float:right; height:15px">
+                    <input type="text" name="list_delim" value="<?=$defaults['list_delim']; ?>" size="1" style="float:right; height:15px" />
                   </div>
                   <div id="kvalloc">
                     Erstes Trennzeichen (zw. Schlüssel-Wert-Elementen) (\n für Zeilenumbruch, \\ für Backslash)
-                    <input type="text" name="kvalloc_delim1" value="<?=$defaults['kvalloc_delim1']; ?>" size="1" style="float:right; height: 15px"> <br>
+                    <input type="text" name="kvalloc_delim1" value="<?=$defaults['kvalloc_delim1']; ?>" size="1" style="float:right; height: 15px" /> <br>
                     Zweites Trennzeichen (zw. Schlüssel und Wert)
-                    <input type="text" name="kvalloc_delim2" value="<?=$defaults['kvalloc_delim2']; ?>" size="1" style="float:right; height: 15px">
+                    <input type="text" name="kvalloc_delim2" value="<?=$defaults['kvalloc_delim2']; ?>" size="1" style="float:right; height: 15px" />
                   </div>
               </td>
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><input type="submit" id="submit" value="Erstellen"></td>
+              <td><input type="submit" id="submit" value="Erstellen" /></td>
             </tr>
           </table>
           </form>
@@ -698,8 +698,8 @@
 
 
                   <div class="art-footer-text">
-                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" width="177" height="33"></a></div>
-<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition "Offenes Wissen" auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" width="80" height="15"> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" width="80" height="15"> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" width="80" height="15"></a><br/>
+                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" width="177" height="33" /></a></div>
+<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition "Offenes Wissen" auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" width="80" height="15" /></a><br/>
 <a href="/impressum" style="text-decoration:none;" title="Impressum anzeigen">Ein Projekt von open3, dem Netzwerk zur Förderung von openSociety, openGovernment und OpenData</a></p></div>                  </div>
                     <div class="cleared"></div>
                 </div>
