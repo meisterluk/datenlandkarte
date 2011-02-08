@@ -3,7 +3,7 @@
 
     if ($_POST) {
         $invalid = check_userinput($_POST);
-        $keys = get_keys_by_vis($_GET);
+        $keys = get_keys_by_vis($_POST);
         $data = get_data($_POST, $keys);
 
         if (!$invalid && is_array($data))
@@ -59,6 +59,7 @@
         }
             elseif ($_GET['interface'] == 'kvalloc')
         {
+            $keys = get_keys_by_vis($_GET);
             if (empty($keys)) {
                 die($error_msg_keys_missing);
             }
@@ -74,6 +75,7 @@
         }
             elseif ($_GET['interface'] == 'list')
         {
+            $keys = get_keys_by_vis($_GET);
             if (empty($keys)) {
                 die($error_msg_keys_missing);
             }
@@ -89,6 +91,7 @@
         }
             elseif ($_GET['interface'] == 'json')
         {
+            $keys = get_keys_by_vis($_GET);
             if (empty($keys)) {
                 die($error_msg_keys_missing);
             }
@@ -107,7 +110,7 @@
 
     // Defaultvalues
     // Will be overwritten, if there was an POST Request
-    // with invalid data.
+    // with invalid data. Has to be HTML.
     $defaults = array(
         'title' => '',
         'subtitle' => '',
@@ -135,7 +138,16 @@
         {
             if (array_key_exists($key, $_POST) && !in_array($key, $invalid))
             {
-                $defaults[$i] = htmlspecialchars($_POST[$i]);
+                $defaults[$key] = htmlspecialchars($_POST[$key], ENT_NOQUOTES);
+            }
+        }
+        if ($_POST['format'] == 'manual')
+        {
+            $i = 1;
+            while (isset($_POST['manual'.$i]))
+            {
+                $defaults['manual'.$i] = htmlspecialchars($_POST['manual'.$i], ENT_NOQUOTES);
+                $i++;
             }
         }
     }
@@ -281,7 +293,6 @@
             else
                 return true;
         });
-        jQuery('#format').change();
     });
 -->
 </script>
@@ -449,7 +460,7 @@
             </tr>
             <tr>
               <td>Untertitel:</td>
-              <td><input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['title']; ?>"></td>
+              <td><input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['subtitle']; ?>"></td>
             </tr>
             <tr>
               <td>Visualisierung:</td>
@@ -591,10 +602,15 @@
                   <strong>Daten:</strong><br>
                   <div id="manual">
                     <table cellpadding="6">
-<?php foreach (get('bundeslaender') as $key => $bl) { ?>
+<?php
+    $i = 1;
+    if (!$_POST)
+        $keys = get('bundeslaender');
+    foreach ($keys as $key => $bl) {
+?>
                       <tr>
                         <td><?=htmlspecialchars($bl, ENT_NOQUOTES); ?>:</td>
-                        <td><input type="text" name="manual<?=$key; ?>"></td>
+                        <td><input type="text" name="manual<?=$key; ?>" value="<?=$defaults['manual'.($i++)]; ?>"></td>
                       </tr>
 <?php } ?>
                     </table>
@@ -602,13 +618,13 @@
                   <textarea name="data" rows="5" id="data_list"></textarea>
                   <div id="list">
                     Trennzeichen zwischen Datensätzen: (\n für Zeilenumbruch, \\ für Backslash)
-                    <input type="text" name="list_delim" value="\n" size="1" style="float:right; height:15px">
+                    <input type="text" name="list_delim" value="<?=$defaults['list_delim']; ?>" size="1" style="float:right; height:15px">
                   </div>
                   <div id="kvalloc">
                     Erstes Trennzeichen (zw. Schlüssel-Wert-Elementen) (\n für Zeilenumbruch, \\ für Backslash)
-                    <input type="text" name="kvalloc_delim1" value="\n" size="1" style="float:right; height: 15px"> <br>
+                    <input type="text" name="kvalloc_delim1" value="<?=$defaults['kvalloc_delim1']; ?>" size="1" style="float:right; height: 15px"> <br>
                     Zweites Trennzeichen (zw. Schlüssel und Wert)
-                    <input type="text" name="kvalloc_delim2" value=";" size="1" style="float:right; height: 15px">
+                    <input type="text" name="kvalloc_delim2" value="<?=$defaults['kvalloc_delim2']; ?>" size="1" style="float:right; height: 15px">
                   </div>
               </td>
             </tr>
