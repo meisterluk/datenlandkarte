@@ -318,28 +318,65 @@
     }
 
     // Create files as defined by user
-    function create_file($svg, $img_path)
+    function create_file($svg, $img_path, $json_data)
     {
         $fp = fopen($img_path.'.svg', 'w');
         if (!$fp)
             return -1;
 
         $w = fwrite($fp, $svg);
-        if (!$w) 
+        if (!$w) {
+            fclose($fp);
             return -2;
+        }
+
+        fclose($fp);
+
+        $json_source = create_json($json_data[0], $json_data[1], $json_data[2],
+            $json_data[3], $json_data[4], $json_data[5], $json_data[6]);
+
+        if (!$json_source)
+            return -3;
+
+        if ($json[0]['shareit'] == 'on')
+            $shareit = '-1';
+        else
+            $shareit = '-0';
+
+        $filename = array();
+        $filename['svg'] = $img_path.$share.'.svg';
+        $filename['png'] = $img_path.$share.'.png';
+        $filename['bpng'] = $img_path.$share.'_big.png';
+        if ($json[0]['shareit'] == 'on')
+        {
+            $filename['txt'] = $img_path.$share.'.txt';
+
+            $fp = fopen($json_source, 'w');
+            if (!$fp) return -1;
+
+            $w = fwrite($fp, $json_source);
+            if (!$w) {
+                fclose($fp);
+                return -2;
+            }
+
+            fclose($fp);
+        }
 
         // PNG1 aus SVG erzeugen
         exec('convert '.$img_path.'.svg '.$img_path.'.png');
         // PNG2 aus SVG erzeugen
         exec('convert -scale 300% '.$img_path.'.svg '.$img_path.'_big.png');
 
-        if (!(file_exists($img_path.'.png')
-            && file_exists($img_path.'_big.png')))
+        foreach ($filename as $short => $f)
         {
-            return -3;
+            if (!file_exists($f))
+                $filename[$short] = false;
         }
+        if (!$filename)
+            $filename = array();
 
-        return true;
+        return $filename;
     }
 
     function json2svg($json) {} // TODO: {substitute();}

@@ -8,7 +8,7 @@
     $error = array();
     if (!$keys)
     {
-        $error = array('Es konnte keine valide Karte verwendet werden');
+        $error[] = 'Es konnte keine valide Karte verwendet werden';
     } else {
         $data = get_data($_POST, $keys);
 
@@ -67,24 +67,50 @@
             $img_path = $location_creation.
                 $date.$file_title.$file_subtitle;
 
-            $status = create_file($svg, $img_path);
-            switch ($status)
+            $json_data = array($_POST, $title, $subtitle, $dec,
+                $colors, (int)$_POST['grad'], $data);
+            $return = create_file($svg, $img_path, $json_data);
+            if (is_int($return))
             {
-                case -1:
-                    $error[] = 'Konnte Datei nicht öffnen. '.
-                        'Keine Zugriffsrechte.';
-                    break;
-                case -2:
-                    $error[] = 'Konnte Datei nicht schreiben. '.
+                switch ($status)
+                {
+                    case -1:
+                        $error[] = 'Konnte Datei nicht öffnen. '.
                             'Keine Zugriffsrechte.';
-                    break;
-                case -3:
-                    $error[] = 'Konnte PNG Datei nicht erzeugen. '.
-                        'Systeminterner Fehler. Tut uns leid.';
-                    break;
-                case true:
-                    // yepee!
-                    break;
+                        break;
+                    case -2:
+                        $error[] = 'Konnte Datei nicht schreiben. '.
+                                'Keine Zugriffsrechte.';
+                        break;
+                    case -3:
+                        $error[] = 'Tut uns leid. Es scheinen Parameter '.
+                            'fehlerhaft sein. Konnte die Daten nicht '.
+                            'speichern.';
+                        break;
+                }
+            } else {
+                if ($return)
+                {
+                    $list = '';
+                    $i = 0;
+                    foreach ($return as $short => $f)
+                    {
+                        if (!$f)
+                        {
+                            if (($i++) == count($return)-1)
+                            {
+                                $list .= '';
+                            } else {
+                                $list .= strtoupper($short).' ,';
+                            }
+                        }
+                    }
+                    if ($list) {
+                        $error[] = 'Sorry, could not create '.
+                            implode(', ', array_keys($return)).' files.';
+                    }
+                }
+                $files = $return;
             }
         } else {
             $error[] = 'Konnte Basiskarte ('.
@@ -273,26 +299,26 @@
 ?>
 
           <div class="download">
-           <a href="<?=$img_path; ?>.svg">
+           <a href="<?=$files['svg']; ?>.svg">
              <img src="img/svg.png" alt="SVG Graphic Datenlandkarte" style="float:left">
            </a>
-           <h5><a href="<?=$img_path; ?>.svg">Download SVG</a></h5>
+           <h5><a href="<?=$files['svg']; ?>.svg">Download SVG</a></h5>
            <p>Scalable Vector Graphics</p>
           </div>
 
           <div class="download">
-           <a href="<?=$img_path; ?>.png">
+           <a href="<?=$files['png']; ?>.png">
              <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
            </a>
-           <h5><a href="<?=$img_path; ?>.png">Download PNG</a></h5>
+           <h5><a href="<?=$files['png']; ?>.png">Download PNG</a></h5>
            <p>Portable Network Graphics</p>
           </div>
 
           <div class="download">
-           <a href="<?=$img_path; ?>_big.png">
+           <a href="<?=$files['bpng']; ?>_big.png">
              <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
            </a>
-           <h5><a href="<?=$img_path; ?>_big.png">Download PNG (3fache Größe)</a></h5>
+           <h5><a href="<?=$files['bpng']; ?>_big.png">Download PNG (3fache Größe)</a></h5>
            <p>Portable Network Graphics</p>
           </div>
 <?php } ?>
