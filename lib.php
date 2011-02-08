@@ -404,7 +404,53 @@
         return $filename;
     }
 
-    function json2svg($json) {} // TODO: {substitute();}
+    // Function to sanitize user input data
+    // Returns an array with two-dimensional arrays
+    // -> parameters in HTML and filename format
+    function sanitize($title, $subtitle, $dec, $colors, $grad)
+    {
+        $file_title = $title;
+        $file_title = preg_replace('/[[:^alnum:]]/', '_', $file_title);
+        $file_subtitle = $subtitle;
+        $file_subtitle = preg_replace('/[[:^alnum:]]/', '_', $file_subtitle);
+
+        $title = htmlspecialchars($title, ENT_NOQUOTES);
+        $subtitle = htmlspecialchars($subtitle, ENT_NOQUOTES);
+
+        if (strlen($dec) == 0)
+            $dec = 2;
+        else
+            $dec = (int)$dec;
+        if ($dec > 3)
+            $dec = 3;
+
+        if (2 < (int)$colors && (int)$colors < 10)
+            $colors = (int)$colors;
+        else
+            $colors = 10;
+
+        $grad = (int)$grad;
+        if ($grad > 7 || $grad < 0)
+            $grad = 0;
+
+        return array(
+            array($title, $file_title), array($subtitle, $file_subtitle),
+            array($dec, $dec), array($colors, $colors), array($grad, $grad)
+        );
+    }
+
+    function json2data($post, $json_data) {
+        $keys = get_keys_by_vis($post);
+        if (!$keys) return false;
+
+        $data = array();
+        foreach ($keys as $key)
+        {
+            $data[] = $json_data[$key];
+        }
+
+        return $data;
+    }
 
     // Main function to extract data from $_POST
     // Takes eg. $_POST and a list of keys.

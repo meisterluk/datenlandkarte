@@ -30,32 +30,21 @@
         $image = select_svg_file($_POST);
 
         // sanitize parameters
-        $file_title = $_POST['title'];
-        $file_title = preg_replace('/[[:^alnum:]]/', '_', $file_title);
-        $file_subtitle = $_POST['subtitle'];
-        $file_subtitle = preg_replace('/[[:^alnum:]]/', '_', $file_subtitle);
+        $return = sanitize($_POST['title'], $_POST['subtitle'],
+            $_POST['dec'], $_POST['colors'], $_POST['grad']);
+        $file_title = $return[0][1];
+        $file_subtitle = $return[1][1];
 
-        $title = htmlspecialchars($_POST['title'], ENT_NOQUOTES);
-        $subtitle = htmlspecialchars($_POST['subtitle'], ENT_NOQUOTES);
+        $title = $return[0][0];
+        $subtitle = $return[0][1];
 
         if ($file_title)
             $file_title = '-'.$file_title;
         if ($file_subtitle)
             $file_subtitle = '-'.$file_subtitle;
 
-        $dec = $_POST['dec'];
-        if (strlen($dec) == 0)
-            $dec = 2;
-        else
-            $dec = (int)$_POST['dec'];
-        if ($dec > 3)
-            $dec = 3;
-
-        $colors = $_POST['colors'];
-        if (2 < (int)$colors && (int)$colors < 10)
-            $colors = (int)$colors;
-        else
-            $colors = 10;
+        $dec = $return[2][0];
+        $colors = $return[3][0];
 
         if (file_exists($image))
         {
