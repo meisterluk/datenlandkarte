@@ -334,18 +334,6 @@
     // Create files as defined by user
     function create_file($svg, $img_path, $json_data)
     {
-        $fp = fopen($img_path.'.svg', 'w');
-        if (!$fp)
-            return -1;
-
-        $w = fwrite($fp, $svg);
-        if (!$w) {
-            fclose($fp);
-            return -2;
-        }
-
-        fclose($fp);
-
         $json_source = create_json($json_data[0], $json_data[1], $json_data[2],
             $json_data[3], $json_data[4], $json_data[5], $json_data[6]);
 
@@ -358,9 +346,9 @@
             $shareit = '-0';
 
         $filename = array();
-        $filename['svg'] = $img_path.$share.'.svg';
-        $filename['png'] = $img_path.$share.'.png';
-        $filename['bpng'] = $img_path.$share.'_big.png';
+        $filename['svg'] = $img_path.$shareit.'.svg';
+        $filename['png'] = $img_path.$shareit.'.png';
+        $filename['bpng'] = $img_path.$shareit.'_big.png';
         if ($json[0]['shareit'] == 'on')
         {
             $filename['txt'] = $img_path.$share.'.txt';
@@ -376,6 +364,19 @@
 
             fclose($fp);
         }
+
+        $fp = fopen($filename['svg'], 'w');
+        if (!$fp)
+            return -1;
+
+        $w = fwrite($fp, $svg);
+        if (!$w) {
+            fclose($fp);
+            return -2;
+        }
+
+        fclose($fp);
+
 
         /* Usage of Image Imagick PHP interface
         $img = new Imagick($filename['svg']);
