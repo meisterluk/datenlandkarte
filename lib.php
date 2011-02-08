@@ -340,7 +340,10 @@
                 if (!$flag)
                     return -1;
 
-                $i = 1;
+                if (isset($post['manual0']))
+                    $i = 0;
+                else
+                    $i = 1;
                 $data = array();
                 while (isset($post[sprintf('manual%s', $i)]))
                 {

@@ -143,7 +143,10 @@
         }
         if ($_POST['format'] == 'manual')
         {
-            $i = 1;
+            if (isset($_POST['manual0']))
+                $i = 0;
+            else
+                $i = 1;
             while (isset($_POST['manual'.$i]))
             {
                 $defaults['manual'.$i] = htmlspecialchars($_POST['manual'.$i], ENT_NOQUOTES);
@@ -641,14 +644,13 @@
                   <div id="manual">
                     <table cellpadding="6">
 <?php
-    $i = 1;
     if (!$_POST)
         $keys = get('bundeslaender');
     foreach ($keys as $key => $bl) {
 ?>
                       <tr>
                         <td><?=htmlspecialchars($bl, ENT_NOQUOTES); ?>:</td>
-                        <td><input type="text" name="manual<?=$key; ?>" value="<?=$defaults['manual'.($i++)]; ?>"></td>
+                        <td><input type="text" name="manual<?=$key; ?>" value="<?=$defaults['manual'.$key]; ?>"></td>
                       </tr>
 <?php } ?>
                     </table>
