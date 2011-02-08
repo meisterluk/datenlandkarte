@@ -92,22 +92,16 @@
                 if ($return)
                 {
                     $list = '';
-                    $i = 0;
                     foreach ($return as $short => $f)
                     {
                         if (!$f)
                         {
-                            if (($i++) == count($return)-1)
-                            {
-                                $list .= '';
-                            } else {
-                                $list .= strtoupper($short).' ,';
-                            }
+                            $list .= strtoupper($short).', ';
                         }
                     }
                     if ($list) {
                         $error[] = 'Sorry, could not create '.
-                            implode(', ', array_keys($return)).' files.';
+                            trim($list, ', ').' files.';
                     }
                 }
                 $files = $return;

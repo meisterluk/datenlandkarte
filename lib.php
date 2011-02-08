@@ -35,6 +35,18 @@
         return true;
     }
 
+    // List all public files in upload folder
+    function list_public_data($folder)
+    {
+        $base = getcwd();
+        chdir($folder);
+        $files = glob('*-1.{svg,png,txt}', GLOB_BRACE);
+        if (!$files) return array();
+        chdir($base);
+
+        return $files;
+    }
+
     // Function to check input by user
     // Takes eg. $_POST and returns array of keys,
     // which values were invalid.
