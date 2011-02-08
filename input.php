@@ -329,7 +329,7 @@
         margin: 20px;
         clear: both;
         padding: 10px;
-		height: 110px;
+        height: 110px;
     }
     #data_list {
         font-family: "Courier New", Courier, monospace;
