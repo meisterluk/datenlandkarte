@@ -17,12 +17,13 @@
         $base = getcwd();
         chdir($folder);
         $date = date('Ymd');
-        $files = glob(date('Y', $time).'*-*.{svg,png,txt}', GLOB_BRACE);
+        $files = glob(date('Y', $time).'*-0.{svg,png,txt}', GLOB_BRACE);
         if (!$files)
             $files = array();
 
         foreach ($files as $file)
         {
+            // delete files next day
             if (substr($file, 0, 8) != date('Ymd', $time))
             {
                 $status = unlink($file);
