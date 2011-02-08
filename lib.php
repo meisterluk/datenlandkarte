@@ -282,6 +282,28 @@
         return $data;
     }
 
+
+    // Function to create JSON object
+    function create_json($post, $title, $subtitle,
+        $dec, $colors, $grad, $data)
+    {
+        $file = select_input_data($post);
+        if (!$file) return false;
+        $json = array(
+            'file' : implode(',', $file),
+            'title' : $title,
+            'subtitle' : $subtitle,
+            'dec' : $dec,
+            'colors' : $colors,
+            'grad' : $grad,
+            'data' : $data // TODO: prefer JSON object to list
+        );
+        $json = json_encode($json);
+        return $json;
+    }
+
+    function json2svg($json) {} // TODO: {substitute();}
+
     // Main function to extract data from $_POST
     // Takes eg. $_POST and a list of keys.
     // Returns data to be inserted in SVG.
