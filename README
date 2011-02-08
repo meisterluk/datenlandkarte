@@ -22,6 +22,7 @@ ToDos
 * Use ImageMagick PHP API instead of shell command
 * txt-file save raw data
 * txt-file raw data directory listing
+* Fix Bug: Parallel access of users.
 
 * Testing
 
