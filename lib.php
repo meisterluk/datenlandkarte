@@ -311,7 +311,7 @@
                     $i++;
                 }
 
-                if (min($data) == max($data))
+                if ($data && (min($data) == max($data)))
                     return $error_invalid_data;
 
                 return $data;
@@ -347,7 +347,7 @@
                         $data[] = (float)$i;
                 }
 
-                if (min($data) == max($data))
+                if ($data && (min($data) == max($data)))
                     return $error_invalid_data;
 
                 return $data;
@@ -372,7 +372,7 @@
                         $data[] = (float)$value;
                 }
 
-                if (min($data) == max($data))
+                if ($data && (min($data) == max($data)))
                     return $error_invalid_data;
 
                 return $data;
@@ -414,7 +414,7 @@
 
                 if (count($data) != count($keys))
                     return $error_invalid_count;
-                if (min($data) == max($data))
+                if ($data && (min($data) == max($data)))
                     return $error_invalid_data;
 
                 return $data;
@@ -435,8 +435,9 @@
                 return 'Einer der eingegebenen Werte ist keine Zahl';
             case -3:
                 return 'Die Anzahl der eingegebenen Werte ist invalid. '.
-                    'Bitte lassen Sie ein Feld leer (zB leere Zeile in '.
-                    'Listeneingabe), wenn keine Daten vorliegen';
+                    'Notiz: Bitte lassen Sie ein Feld leer (zB leere '.
+                    'Zeile in Listeneingabe), falls keine Daten '.
+                    'vorliegen';
             case -6:
             case -15:
                 return 'Leere Trennzeichen sind nicht erlaubt.';

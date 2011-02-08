@@ -151,6 +151,8 @@
             }
         }
     }
+    // Default for shareit
+    $defaults['shareit'] = ($_POST['shareit'] == 'on') ? ' checked="checked"' : '';
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
  xmlns:og='http://opengraphprotocol.org/schema/'>
@@ -328,6 +330,16 @@
     #data_list {
         font-family: "Courier New", Courier, monospace;
     }
+    #cc_header {
+        border: 2px dashed #000;
+        padding: 10px;
+    }
+    #cc_header_img {
+        float: left;
+    }
+    #cc_header_text {
+        margin-left: 80px;
+    }
 -->
 </style>
 </head>
@@ -388,6 +400,7 @@
 <div class="art-post post-2 page type-page hentry" id="post-2">
 	    <div class="art-post-body">
 	            <div class="art-post-inner art-article">
+          <form action="input.php" method="post">
 
 
         <h2 class="art-postheader">Datenlandkarte erstellen</h2>
@@ -409,6 +422,32 @@
               href="http://twitter.com/datenlandkarten">Twitter</a>, um
               über die Fertigstellung informiert zu werden!
             </span>
+          </p>
+
+          <div id="cc_header">
+            <div id="cc_header_img">
+              <img src="img/cc.png" alt="Creative Commons" width="64">
+            </div>
+            <div id="cc_header_text">
+              <p>
+                <input type="checkbox" name="shareit" id="check_share"<?=$defaults['shareit']; ?>>
+                <strong><label for="check_share">
+                  Ja, ich möchte meine Daten öffentlich teilen.
+                </label></strong><br><br>
+
+                Ich stimme zu, dass ich die Daten zuverlässig gesammelt oder
+                aus einer verlässlichen Quelle gewonnen habe. Ebenso
+                bestätige ich im zweiteren Fall das Recht zu haben, die
+                gewonnenen Daten unter der Creative-Commons-Lizenz (XY)
+                weitergeben zu dürfen. Ich bin damit einverstanden, dass die
+                eingegebenen Daten langfristig gespeichert werden und der
+                Öffentlichkeit zugänglich bleiben.
+              </p>
+            </div>
+          </div>
+
+          <p>
+            Fehlende (leere) Angaben werden in der Graphik weiß dargestellt.
           </p>
 
 <?php
@@ -452,11 +491,6 @@
     // I am sorry for the following source code:
 ?>
 
-          <p>
-            Fehlende (leere) Angaben werden in der Graphik weiß dargestellt.
-          </p>
-
-          <form action="input.php" method="post">
           <table cellpadding="6">
             <tr>
               <td>Titel:</td>

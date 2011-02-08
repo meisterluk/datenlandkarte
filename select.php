@@ -299,10 +299,8 @@
            <h5><a href="<?=$img_path; ?>_big.png">Download PNG (3fache Größe)</a></h5>
            <p>Portable Network Graphics</p>
           </div>
-      </div>
 <?php } ?>
                     <div class="cleared"></div>
-                                    </div>
             <div class="cleared"></div>
         </div>
     </div>

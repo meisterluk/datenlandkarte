@@ -70,10 +70,10 @@
         37 => 'Vereinigtes Königreich', 38 => 'Weißrussland'
     );
                 if ($index === false)
-                    return $laender;
+                    $result = $laender;
                 else
-                    return $laender[$index];
-
+                    $result = $laender[$index];
+                break;
 
             case 'bundeslaender':
 
@@ -89,9 +89,10 @@
         9 => 'Wien'
     );
                 if ($index === false)
-                    return $bundeslaender;
+                    $result = $bundeslaender;
                 else
-                    return $bundeslaender[$index];
+                    $result = $bundeslaender[$index];
+                break;
 
             case 'bl_files':
 
@@ -108,10 +109,11 @@
     );
 
                 if ($index === false)
-                    return $bl_files;
+                    $result = $bl_files;
                 else
-                    return $bl_files[$index];
-   
+                    $result = $bl_files[$index];
+                break;
+
             case 'bezirke':
 
     $bezirke = array();
@@ -144,7 +146,11 @@
         'Spittal an der Drau', 'St. Veit an der Glan', 'Villach',
         'Villach-Stadt', 'Völkermarkt','Wolfsberg'
     );
-        return $bezirke[$index];
+            if ($index === false)
+                $result = $bezirke;
+            else
+                $result = $bezirke[$index];
+            break;
 
         case 'gemeinden':
 
@@ -188,8 +194,15 @@
         'Sankt Georgen im Lavanttal', 'Sankt Paul im Lavanttal', 'Wolfsberg'
     );
 
-            return $gemeinden[$index];
+            if ($index === false)
+                $result = $gemeinden;
+            else
+                $result = $gemeinden[$index];
+            break;
         }
+        if (!$result)
+            return array();
+        else
+            return $result;
     }
-    return array();
 ?>
