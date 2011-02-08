@@ -293,26 +293,26 @@
 ?>
 
           <div class="download">
-           <a href="<?=$files['svg']; ?>.svg">
+           <a href="<?=$files['svg']; ?>">
              <img src="img/svg.png" alt="SVG Graphic Datenlandkarte" style="float:left">
            </a>
-           <h5><a href="<?=$files['svg']; ?>.svg">Download SVG</a></h5>
+           <h5><a href="<?=$files['svg']; ?>">Download SVG</a></h5>
            <p>Scalable Vector Graphics</p>
           </div>
 
           <div class="download">
-           <a href="<?=$files['png']; ?>.png">
+           <a href="<?=$files['png']; ?>">
              <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
            </a>
-           <h5><a href="<?=$files['png']; ?>.png">Download PNG</a></h5>
+           <h5><a href="<?=$files['png']; ?>">Download PNG</a></h5>
            <p>Portable Network Graphics</p>
           </div>
 
           <div class="download">
-           <a href="<?=$files['bpng']; ?>_big.png">
+           <a href="<?=$files['bpng']; ?>">
              <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left">
            </a>
-           <h5><a href="<?=$files['bpng']; ?>_big.png">Download PNG (3fache Größe)</a></h5>
+           <h5><a href="<?=$files['bpng']; ?>">Download PNG (3fache Größe)</a></h5>
            <p>Portable Network Graphics</p>
           </div>
 <?php } ?>

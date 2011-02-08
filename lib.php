@@ -376,10 +376,20 @@
             fclose($fp);
         }
 
+        /* Usage of Image Imagick PHP interface
+        $img = new Imagick($filename['svg']);
+        $img->writeImage($filename['png']);
+        $s = $img->getSize();
+        $img->scaleImage($s[0], $s[1]);
+        $img->writeImage($filename['bpng']);
+        $img->clear();
+        $img->destroy();
+        */
+
         // PNG1 aus SVG erzeugen
-        exec('convert '.$img_path.'.svg '.$img_path.'.png');
+        exec('convert '.$location_creation.$filename['svg'].' '.$location_creation.$filename['png']);
         // PNG2 aus SVG erzeugen
-        exec('convert -scale 300% '.$img_path.'.svg '.$img_path.'_big.png');
+        exec('convert -scale 300% '.$location_creation.$filename['svg'].' '.$location_creation.$filename['bpng']);
 
         foreach ($filename as $short => $f)
         {
