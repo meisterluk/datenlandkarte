@@ -22,6 +22,7 @@ ToDos
 * Use ImageMagick PHP API instead of shell command
 * txt-file save raw data
 * txt-file raw data directory listing
+* Bug: Wrong order for color palette
 
 * Testing
 
