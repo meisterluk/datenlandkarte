@@ -1,6 +1,11 @@
 <?php
     require_once('lib.php');
 
+    // Disclaimer:
+    // I'm so sorry for this bad API design. It just looks exactly like
+    // the POST and GET requests. But internal functions do work out
+    // very badly for other stuff.
+
     /* Example
 
     {"title":"test", "subtitle":"x", "vis":"bz", "bz_spec":"bl", "bz_bl": 2,
