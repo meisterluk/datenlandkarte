@@ -20,6 +20,8 @@ ToDos
 * W3C compatibility
 * 2-directional folding
 * SVG Upload if SVG not available
+* Add field Quelle.
+* Feature: Allow [,.] floating point numbers.
 
 * Testing
 
