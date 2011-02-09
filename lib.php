@@ -480,7 +480,8 @@
                 $data = array();
                 while (isset($post[sprintf('manual%s', $i)]))
                 {
-                    $val = check_input_value($post['manual'.($i)]);
+                    $val = str_replace(',', '.', $post['manual'.($i)]);
+                    $val = check_input_value($val);
                     if ($val === false)
                         return $error_invalid_value;
                     elseif ($val === true)
