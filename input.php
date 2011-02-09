@@ -116,7 +116,7 @@
         'subtitle' => '',
         'fac' => 1,
         'dec' => 2,
-        'colors' => 6,
+        'colors' => 10,
         'grad' => 0,
         # visualisation
         'vis' => 'bl',
