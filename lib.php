@@ -339,7 +339,7 @@
         if (!$json_source)
             return -3;
 
-        if ($json[0]['shareit'] == 'on')
+        if ($json_data[0]['shareit'] == 'on')
             $shareit = '-1';
         else
             $shareit = '-0';
