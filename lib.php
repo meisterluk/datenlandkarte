@@ -173,7 +173,6 @@
     }
 
     // Function to reduce color palette to $count_colors colors.
-    // Note: Direction of color palette is swapped
     function color_palette_adjustment($palette, $count_colors)
     {
         $count_colors = (int)$count_colors;
@@ -216,7 +215,7 @@
         $new_palette = array();
         foreach ($pa as $index)
         {
-            $new_palette[] = $palette[10-$index];
+            $new_palette[] = $palette[$index];
         }
 
         return $new_palette;
@@ -340,20 +339,12 @@
         if (!$json_source)
             return -3;
 
-        if ($json[0]['shareit'] == 'on')
-            $shareit = '-1';
-        else
-            $shareit = '-0';
-
-        $filename = array();
-        $filename['svg'] = $img_path.$shareit.'.svg';
-        $filename['png'] = $img_path.$shareit.'.png';
-        $filename['bpng'] = $img_path.$shareit.'_big.png';
-        if ($json[0]['shareit'] == 'on')
+        if ($json_data[0]['shareit'] == 'on')
         {
-            $filename['txt'] = $img_path.$share.'.txt';
+            $shareit = '-1';
+            $filename['txt'] = $img_path.$shareit.'.txt';
 
-            $fp = fopen($json_source, 'w');
+            $fp = fopen($filename['txt'], 'w');
             if (!$fp) return -1;
 
             $w = fwrite($fp, $json_source);
@@ -363,7 +354,14 @@
             }
 
             fclose($fp);
+        } else {
+            $shareit = '-0';
         }
+
+        $filename = array();
+        $filename['svg'] = $img_path.$shareit.'.svg';
+        $filename['png'] = $img_path.$shareit.'.png';
+        $filename['bpng'] = $img_path.'_big'.$shareit.'.png';
 
         $fp = fopen($filename['svg'], 'w');
         if (!$fp)
@@ -480,7 +478,8 @@
                 $data = array();
                 while (isset($post[sprintf('manual%s', $i)]))
                 {
-                    $val = check_input_value($post['manual'.($i)]);
+                    $val = str_replace(',', '.', $post['manual'.($i)]);
+                    $val = check_input_value($val);
                     if ($val === false)
                         return $error_invalid_value;
                     elseif ($val === true)

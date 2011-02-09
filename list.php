@@ -61,6 +61,13 @@
     
 <meta name='NextGEN' content='1.7.3' />
 <script type="text/javascript" src="http://www.datenlandkarten.at/wp-content/themes/datenlandkarten/script.js"></script>
+<style type="text/css">
+<!--
+    a:link, a:visited, a:hover {
+        text-decoration: none !important;
+    }
+-->
+</style>
 </head>
 <body class="page page-id-2 page-template page-template-default">
 <div id="art-main">
@@ -125,12 +132,12 @@
         <h2 class="art-postheader">Datenlandkarten auflisten</h2>
         <div class="art-postcontent">
 
-          <img src="img/cc.png" alt="Creative Commons" width="32" style="float:left; margin:10px">
+          <img src="img/cc.png" alt="Creative Commons" width="32" style="float:left; margin:10px" />
           <p>
             Die folgenden Daten unterstehen der Creative Commons-Lizenz.
           </p>
 
-          <table cellpadding="6">
+          <table cellpadding="6" style="width:100%">
 <?php
         $files = list_public_data($location_creation);
         if ($files)
@@ -148,16 +155,18 @@
                         $type = 'SVG';
                         break;
                 }
+                if (!file_exists($location_creation.$f))
+                    continue;
 ?>
             <tr>
               <td>
-                <a href="<?=$location_creation; ?><?=$htmlspecialchars($f, ENT_NOQUOTES); ?>">
+                <a href="<?=$location_creation; ?><?=htmlspecialchars($f, ENT_NOQUOTES); ?>">
                   <?=htmlspecialchars($f, ENT_NOQUOTES); ?>
                 </a>
               </td>
-              <td><?=filemtime($location_creation.$f); ?></td>
+              <td><?=date('Y-m-d', filemtime($location_creation.$f)); ?></td>
               <td><?=$type; ?></td>
-              <td><?=((float)filesize($location_creation.$f) / 1024); ?> MB</td>
+              <td><?=sprintf("%.1f", ((float)filesize($location_creation.$f) / 1024)); ?> MB</td>
             </tr>
 <?php
             }
@@ -187,8 +196,8 @@
 
 
                   <div class="art-footer-text">
-                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" width="177" height="33"></a></div>
-<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition "Offenes Wissen" auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" width="80" height="15"> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" width="80" height="15"> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" width="80" height="15"></a><br/>
+                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" alt="Open3 Logo" width="177" height="33" /></a></div>
+<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition 'Offenes Wissen' auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" alt="Badge OD" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" alt="Badge OK" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" alt="Badge OC" width="80" height="15" /></a><br/>
 <a href="/impressum" style="text-decoration:none;" title="Impressum anzeigen">Ein Projekt von open3, dem Netzwerk zur Förderung von openSociety, openGovernment und OpenData</a></p></div>                  </div>
                     <div class="cleared"></div>
                 </div>

@@ -117,6 +117,7 @@
         'fac' => 1,
         'dec' => 2,
         'colors' => 6,
+        'colors' => 10,
         'grad' => 0,
         # visualisation
         'vis' => 'bl',
@@ -329,7 +330,7 @@
         margin: 20px;
         clear: both;
         padding: 10px;
-        height: 110px;
+        min-height: 110px;
     }
     #data_list {
         font-family: "Courier New", Courier, monospace;
@@ -445,11 +446,12 @@
                 Ich stimme zu, dass ich die Daten zuverlässig gesammelt oder
                 aus einer verlässlichen Quelle gewonnen habe. Ebenso
                 bestätige ich im zweiteren Fall das Recht zu haben, die
-                gewonnenen Daten unter der <a href="http://creativecommons.org/licenses/by-sa/3.0/at/" target="_blank">Creative 
-				Commons Namensnennung-Weitergabe unter gleichen Bedingungen 3.0 
-				Österreich Lizenz</A> weitergeben zu dürfen. Ich bin damit 
-				einverstanden, dass die eingegebenen Daten langfristig gespeichert 
-				werden und der Öffentlichkeit zugänglich bleiben.
+                gewonnenen Daten unter der <a href="http://creativecommons.org/licenses/by-sa/3.0/at/">Creative
+                Commons Namensnennung-Weitergabe unter gleichen
+                Bedingungen 3.0 Österreich Lizenz</a> weitergeben zu dürfen.
+                Ich bin damit einverstanden, dass die eingegebenen Daten
+                langfristig gespeichert werden und der Öffentlichkeit
+                zugänglich bleiben.
               </p>
             </div>
           </div>
@@ -542,31 +544,31 @@
         else
             $ch = '';
 ?>
-                          <input type="radio" name="bz_bl" id="bz_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
+                          <input type="radio" name="bz_bl" id="bz_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?> />
                             <label for="bz_bl<?=$key; ?>"><?=$bl; ?></label> <br />
 <?php } ?>
                       </div>
 <?php if ($defaults['bz_spec'] === 'oe') { ?>
-                      <input type="radio" name="bz_spec" id="oe" value="oe" checked="checked">
+                      <input type="radio" name="bz_spec" id="oe" value="oe" checked="checked" />
                         <label for="oe">von Österreich</label>
 <?php } else { ?>
-                      <input type="radio" name="bz_spec" id="oe" value="oe">
+                      <input type="radio" name="bz_spec" id="oe" value="oe" />
                         <label for="oe">von Österreich</label>
 <?php } ?>
                   </div>
 <?php if ($defaults['vis'] === 'gm') { ?>
-                  <input type="radio" name="vis" value="gm" id="gm" checked="checked">
+                  <input type="radio" name="vis" value="gm" id="gm" checked="checked" />
                     <label for="gm">Gemeinden</label> <br />
 <?php } else { ?>
-                  <input type="radio" name="vis" value="gm" id="gm">
+                  <input type="radio" name="vis" value="gm" id="gm" />
                     <label for="gm">Gemeinden</label> <br />
 <?php } ?>
                   <div id="gm_select" class="subselect">
 <?php if ($defaults['gm_spec'] === 'bl') { ?>
-                      <input type="radio" name="gm_spec" id="gm_spec" value="bl" checked="checked">
+                      <input type="radio" name="gm_spec" id="gm_spec" value="bl" checked="checked" />
                         <label for="gm_spec">eines Bundeslands</label> <br />
 <?php } else { ?>
-                      <input type="radio" name="gm_spec" id="gm_spec" value="bl">
+                      <input type="radio" name="gm_spec" id="gm_spec" value="bl" />
                         <label for="gm_spec">eines Bundeslands</label> <br />
 <?php } ?>
                       <div id="gm_bl_select" class="subselect">
@@ -577,7 +579,7 @@
         else
             $ch = '';
 ?>
-                          <input type="radio" name="gm_bl" id="gm_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
+                          <input type="radio" name="gm_bl" id="gm_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?> />
                             <label for="gm_bl<?=$key; ?>"><?=$bl; ?></label> <br />
 <?php } ?>
                       </div>
@@ -698,8 +700,8 @@
 
 
                   <div class="art-footer-text">
-                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" width="177" height="33" /></a></div>
-<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition "Offenes Wissen" auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" width="80" height="15" /></a><br/>
+                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" alt="Open3 Logo" width="177" height="33" /></a></div>
+<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition 'Offenes Wissen' auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" alt="Badge OD" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" alt="Badge OK" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" alt="Badge OC" width="80" height="15" /></a><br/>
 <a href="/impressum" style="text-decoration:none;" title="Impressum anzeigen">Ein Projekt von open3, dem Netzwerk zur Förderung von openSociety, openGovernment und OpenData</a></p></div>                  </div>
                     <div class="cleared"></div>
                 </div>

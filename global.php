@@ -13,36 +13,43 @@
     );
 
     $color_gradients[0] = array(
-        '#CC0000', '#D01616', '#D52C2C', '#D94242', '#DE5858', '#E26E6E',
-        '#E78484', '#EB9A9A', '#F0B0B0', '#F4C6C6', '#F4C6C6'
+        '#F4C6C6', '#F4C6C6', '#F0B0B0', '#EB9A9A', '#E78484', '#E26E6E',
+        '#DE5858', '#D94242', '#D52C2C', '#D01616', '#CC0000'
     );
+
     $color_gradients[1] = array(
-        '#FF9900', '#FFA216', '#FFAB2C', '#FFB342', '#FFBC58', '#FFC56E',
-        '#FFCE84', '#FFD69A', '#FFDFB0', '#FFE8C6', '#FFFFFF'
+        '#FFE8C6', '#FFDFB0', '#FFD69A', '#FFCE84', '#FFC56E',
+        '#FFBC58', '#FFB342', '#FFAB2C', '#FFA216', '#FF9900'
     );
+
     $color_gradients[2] = array(
-        '#FFCC00', '#FFD016', '#FFD52C', '#FFD942', '#FFDE58', '#FFE26E',
-        '#FFE784', '#FFEB9A', '#FFF0B0', '#FFF4C6', '#FFFFFF'
+        '#FFF4C6', '#FFF0B0', '#FFEB9A', '#FFE784', '#FFE26E',
+        '#FFDE58', '#FFD942', '#FFD52C', '#FFD016', '#FFCC00'
     );
+
     $color_gradients[3] = array(
-        '#33CC00', '#45D016', '#56D52C', '#68D942', '#7ADE58', '#8BE26E',
-        '#9DE784', '#AFEB9A', '#C0F0B0', '#D2F4C6', '#FFFFFF'
+        '#D2F4C6', '#C0F0B0', '#AFEB9A', '#9DE784', '#8BE26E',
+        '#7ADE58', '#68D942', '#56D52C', '#45D016', '#33CC00'
     );
+
     $color_gradients[4] = array(
-        '#00CCCC', '#16D0D0', '#2CD5D5', '#42D9D9', '#58DEDE', '#6EE2E2',
-        '#84E7E7', '#9AEBEB', '#B0F0F0', '#C6F4F4', '#FFFFFF'
+        '#C6F4F4', '#B0F0F0', '#9AEBEB', '#84E7E7', '#6EE2E2',
+        '#58DEDE', '#42D9D9', '#2CD5D5', '#16D0D0', '#00CCCC'
     );
+
     $color_gradients[5] = array(
-        '#0000CC', '#1616D0', '#2C2CD5', '#4242D9', '#5858DE', '#6E6EE2',
-        '#8484E7', '#9A9AEB', '#B0B0F0', '#C6C6F4', '#FFFFFF'
+        '#C6C6F4', '#B0B0F0', '#9A9AEB', '#8484E7', '#6E6EE2',
+        '#5858DE', '#4242D9', '#2C2CD5', '#1616D0', '#0000CC'
     );
+
     $color_gradients[6] = array(
-        '#CC00CC', '#D016D0', '#D52CD5', '#D942D9', '#DE58DE', '#E26EE2',
-        '#E784E7', '#EB9AEB', '#F0B0F0', '#F4C6F4', '#FFFFFF'
+        '#F4C6F4', '#F0B0F0', '#EB9AEB', '#E784E7', '#E26EE2',
+        '#DE58DE', '#D942D9', '#D52CD5', '#D016D0', '#CC00CC'
     );
+
     $color_gradients[7] = array(
-        '#000000', '#161616', '#2C2C2C', '#424242', '#585858', '#6E6E6E',
-        '#848484', '#9A9A9A', '#B0B0B0', '#C6C6C6', '#FFFFFF'
+        '#C6C6C6', '#B0B0B0', '#9A9A9A', '#848484', '#6E6E6E',
+        '#585858', '#424242', '#2C2C2C', '#161616', '#000000'
     );
 
 

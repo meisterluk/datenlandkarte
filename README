@@ -20,11 +20,12 @@ ToDos
 * W3C compatibility
 * 2-directional folding
 * SVG Upload if SVG not available
+* Add field Quelle.
 
 * Testing
 
-    * Check error messages
-    * Rendering
+    * API Testing
+    * Check filenames precisely.
 
 Features
 --------
