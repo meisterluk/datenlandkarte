@@ -348,7 +348,7 @@
         $filename = array();
         $filename['svg'] = $img_path.$shareit.'.svg';
         $filename['png'] = $img_path.$shareit.'.png';
-        $filename['bpng'] = $img_path.$shareit.'_big.png';
+        $filename['bpng'] = $img_path.'_big'.$shareit.'.png';
         if ($json[0]['shareit'] == 'on')
         {
             $filename['txt'] = $img_path.$share.'.txt';
