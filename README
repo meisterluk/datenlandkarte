@@ -21,7 +21,6 @@ ToDos
 * 2-directional folding
 * SVG Upload if SVG not available
 * Add field Quelle.
-* Feature: Allow [,.] floating point numbers.
 * Bug in scale calculation and white color.
 
 * Testing
