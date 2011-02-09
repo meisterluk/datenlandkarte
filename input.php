@@ -543,31 +543,31 @@
         else
             $ch = '';
 ?>
-                          <input type="radio" name="bz_bl" id="bz_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
+                          <input type="radio" name="bz_bl" id="bz_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?> />
                             <label for="bz_bl<?=$key; ?>"><?=$bl; ?></label> <br />
 <?php } ?>
                       </div>
 <?php if ($defaults['bz_spec'] === 'oe') { ?>
-                      <input type="radio" name="bz_spec" id="oe" value="oe" checked="checked">
+                      <input type="radio" name="bz_spec" id="oe" value="oe" checked="checked" />
                         <label for="oe">von Österreich</label>
 <?php } else { ?>
-                      <input type="radio" name="bz_spec" id="oe" value="oe">
+                      <input type="radio" name="bz_spec" id="oe" value="oe" />
                         <label for="oe">von Österreich</label>
 <?php } ?>
                   </div>
 <?php if ($defaults['vis'] === 'gm') { ?>
-                  <input type="radio" name="vis" value="gm" id="gm" checked="checked">
+                  <input type="radio" name="vis" value="gm" id="gm" checked="checked" />
                     <label for="gm">Gemeinden</label> <br />
 <?php } else { ?>
-                  <input type="radio" name="vis" value="gm" id="gm">
+                  <input type="radio" name="vis" value="gm" id="gm" />
                     <label for="gm">Gemeinden</label> <br />
 <?php } ?>
                   <div id="gm_select" class="subselect">
 <?php if ($defaults['gm_spec'] === 'bl') { ?>
-                      <input type="radio" name="gm_spec" id="gm_spec" value="bl" checked="checked">
+                      <input type="radio" name="gm_spec" id="gm_spec" value="bl" checked="checked" />
                         <label for="gm_spec">eines Bundeslands</label> <br />
 <?php } else { ?>
-                      <input type="radio" name="gm_spec" id="gm_spec" value="bl">
+                      <input type="radio" name="gm_spec" id="gm_spec" value="bl" />
                         <label for="gm_spec">eines Bundeslands</label> <br />
 <?php } ?>
                       <div id="gm_bl_select" class="subselect">
@@ -578,7 +578,7 @@
         else
             $ch = '';
 ?>
-                          <input type="radio" name="gm_bl" id="gm_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?>>
+                          <input type="radio" name="gm_bl" id="gm_bl<?=$key; ?>" value="<?=$key; ?>"<?=$ch; ?> />
                             <label for="gm_bl<?=$key; ?>"><?=$bl; ?></label> <br />
 <?php } ?>
                       </div>
