@@ -36,7 +36,7 @@
         $file_subtitle = $return[1][1];
 
         $title = $return[0][0];
-        $subtitle = $return[0][1];
+        $subtitle = $return[1][0];
 
         if ($file_title)
             $file_title = '-'.$file_title;
@@ -190,6 +190,7 @@
         margin: 20px;
         clear: both;
         padding: 10px;
+        min-height: 110px;
     }
 -->
 </style>
