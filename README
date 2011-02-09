@@ -22,11 +22,12 @@ ToDos
 * SVG Upload if SVG not available
 * Add field Quelle.
 * Feature: Allow [,.] floating point numbers.
+* Bug in scale calculation and white color.
 
 * Testing
 
-    * Check error messages
-    * Rendering
+    * List does not work out
+    * API Testing
 
 Features
 --------
