@@ -329,6 +329,7 @@
         margin: 20px;
         clear: both;
         padding: 10px;
+        min-height: 110px;
     }
     #data_list {
         font-family: "Courier New", Courier, monospace;
@@ -444,10 +445,12 @@
                 Ich stimme zu, dass ich die Daten zuverlässig gesammelt oder
                 aus einer verlässlichen Quelle gewonnen habe. Ebenso
                 bestätige ich im zweiteren Fall das Recht zu haben, die
-                gewonnenen Daten unter der Creative-Commons-Lizenz (XY)
-                weitergeben zu dürfen. Ich bin damit einverstanden, dass die
-                eingegebenen Daten langfristig gespeichert werden und der
-                Öffentlichkeit zugänglich bleiben.
+                gewonnenen Daten unter der <a href="http://creativecommons.org/licenses/by-sa/3.0/at/">Creative
+                Commons Namensnennung-Weitergabe unter gleichen
+                Bedingungen 3.0 Österreich Lizenz</a> weitergeben zu dürfen.
+                Ich bin damit einverstanden, dass die eingegebenen Daten
+                langfristig gespeichert werden und der Öffentlichkeit
+                zugänglich bleiben.
               </p>
             </div>
           </div>
