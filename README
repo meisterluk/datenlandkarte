@@ -21,11 +21,9 @@ ToDos
 * 2-directional folding
 * SVG Upload if SVG not available
 * Add field Quelle.
-* Bug in scale calculation and white color.
 
 * Testing
 
-    * List does not work out
     * API Testing
     * Check filenames precisely.
 

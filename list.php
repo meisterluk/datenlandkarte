@@ -61,6 +61,13 @@
     
 <meta name='NextGEN' content='1.7.3' />
 <script type="text/javascript" src="http://www.datenlandkarten.at/wp-content/themes/datenlandkarten/script.js"></script>
+<style type="text/css">
+<!--
+    a:link, a:visited, a:hover {
+        text-decoration: none !important;
+    }
+-->
+</style>
 </head>
 <body class="page page-id-2 page-template page-template-default">
 <div id="art-main">
@@ -130,7 +137,7 @@
             Die folgenden Daten unterstehen der Creative Commons-Lizenz.
           </p>
 
-          <table cellpadding="6">
+          <table cellpadding="6" style="width:100%">
 <?php
         $files = list_public_data($location_creation);
         if ($files)
@@ -148,16 +155,18 @@
                         $type = 'SVG';
                         break;
                 }
+                if (!file_exists($location_creation.$f))
+                    continue;
 ?>
             <tr>
               <td>
-                <a href="<?=$location_creation; ?><?=$htmlspecialchars($f, ENT_NOQUOTES); ?>">
+                <a href="<?=$location_creation; ?><?=htmlspecialchars($f, ENT_NOQUOTES); ?>">
                   <?=htmlspecialchars($f, ENT_NOQUOTES); ?>
                 </a>
               </td>
-              <td><?=filemtime($location_creation.$f); ?></td>
+              <td><?=date('Y-m-d', filemtime($location_creation.$f)); ?></td>
               <td><?=$type; ?></td>
-              <td><?=((float)filesize($location_creation.$f) / 1024); ?> MB</td>
+              <td><?=sprintf("%.1f", ((float)filesize($location_creation.$f) / 1024)); ?> MB</td>
             </tr>
 <?php
             }
