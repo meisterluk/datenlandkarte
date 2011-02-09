@@ -340,19 +340,11 @@
             return -3;
 
         if ($json_data[0]['shareit'] == 'on')
-            $shareit = '-1';
-        else
-            $shareit = '-0';
-
-        $filename = array();
-        $filename['svg'] = $img_path.$shareit.'.svg';
-        $filename['png'] = $img_path.$shareit.'.png';
-        $filename['bpng'] = $img_path.'_big'.$shareit.'.png';
-        if ($json[0]['shareit'] == 'on')
         {
-            $filename['txt'] = $img_path.$share.'.txt';
+            $shareit = '-1';
+            $filename['txt'] = $img_path.$shareit.'.txt';
 
-            $fp = fopen($json_source, 'w');
+            $fp = fopen($filename['txt'], 'w');
             if (!$fp) return -1;
 
             $w = fwrite($fp, $json_source);
@@ -362,7 +354,14 @@
             }
 
             fclose($fp);
+        } else {
+            $shareit = '-0';
         }
+
+        $filename = array();
+        $filename['svg'] = $img_path.$shareit.'.svg';
+        $filename['png'] = $img_path.$shareit.'.png';
+        $filename['bpng'] = $img_path.'_big'.$shareit.'.png';
 
         $fp = fopen($filename['svg'], 'w');
         if (!$fp)
