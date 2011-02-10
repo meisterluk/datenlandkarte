@@ -70,11 +70,11 @@
         22 => 'Malta', 23 => 'Mazedonien', 24 => 'Moldawien', 25 => 'Monaco',
         26 => 'Montenegro', 27 => 'Niederlande', 28 => 'Norwegen',
         29 => 'Österreich', 30 => 'Polen', 31 => 'Portugal',
-        23 => 'Rumänien', 24 => 'Russland', 25 => 'San Marino',
-        26 => 'Schweden', 27 => 'Schweiz', 28 => 'Serbien', 29 => 'Slowakei',
-        30 => 'Slowenien', 31 => 'Spanien', 32 => 'Tschechien',
-        33 => 'Türkei', 34 => 'Ukraine', 35 => 'Ungarn', 36 => 'Vatikanstadt',
-        37 => 'Vereinigtes Königreich', 38 => 'Weißrussland'
+        32 => 'Rumänien', 33 => 'Russland', 34 => 'San Marino',
+        35 => 'Schweden', 36 => 'Schweiz', 37 => 'Serbien', 38 => 'Slowakei',
+        39 => 'Slowenien', 40 => 'Spanien', 41 => 'Tschechien',
+        42 => 'Türkei', 43 => 'Ukraine', 44 => 'Ungarn', 45 => 'Vatikanstadt',
+        46 => 'Vereinigtes Königreich', 47 => 'Weißrussland'
     );
                 if ($index === false)
                     $result = $laender;

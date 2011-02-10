@@ -166,7 +166,7 @@
 <meta name="description" content="Hier können Sie selbst Datenlandkarten erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisierung gespeichert und" />
 <meta name="keywords" content="Bezirke, Kärnten, Alle, Ebenen, Daten, Bundesländer" />
 <meta name="robots" content="index, follow" />
-<link rel="canonical" href="http://www.datenlandkarten.at/datenlandkarte-erstellen/" />
+<link rel="canonical" href="http://www.datenlandkarten.at/erstellen/" />
 
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 
@@ -192,7 +192,7 @@
 				<meta name="DC.publisher" content="Datenlandkarten.at" />
 		<meta name="DC.publisher.url" content="http://www.datenlandkarten.at/" />
 		<meta name="DC.title" content="Datenlandkarte erstellen" />
-		<meta name="DC.identifier" content="http://www.datenlandkarten.at/datenlandkarte-erstellen/" />
+		<meta name="DC.identifier" content="http://www.datenlandkarten.at/erstellen/" />
 		<meta name="DC.date.created" scheme="WTN8601" content="2011-02-02T20:09:28" />
 		<meta name="DC.created" scheme="WTN8601" content="2011-02-02T20:09:28" />
 		<meta name="DC.date" scheme="WTN8601" content="2011-02-02T20:09:28" />
@@ -207,7 +207,7 @@
 	<meta property="og:title" content="Datenlandkarte erstellen"/>
 		<meta property="og:description" content="Hier können Sie selbst Datenlandkarten erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisie"/>
 	
-	<meta property="og:url" content="http://www.datenlandkarten.at/datenlandkarte-erstellen/"/>
+	<meta property="og:url" content="http://www.datenlandkarten.at/erstellen/"/>
 	<meta property="fb:admins" content="1039929046" />
 	<meta property="fb:app_id" content="192140977480316" />
 	<meta property="og:image" content="http://www.datenlandkarten.at/wp-content/uploads/opengraph.png" />
@@ -382,7 +382,7 @@
 	<li><a href="http://www.datenlandkarten.at" title="Startseite"><span class="l"> </span><span class="r"> </span><span class="t">Startseite</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li class="active"><a class="active" href="http://www.datenlandkarten.at/datenlandkarte-erstellen/" title="Datenlandkarte erstellen"><span class="l"> </span><span class="r"> </span><span class="t">Datenlandkarte erstellen</span></a>
+	<li class="active"><a class="active" href="http://www.datenlandkarten.at/erstellen/" title="Datenlandkarte erstellen"><span class="l"> </span><span class="r"> </span><span class="t">Datenlandkarte erstellen</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li><a href="http://www.datenlandkarten.at/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
