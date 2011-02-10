@@ -450,7 +450,10 @@
                 Bedingungen 3.0 Österreich Lizenz</a> weitergeben zu dürfen.
                 Ich bin damit einverstanden, dass die eingegebenen Daten
                 langfristig gespeichert werden und der Öffentlichkeit
-                zugänglich bleiben.
+                zugänglich bleiben.<br>
+
+                Andernfalls werden die eingegebenen Daten genau für 1 Tag
+                gespeichert, sind jedoch nicht öffentlich zugänglich.
               </p>
             </div>
           </div>

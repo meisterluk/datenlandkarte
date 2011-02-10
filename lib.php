@@ -127,9 +127,14 @@
 
     // Function to return the array of data which
     // will become the base for data.
-    function get_keys_by_vis($post)
+    function get_keys_by_vis($post=false, $direct=false)
     {
-        $input = select_input_data($post);
+        if ($post)
+        {
+            $input = select_input_data($post);
+        } else {
+            $input = $direct;
+        }
         if (!is_array($input) || count($input) < 2)
             return false;
 
@@ -303,8 +308,8 @@
     function create_json($post, $title, $subtitle,
         $dec, $colors, $grad, $data)
     {
-        $file = select_input_data($post);
-        if (!$file) return false;
+        $base = select_input_data($post);
+        if (!$base) return false;
 
         $keys = get_keys_by_vis($post);
         if (!$keys) return false;
@@ -318,9 +323,9 @@
         }
 
         $json = array(
-            'file' => $file,
             'title' => $title,
             'subtitle' => $subtitle,
+            'base' => $base,
             'dec' => $dec,
             'colors' => $colors,
             'grad' => $grad,

@@ -34,7 +34,7 @@ Features
 * Google Chart API binding
 * Public API offering
 * manual\d should become manual[]
-* SVG filename and selection allocation sucks
+* Sanitization and Parameter collection sucks
 
 Bugs
 ----

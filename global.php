@@ -201,6 +201,9 @@
         'Sankt Georgen im Lavanttal', 'Sankt Paul im Lavanttal', 'Wolfsberg'
     );
 
+            if ($index == 'oe' || $index = 'austria')
+                $gemeinden[$index] = array_merge($gemeinden[2]);
+
             if ($index === false)
                 $result = $gemeinden;
             else
