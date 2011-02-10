@@ -34,6 +34,7 @@ Features
 * manual\d should become manual[]
 * Sanitization and Parameter collection sucks
 * SVG Upload if SVG not available
+* More global variables
 
 Bugs
 ----

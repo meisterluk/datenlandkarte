@@ -260,7 +260,7 @@
     function check_input_value($value)
     {
         // if it is a real zero
-        if (preg_match('/0(\.0+)?/', $value))
+        if (preg_match('/0([.,]0+)?/', $value))
         {
             return 0;
         } else {
@@ -470,7 +470,7 @@
                 $flag = false;
                 foreach (array_keys($post) as $key)
                 {
-                    if (preg_match('/manual\d+/', $key))
+                    if (!$flag && preg_match('/manual\d+/', $key))
                         $flag = true;
                 }
                 if (!$flag)
@@ -698,7 +698,7 @@
         foreach ($ranges as $nr => $range)
         {
             if ($value === true)
-                return $palette[count($palette)-1];
+                return '#FFFFFF';
             if ($nr == count($ranges)-1) {
                 if ($range[0] <= $value && $range[1] >= $value)
                     return $palette[$nr];
