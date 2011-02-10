@@ -37,7 +37,7 @@
                 $pseudo_post['vis'] = 'bl';
                 break;
             case 'l':
-                $pseudo_post['vis'] = 'europe';
+                $pseudo_post['vis'] = 'eu';
                 break;
             case 'gm':
                 $pseudo_post['vis'] = 'gm';
@@ -96,7 +96,7 @@
         on error.
     </p>
 
-    <form action="<?=basename($_SERVER['SCRIPT_FILENAME']); ?>" method="get">
+    <form action="<?=basename($_SERVER['SCRIPT_FILENAME']); ?>" method="post">
       <textarea name="q" cols="100" rows="15" style="width:100%">{
     "base" : [ "austria", "bl" ],
     "colors" : 10,

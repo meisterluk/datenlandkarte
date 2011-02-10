@@ -17,6 +17,7 @@ ToDos
 -----
 
 * Bug: Data get lost for list input.
+* Bug: If no correct value is entered: do not show any color areas.
 
 Features
 --------
