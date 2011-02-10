@@ -19,6 +19,7 @@ ToDos
 * Browser compatibility check
 * 2-directional folding
 * Add field Quelle.
+* Data get lost for list input.
 
 * Testing
 

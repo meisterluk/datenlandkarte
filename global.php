@@ -124,6 +124,7 @@
             case 'bezirke':
 
     $bezirke = array();
+    //$bezirke['austria'] = array(); # for Austria
     $bezirke[9] = array(
         'Innere Stadt', 'Leopoldstadt', 'Landstrasse', 'Wieden', 'Margareten',
         'Mariahilf', 'Neubau', 'Josefstadt', 'Alsergrund', 'Favoriten',

@@ -127,14 +127,9 @@
 
     // Function to return the array of data which
     // will become the base for data.
-    function get_keys_by_vis($post=false, $direct=false)
+    function get_keys_by_vis($post)
     {
-        if ($post)
-        {
-            $input = select_input_data($post);
-        } else {
-            $input = $direct;
-        }
+        $input = select_input_data($post);
         if (!is_array($input) || count($input) < 2)
             return false;
 
@@ -181,13 +176,16 @@
     function color_palette_adjustment($palette, $count_colors)
     {
         $count_colors = (int)$count_colors;
-        if ($count_colors < 2) $count_colors = 2;
+        if ($count_colors < 1) $count_colors = 2;
         if ($count_colors > 10) $count_colors = 10;
 
         // with indizes of the palette shall be used
         // at an specified numbers of colors
         switch ($count_colors)
         {
+            case 1:
+                $pa = array(9);
+                break;
             case 2:
                 $pa = array(0, 9);
                 break;
@@ -235,7 +233,6 @@
         $dist = ((float)$max - $min) / $count_ranges;
 
         $ranges = array();
-
         for ($i=0; $i<$count_ranges; $i++)
         {
             $ranges[] = array($min + ($dist * $i), $min + ($dist * ($i + 1)));
@@ -323,8 +320,8 @@
         }
 
         $json = array(
-            'title' => $title,
-            'subtitle' => $subtitle,
+            'title' => trim($title),
+            'subtitle' => trim($subtitle),
             'base' => $base,
             'dec' => $dec,
             'colors' => $colors,
@@ -449,7 +446,10 @@
         $data = array();
         foreach ($keys as $key)
         {
-            $data[] = $json_data[$key];
+            if (!isset($json_data[$key]))
+                $data[] = true;
+            else
+                $data[] = $json_data[$key];
         }
 
         return $data;
@@ -500,8 +500,11 @@
 
                 if (!$filled_up)
                     return -7;
-                if ($data && (min($data) == max($data)))
+                if ($data && !is_bool(min($data)) && !is_bool(max($data))
+                    && (min($data) == max($data)))
+                {
                     return $error_invalid_data;
+                }
 
                 return $data;
             case 'list':
@@ -536,8 +539,11 @@
                         $data[] = (float)$i;
                 }
 
-                if ($data && (min($data) == max($data)))
+                if ($data && !is_bool(min($data)) && !is_bool(max($data))
+                    && (min($data) == max($data)))
+                {
                     return $error_invalid_data;
+                }
 
                 return $data;
             case 'json':
@@ -561,8 +567,11 @@
                         $data[] = (float)$value;
                 }
 
-                if ($data && (min($data) == max($data)))
+                if ($data && !is_bool(min($data)) && !is_bool(max($data))
+                    && (min($data) == max($data)))
+                {
                     return $error_invalid_data;
+                }
 
                 return $data;
             case 'kvalloc':
@@ -603,8 +612,11 @@
 
                 if (count($data) != count($keys))
                     return $error_invalid_count;
-                if ($data && (min($data) == max($data)))
+                if ($data && !is_bool(min($data)) && !is_bool(max($data))
+                    && (min($data) == max($data)))
+                {
                     return $error_invalid_data;
+                }
 
                 return $data;
             default:
@@ -646,6 +658,33 @@
         }
     }
 
+    // Helper function. Inverted is_bool() function.
+    function _is_not_bool($val)
+    {
+        return !is_bool($val);
+    }
+
+    function sanitize_colors($colors, $data)
+    {
+        $nb_data = array_filter($data, '_is_not_bool'); // not bool data
+        if (!$nb_data)
+        {
+            $min = NULL;
+            $max = NULL;
+            $c = 0;
+        } else {
+            $min = min($nb_data);
+            $max = max($nb_data);
+            $c = $colors;
+        }
+        if ($min == NULL || $max == NULL)
+            $c = 0;
+        if (is_int($min) && is_int($max) && $min === $max)
+            $c = 1;
+
+        return array($min, $max, $c);
+    }
+
     // Function to execute the substitution in SVG source code
     // $image = path to SVG pattern file
     // $title, $subtitle = title and subtitle of SVG file
@@ -664,8 +703,9 @@
         $svg = str_replace('%titel1%', $title, $svg);
         $svg = str_replace('%titel2%', $subtitle, $svg);
 
-        $palette = color_palette_adjustment($color_gradients[$grad], $colors);
-        $ranges = create_ranges(min($data), max($data), $colors);
+        list($min, $max, $c) = sanitize_colors($colors, $data);
+        $palette = color_palette_adjustment($color_gradients[$grad], $c);
+        $ranges = create_ranges($min, $max, $c);
 
         // oh man, this sucks so much in PHP
         $tmp = array($palette, $ranges, $data);
@@ -681,8 +721,12 @@
             {
                 $start = sprintf("%.".((int) $dec).'f', $ranges[$i][0]);
                 $end = sprintf("%.".((int) $dec).'f', $ranges[$i][1]);
+                if ($start == $end)
+                    $str = $start;
+                else
+                    $str = $start.' - '.$end;
 
-                $svg = str_replace('%legende'.($i+1).'%', $start.' - '.$end, $svg);
+                $svg = str_replace('%legende'.($i+1).'%', $str, $svg);
             } else {
                 $svg = str_replace('%legende'.($i+1).'%', '', $svg);
             }
