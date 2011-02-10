@@ -101,10 +101,10 @@
 	<li><a href="http://www.datenlandkarten.at" title="Startseite"><span class="l"> </span><span class="r"> </span><span class="t">Startseite</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li class="active"><a class="active" href="http://www.datenlandkarten.at/erstellen/" title="Datenlandkarte erstellen"><span class="l"> </span><span class="r"> </span><span class="t">Datenlandkarte erstellen</span></a>
+	<li><a href="http://www.datenlandkarten.at/erstellen/" title="Datenlandkarte erstellen"><span class="l"> </span><span class="r"> </span><span class="t">Datenlandkarte erstellen</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li><a href="http://www.datenlandkarten.at/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
+	<li class="active"><a class="active" href="http://www.datenlandkarten.at/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li><a href="http://www.datenlandkarten.at/galerie/" title="Galerie"><span class="l"> </span><span class="r"> </span><span class="t">Galerie</span></a>
@@ -166,7 +166,7 @@
               </td>
               <td><?=date('Y-m-d', filemtime($location_creation.$f)); ?></td>
               <td><?=$type; ?></td>
-              <td><?=sprintf("%.1f", ((float)filesize($location_creation.$f) / 1024)); ?> MB</td>
+              <td><?=sprintf("%.1f", ((float)filesize($location_creation.$f) / 1024)); ?> KB</td>
             </tr>
 <?php
             }
