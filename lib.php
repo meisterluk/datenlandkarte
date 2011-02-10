@@ -581,19 +581,28 @@
 
                 return $data;
             case 'kvalloc':
-                if (empty($post['kvalloc_delim1'])
-                    || empty($post['kvalloc_delim2']))
+                if (
+                    (empty($post['kvalloc_delim1']) &&
+                    strlen($post['kvalloc_delim1']) == 0)
+                    || (empty($post['kvalloc_delim2']) &&
+                    strlen($post['kvalloc_delim2']) == 0)
+                ) {
                     return -15;
+                }
 
                 $delim1 = stripslashes($post['kvalloc_delim1']);
                 $delim2 = stripslashes($post['kvalloc_delim2']);
                 $delim1 = parse_delimiter($delim1);
                 $delim2 = parse_delimiter($delim2);
 
-                $post['data'] = remove_trailing_line($post['data'], count($keys));
+                $post['data'] = remove_trailing_line($post['data'],
+                    count($keys));
 
                 $data = array();
                 $d = explode($delim1, $post['data']);
+
+                if (count($d) == (count($keys)+1) && empty($d[count($d)-1]))
+                    array_pop($d);
 
                 if (count($d) != count($keys))
                     return $error_invalid_count;
