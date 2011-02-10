@@ -69,13 +69,12 @@
 
         $svg = substitute($s, $return[0][0], $return[1][0],
             $return[2][0], $return[3][0], $return[4][0], $data);
+
+        if (!$svg) die();
     }
 
-    if ($svg)
-    {
-        header('Content-type: image/svg+xml; charset=utf-8');
-        echo $svg;
-    } else {
+    header('Content-type: image/svg+xml; charset=utf-8');
+    echo $svg;
 ?><!DOCTYPE html>
 <html>
   <head>
@@ -142,6 +141,4 @@
         <strong>(sub)title:</strong> String for (sub)title.
     </p>
   </body>
-</html><?php
-    }
-?>
+</html>
