@@ -17,7 +17,7 @@
         $base = getcwd();
         chdir($folder);
         $date = date('Ymd');
-        $files = glob(date('Y', $time).'*-0.{svg,png,txt}', GLOB_BRACE);
+        $files = glob(date('Y', $time).'*{-0.svg,-0.png,-0.txt,-1.png}', GLOB_BRACE);
         if (!$files)
             $files = array();
 
