@@ -422,18 +422,16 @@
               Sie Javascript in ihrem Browser, wenn möglich.
             </p>
           </noscript>
-          <p style="border:1px solid #000000;padding:10px;background:#e59a9a;margin-bottom:10px;font-size:1.3em;line-height:100%;">
+<?php if (time() < 1304028000) { ?>
+          <p style="border:1px solid #000000;padding:10px;background-color:#6F6;margin-bottom:10px;font-size:1.3em;line-height:100%;">
             <strong>Hinweis:</strong> <br />
             <span style="font-style:italic">
-              An diesem Feature wird derzeit noch gearbeitet &ndash;
-              bitte abonnieren Sie unseren
-              <a class="liexternal" target="_blank" href="http://feeds.feedburner.com/datenlandkarten">RSS-Feed</a> <br />
-              oder folgen Sie uns auf
-              <a class="liexternal" target="_blank"
-              href="http://twitter.com/datenlandkarten">Twitter</a>, um
-              über die Fertigstellung informiert zu werden!
+              Dieses Feature wurde neu entwickelt und befindet sich nun in der Testphase.
+              Biete meldet Fehler und Wünsche an
+              <a href="mailtol:info@datamaps.eu">info@datamaps.eu</a> weiter.
             </span>
           </p>
+<?php } ?>
 
           <div id="cc_header">
             <div id="cc_header_img">
