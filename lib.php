@@ -481,8 +481,12 @@
                 else
                     $i = 1;
                 $data = array();
+                $filled_up = false;
                 while (isset($post[sprintf('manual%s', $i)]))
                 {
+                    if (!$filled_up && $post['manual'.($i)] !== '')
+                        $filled_up = true;
+
                     $val = str_replace(',', '.', $post['manual'.($i)]);
                     $val = check_input_value($val);
                     if ($val === false)
@@ -494,6 +498,8 @@
                     $i++;
                 }
 
+                if (!$filled_up)
+                    return -7;
                 if ($data && (min($data) == max($data)))
                     return $error_invalid_data;
 
