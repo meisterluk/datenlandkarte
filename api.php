@@ -71,10 +71,11 @@
             $return[2][0], $return[3][0], $return[4][0], $data);
 
         if (!$svg) die();
+
+        header('Content-type: image/svg+xml; charset=utf-8');
+        die($svg);
     }
 
-    header('Content-type: image/svg+xml; charset=utf-8');
-    echo $svg;
 ?><!DOCTYPE html>
 <html>
   <head>
