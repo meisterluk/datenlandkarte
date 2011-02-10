@@ -176,13 +176,15 @@
     function color_palette_adjustment($palette, $count_colors)
     {
         $count_colors = (int)$count_colors;
-        if ($count_colors < 1) $count_colors = 2;
+        if ($count_colors < 0) $count_colors = 1;
         if ($count_colors > 10) $count_colors = 10;
 
         // with indizes of the palette shall be used
         // at an specified numbers of colors
         switch ($count_colors)
         {
+            case 0:
+                return array();
             case 1:
                 $pa = array(9);
                 break;
@@ -761,6 +763,9 @@
         $palette = $tmp[0];
         $ranges = $tmp[1];
 
+        if (!$palette)
+            return '#FFFFFF';
+
         foreach ($ranges as $nr => $range)
         {
             if ($value === true)
@@ -798,7 +803,7 @@
         global $tmp;
         static $call_num = 0;
 
-        if ($call_num >= count($tmp[0]))
+        if (!$tmp[0] || $call_num >= count($tmp[0]))
             $value = '#FFFFFF';
         else
             $value = $tmp[0][$call_num];
