@@ -16,8 +16,7 @@ Setup
 ToDos
 -----
 
-* 2-directional folding
-* Data get lost for list input.
+* Bug: Data get lost for list input.
 
 Features
 --------
@@ -30,6 +29,7 @@ Features
 * Sanitization and Parameter collection sucks
 * SVG Upload if SVG not available
 * More global.php variables / configuration
+* 2-directional folding
 
 Bugs
 ----
