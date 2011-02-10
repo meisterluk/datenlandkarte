@@ -19,7 +19,6 @@ ToDos
 * Browser compatibility check
 * W3C compatibility
 * 2-directional folding
-* SVG Upload if SVG not available
 * Add field Quelle.
 
 * Testing
@@ -35,6 +34,7 @@ Features
 * Public API offering
 * manual\d should become manual[]
 * Sanitization and Parameter collection sucks
+* SVG Upload if SVG not available
 
 Bugs
 ----
