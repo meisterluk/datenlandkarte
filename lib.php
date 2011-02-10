@@ -323,8 +323,8 @@
         }
 
         $json = array(
-            'title' => trim($title),
-            'subtitle' => trim($subtitle),
+            'title' => $title,
+            'subtitle' => $subtitle,
             'base' => $base,
             'dec' => $dec,
             'colors' => $colors,
@@ -412,6 +412,8 @@
     // -> parameters in HTML and filename format
     function sanitize($title, $subtitle, $dec, $colors, $grad)
     {
+        $title = trim($title);
+        $subtitle = trim($subtitle);
         $file_title = $title;
         $file_title = preg_replace('/[[:^alnum:]]/', '_', $file_title);
         $file_subtitle = $subtitle;
@@ -681,7 +683,7 @@
             $max = max($nb_data);
             $c = $colors;
         }
-        if ($min == NULL || $max == NULL)
+        if ($min === NULL || $max === NULL)
             $c = 0;
         if (is_int($min) && is_int($max) && $min === $max)
             $c = 1;
@@ -700,7 +702,6 @@
         $dec, $colors, $grad, $data)
     {
         global $color_gradients, $tmp;
-        var_dump($data);
 
         $svg = file_get_contents($image);
         if (!$svg) return -1;

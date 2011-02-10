@@ -150,7 +150,7 @@
 	<!--Facebook Like Button OpenGraph Settings Start-->
 	<meta property="og:site_name" content="datamaps.eu"/>
 	<meta property="og:title" content="Datenlandkarte erstellen"/>
-		<meta property="og:description" content="Hier können Sie selbst datamaps erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisie"/>
+		<meta property="og:description" content="Hier können Sie selbst Datenlandkarten erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisie"/>
 	
 	<meta property="og:url" content="http://www.datamaps.eu/erstellen/"/>
 	<meta property="fb:admins" content="1039929046" />
