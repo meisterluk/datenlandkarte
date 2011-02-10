@@ -509,7 +509,7 @@
               <td><input type="text" maxlength="50" tabindex="1" name="title" value="<?=$defaults['title']; ?>" /></td>
             </tr>
             <tr>
-              <td>Untertitel:</td>
+              <td>Untertitel / Quelle:</td>
               <td><input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['subtitle']; ?>" /></td>
             </tr>
             <tr>

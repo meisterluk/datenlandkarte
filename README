@@ -18,7 +18,6 @@ ToDos
 
 * Browser compatibility check
 * 2-directional folding
-* Add field Quelle.
 * Data get lost for list input.
 
 * Testing
@@ -32,10 +31,11 @@ Features
 * User-defined color palettes
 * Google Chart API binding
 * Public API offering
+* Additional fields such as source.
 * manual\d should become manual[]
 * Sanitization and Parameter collection sucks
 * SVG Upload if SVG not available
-* More global variables
+* More global.php variables / configuration
 
 Bugs
 ----
