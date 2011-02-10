@@ -229,6 +229,8 @@
     function create_ranges($min, $max, $count_ranges)
     {
         if ($max < $min) return -1;
+        if ($count_ranges == 0)
+            return array();
 
         $dist = ((float)$max - $min) / $count_ranges;
 
@@ -247,6 +249,7 @@
     {
         $delim = str_replace('\r\n', "\n", $delim);
         $delim = str_replace('\n', "\n", $delim);
+        $delim = str_replace('\r', "\n", $delim);
         $delim = str_replace('\t', "\t", $delim);
         $delim = preg_replace('/\\\\([\\\\]+)/', '$1', $delim);
 
@@ -517,6 +520,7 @@
 
                 // stupid php
                 $post['data'] = stripslashes($post['data']);
+                $post['data'] = str_replace("\r\n", "\n", $post['data']);
                 $post['list_delim'] = stripslashes($post['list_delim']);
                 $post['list_delim'] = parse_delimiter($post['list_delim']);
 
@@ -696,6 +700,7 @@
         $dec, $colors, $grad, $data)
     {
         global $color_gradients, $tmp;
+        var_dump($data);
 
         $svg = file_get_contents($image);
         if (!$svg) return -1;

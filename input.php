@@ -138,7 +138,9 @@
         {
             if (array_key_exists($key, $_POST) && !in_array($key, $invalid))
             {
-                $defaults[$key] = htmlspecialchars($_POST[$key], ENT_NOQUOTES);
+                $defaults[$key] = stripslashes(
+                    htmlspecialchars($_POST[$key], ENT_NOQUOTES)
+                );
             }
         }
         if ($_POST['format'] == 'manual')
@@ -149,7 +151,9 @@
                 $i = 1;
             while (isset($_POST['manual'.$i]))
             {
-                $defaults['manual'.$i] = htmlspecialchars($_POST['manual'.$i], ENT_NOQUOTES);
+                $defaults['manual'.$i] = stripslashes(
+                    htmlspecialchars($_POST['manual'.$i], ENT_NOQUOTES)
+                );
                 $i++;
             }
         }
@@ -162,37 +166,37 @@
 <head profile="http://gmpg.org/xfn/11">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<title>Datenlandkarte erstellen » Datenlandkarten.at</title>
-<meta name="description" content="Hier können Sie selbst Datenlandkarten erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisierung gespeichert und" />
+<title>Datenlandkarte erstellen » datamaps.eu</title>
+<meta name="description" content="Hier können Sie selbst datamaps erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisierung gespeichert und" />
 <meta name="keywords" content="Bezirke, Kärnten, Alle, Ebenen, Daten, Bundesländer" />
 <meta name="robots" content="index, follow" />
-<link rel="canonical" href="http://www.datenlandkarten.at/erstellen/" />
+<link rel="canonical" href="http://www.datamaps.eu/erstellen/" />
 
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 
-<link rel="stylesheet" href="http://www.datenlandkarten.at/wp-content/themes/datenlandkarten/style.css" type="text/css" media="screen" />
-<!--[if IE 6]><link rel="stylesheet" href="http://www.datenlandkarten.at/wp-content/themes/datenlandkarten/style.ie6.css" type="text/css" media="screen" /><![endif]-->
-<!--[if IE 7]><link rel="stylesheet" href="http://www.datenlandkarten.at/wp-content/themes/datenlandkarten/style.ie7.css" type="text/css" media="screen" /><![endif]-->
-<link rel="pingback" href="http://www.datenlandkarten.at/xmlrpc.php" />
-<link rel="alternate" type="application/rss+xml" title="Datenlandkarten.at &raquo; Feed" href="http://www.datenlandkarten.at/feed/" />
-<link rel="alternate" type="application/rss+xml" title="Datenlandkarten.at &raquo; Kommentar Feed" href="http://www.datenlandkarten.at/comments/feed/" />
-<link rel='stylesheet' id='NextGEN-css'  href='http://www.datenlandkarten.at/wp-content/plugins/nextgen-gallery/css/nggallery.css?ver=1.0.0' type='text/css' media='screen' />
-<link rel='stylesheet' id='shutter-css'  href='http://www.datenlandkarten.at/wp-content/plugins/nextgen-gallery/shutter/shutter-reloaded.css?ver=1.3.0' type='text/css' media='screen' />
-<link rel='stylesheet' id='feedreading_style-css'  href='http://www.datenlandkarten.at/wp-content/plugins/feed-reading-blogroll/css/feedreading_blogroll.css?ver=1.5.6' type='text/css' media='all' />
-<link rel='stylesheet' id='prlipro-post-css'  href='http://www.datenlandkarten.at/wp-content/plugins/pretty-link/pro/css/prlipro-post.css?ver=3.0.4' type='text/css' media='all' />
-<script type='text/javascript' src='http://www.datenlandkarten.at/wp-content/plugins/nextgen-gallery/shutter/shutter-reloaded.js?ver=1.3.0'></script>
-<script type='text/javascript' src='http://www.datenlandkarten.at/wp-includes/js/swfobject.js?ver=2.2'></script>
-<script type='text/javascript' src='http://www.datenlandkarten.at/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
-<script type='text/javascript' src='http://www.datenlandkarten.at/wp-includes/js/comment-reply.js?ver=20090102'></script>
-<script type='text/javascript' src='http://www.datenlandkarten.at/wp-content/feedreading_blogroll.js?ver=1.5.6'></script>
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.datenlandkarten.at/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.datenlandkarten.at/wp-includes/wlwmanifest.xml" /> 
-<link rel='index' title='Datenlandkarten.at' href='http://www.datenlandkarten.at/' />
-<link rel='next' title='Galerie' href='http://www.datenlandkarten.at/galerie/' />
-				<meta name="DC.publisher" content="Datenlandkarten.at" />
-		<meta name="DC.publisher.url" content="http://www.datenlandkarten.at/" />
+<link rel="stylesheet" href="http://www.datamaps.eu/wp-content/themes/datamaps/style.css" type="text/css" media="screen" />
+<!--[if IE 6]><link rel="stylesheet" href="http://www.datamaps.eu/wp-content/themes/datamaps/style.ie6.css" type="text/css" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="http://www.datamaps.eu/wp-content/themes/datamaps/style.ie7.css" type="text/css" media="screen" /><![endif]-->
+<link rel="pingback" href="http://www.datamaps.eu/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="datamaps.eu &raquo; Feed" href="http://www.datamaps.eu/feed/" />
+<link rel="alternate" type="application/rss+xml" title="datamaps.eu &raquo; Kommentar Feed" href="http://www.datamaps.eu/comments/feed/" />
+<link rel='stylesheet' id='NextGEN-css'  href='http://www.datamaps.eu/wp-content/plugins/nextgen-gallery/css/nggallery.css?ver=1.0.0' type='text/css' media='screen' />
+<link rel='stylesheet' id='shutter-css'  href='http://www.datamaps.eu/wp-content/plugins/nextgen-gallery/shutter/shutter-reloaded.css?ver=1.3.0' type='text/css' media='screen' />
+<link rel='stylesheet' id='feedreading_style-css'  href='http://www.datamaps.eu/wp-content/plugins/feed-reading-blogroll/css/feedreading_blogroll.css?ver=1.5.6' type='text/css' media='all' />
+<link rel='stylesheet' id='prlipro-post-css'  href='http://www.datamaps.eu/wp-content/plugins/pretty-link/pro/css/prlipro-post.css?ver=3.0.4' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.datamaps.eu/wp-content/plugins/nextgen-gallery/shutter/shutter-reloaded.js?ver=1.3.0'></script>
+<script type='text/javascript' src='http://www.datamaps.eu/wp-includes/js/swfobject.js?ver=2.2'></script>
+<script type='text/javascript' src='http://www.datamaps.eu/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
+<script type='text/javascript' src='http://www.datamaps.eu/wp-includes/js/comment-reply.js?ver=20090102'></script>
+<script type='text/javascript' src='http://www.datamaps.eu/wp-content/feedreading_blogroll.js?ver=1.5.6'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.datamaps.eu/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.datamaps.eu/wp-includes/wlwmanifest.xml" /> 
+<link rel='index' title='datamaps.eu' href='http://www.datamaps.eu/' />
+<link rel='next' title='Galerie' href='http://www.datamaps.eu/galerie/' />
+				<meta name="DC.publisher" content="datamaps.eu" />
+		<meta name="DC.publisher.url" content="http://www.datamaps.eu/" />
 		<meta name="DC.title" content="Datenlandkarte erstellen" />
-		<meta name="DC.identifier" content="http://www.datenlandkarten.at/erstellen/" />
+		<meta name="DC.identifier" content="http://www.datamaps.eu/erstellen/" />
 		<meta name="DC.date.created" scheme="WTN8601" content="2011-02-02T20:09:28" />
 		<meta name="DC.created" scheme="WTN8601" content="2011-02-02T20:09:28" />
 		<meta name="DC.date" scheme="WTN8601" content="2011-02-02T20:09:28" />
@@ -203,20 +207,20 @@
 		<meta name="DC.rights.license" content="http://creativecommons.org/licenses/by/3.0/at/" />
 		<meta name="DC.license" content="http://creativecommons.org/licenses/by/3.0/at/" />
 	<!--Facebook Like Button OpenGraph Settings Start-->
-	<meta property="og:site_name" content="Datenlandkarten.at"/>
+	<meta property="og:site_name" content="datamaps.eu"/>
 	<meta property="og:title" content="Datenlandkarte erstellen"/>
-		<meta property="og:description" content="Hier können Sie selbst Datenlandkarten erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisie"/>
+		<meta property="og:description" content="Hier können Sie selbst datamaps erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisie"/>
 	
-	<meta property="og:url" content="http://www.datenlandkarten.at/erstellen/"/>
+	<meta property="og:url" content="http://www.datamaps.eu/erstellen/"/>
 	<meta property="fb:admins" content="1039929046" />
 	<meta property="fb:app_id" content="192140977480316" />
-	<meta property="og:image" content="http://www.datenlandkarten.at/wp-content/uploads/opengraph.png" />
+	<meta property="og:image" content="http://www.datamaps.eu/wp-content/uploads/opengraph.png" />
 	<meta property="og:type" content="article" />
 		<!--Facebook Like Button OpenGraph Settings End-->
 	      <link rel="shorturl" href="http://datenlandkarte.at/gs8" />
     
 <meta name='NextGEN' content='1.7.3' />
-<script type="text/javascript" src="http://www.datenlandkarten.at/wp-content/themes/datenlandkarten/script.js"></script>
+<script type="text/javascript" src="http://www.datamaps.eu/wp-content/themes/datamaps/script.js"></script>
 <script type="text/javascript">
 <!--
     /* jQuery ftw */
@@ -370,7 +374,7 @@
                 </div>
                 <div class="art-headerobject"></div>
                 <div class="art-logo">
-                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datenlandkarten.at/">Datenlandkarten.at</a></h1>
+                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">datamaps.eu</a></h1>
                                                     <h2 id="slogan-text" class="art-logo-text">Erstelle deine eigene Visualisierung von Gemeinde-, Bezirks-, und Bundesland-Daten</h2>
                                 </div>
             </div>
@@ -379,22 +383,22 @@
             	<div class="art-nav-r"></div>
             	
 <ul class="art-menu">
-	<li><a href="http://www.datenlandkarten.at" title="Startseite"><span class="l"> </span><span class="r"> </span><span class="t">Startseite</span></a>
+	<li><a href="http://www.datamaps.eu" title="Startseite"><span class="l"> </span><span class="r"> </span><span class="t">Startseite</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li class="active"><a class="active" href="http://www.datenlandkarten.at/erstellen/" title="Datenlandkarte erstellen"><span class="l"> </span><span class="r"> </span><span class="t">Datenlandkarte erstellen</span></a>
+	<li class="active"><a class="active" href="http://www.datamaps.eu/erstellen/" title="Datenlandkarte erstellen"><span class="l"> </span><span class="r"> </span><span class="t">Datenlandkarte erstellen</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li><a href="http://www.datenlandkarten.at/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
+	<li><a href="http://www.datamaps.eu/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li><a href="http://www.datenlandkarten.at/galerie/" title="Galerie"><span class="l"> </span><span class="r"> </span><span class="t">Galerie</span></a>
+	<li><a href="http://www.datamaps.eu/galerie/" title="Galerie"><span class="l"> </span><span class="r"> </span><span class="t">Galerie</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li><a href="http://www.datenlandkarten.at/blog/" title="Blog"><span class="l"> </span><span class="r"> </span><span class="t">Blog</span></a>
+	<li><a href="http://www.datamaps.eu/blog/" title="Blog"><span class="l"> </span><span class="r"> </span><span class="t">Blog</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li><a href="http://www.datenlandkarten.at/impressum/" title="Impressum"><span class="l"> </span><span class="r"> </span><span class="t">Impressum</span></a>
+	<li><a href="http://www.datamaps.eu/impressum/" title="Impressum"><span class="l"> </span><span class="r"> </span><span class="t">Impressum</span></a>
 	</li>
 </ul>
             </div>
@@ -702,8 +706,8 @@
 
 
                   <div class="art-footer-text">
-                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datenlandkarten.at/wp-content/uploads/open3logo.png" alt="Open3 Logo" width="177" height="33" /></a></div>
-<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition 'Offenes Wissen' auf http://opendefinition.org/ anzeigen"><img src="http://www.datenlandkarten.at/wp-content/uploads/badge-od.png" alt="Badge OD" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-ok.png" alt="Badge OK" width="80" height="15" /> <img src="http://www.datenlandkarten.at/wp-content/uploads/badge-oc.png" alt="Badge OC" width="80" height="15" /></a><br/>
+                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datamaps.eu/wp-content/uploads/open3logo.png" alt="Open3 Logo" width="177" height="33" /></a></div>
+<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition 'Offenes Wissen' auf http://opendefinition.org/ anzeigen"><img src="http://www.datamaps.eu/wp-content/uploads/badge-od.png" alt="Badge OD" width="80" height="15" /> <img src="http://www.datamaps.eu/wp-content/uploads/badge-ok.png" alt="Badge OK" width="80" height="15" /> <img src="http://www.datamaps.eu/wp-content/uploads/badge-oc.png" alt="Badge OC" width="80" height="15" /></a><br/>
 <a href="/impressum" style="text-decoration:none;" title="Impressum anzeigen">Ein Projekt von open3, dem Netzwerk zur Förderung von openSociety, openGovernment und OpenData</a></p></div>                  </div>
                     <div class="cleared"></div>
                 </div>
