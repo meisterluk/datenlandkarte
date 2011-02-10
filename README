@@ -19,8 +19,6 @@ ToDos
 * Browser compatibility check
 * 2-directional folding
 * Data get lost for list input.
-* Bug: one entered value => only one color to display
-* Bug: Europe - no "basiskarte nicht vorhanden" error message.
 
 Features
 --------

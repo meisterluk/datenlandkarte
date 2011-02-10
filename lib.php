@@ -260,7 +260,7 @@
     function check_input_value($value)
     {
         // if it is a real zero
-        if (preg_match('/0([.,]0+)?/', $value))
+        if (preg_match('/^0([.,]0+)?$/', $value))
         {
             return 0;
         } else {
@@ -505,6 +505,7 @@
 
                 if (!$filled_up)
                     return -7;
+
                 if ($data && !is_bool(min($data)) && !is_bool(max($data))
                     && (min($data) == max($data)))
                 {
@@ -664,8 +665,8 @@
                 return 'Kein valides JSON-Objekt. Konnte es nicht '.
                     'verarbeiten';
             case -20:
-                return 'Keine sinnvollen Daten eingegeben. Die Werte '.
-                    'müssen verschieden sein.';
+                return 'Keine sinnvollen Daten eingegeben. Es muss sich '.
+                    'um verschiedene Werte handeln.';
             case false:
                 return 'Kein valides Eingabeformat gewählt.';
             case 1:
