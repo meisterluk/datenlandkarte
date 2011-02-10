@@ -119,7 +119,7 @@
             </div>
 <div class="art-content-layout">
     <div class="art-content-layout-row">
-        <div class="art-layout-cell art-content">
+        <div class="art-layout-cell art-content" style="display:block">
 			
 
 
@@ -133,11 +133,11 @@
         <div class="art-postcontent">
 
           <img src="img/cc.png" alt="Creative Commons" width="32" style="float:left; margin:10px" />
-          <p>
+          <p style="line-height:50px; vertical-align:middle">
             Die folgenden Daten unterstehen der Creative Commons-Lizenz.
           </p>
 
-          <table cellpadding="6" style="width:100%">
+          <table cellpadding="6" style="width:100%; clear:left">
 <?php
         $files = list_public_data($location_creation);
         if ($files)
