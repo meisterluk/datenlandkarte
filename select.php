@@ -215,8 +215,8 @@
                 </div>
                 <div class="art-headerobject"></div>
                 <div class="art-logo">
-                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">datamaps.eu</a></h1>
-                                                    <h2 id="slogan-text" class="art-logo-text">Erstelle deine eigene Visualisierung von Gemeinde-, Bezirks-, und Bundesland-Daten</h2>
+                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">DataMaps.eu</a></h1>
+                                                    <h2 id="slogan-text" class="art-logo-text">Erstellen Sie Visualisierungen von ortsbezogenen Daten</h2>
                                 </div>
             </div>
             <div class="art-nav">
@@ -231,6 +231,9 @@
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li><a href="http://www.datamaps.eu/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
+	</li>
+	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
+	<li><a href="http://www.datamaps.eu/vorlagen/" title="Vorlagen"><span class="l"> </span><span class="r"> </span><span class="t">Vorlagen</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li><a href="http://www.datamaps.eu/galerie/" title="Galerie"><span class="l"> </span><span class="r"> </span><span class="t">Galerie</span></a>
@@ -281,6 +284,16 @@
 <?php
     } else {
 ?>
+
+<h3 style="margin-top:15px;">Vorschau</h3>
+ <img src="<?=$files['png']; ?>" alt="Preview" style="float:center;" width="900"/>
+
+          <div class="download" style="min-height:40px;">
+           <a href="javascript:back();">
+             <img src="img/back.png" alt="zurück zum Eingabeformular" style="float:left" />
+           </a>
+           <h5 style="margin-top:10px;"><a href="javascript:back();">Parameter ändern und Grafik neu erstellen</a></h5>
+          </div>
 
           <div class="download">
            <a href="<?=$files['svg']; ?>">
@@ -340,4 +353,16 @@
     <div id="wp-footer">
     </div>
 </body>
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.ihrwebprofi.at/piwik/" : "http://www.ihrwebprofi.at/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 10);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://www.ihrwebprofi.at/piwik/piwik.php?idsite=10" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Tag -->
 </html>

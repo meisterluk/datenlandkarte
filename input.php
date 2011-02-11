@@ -16,7 +16,7 @@
     }
 
     // Remove any old created files if there are any
-    if (!delete_old_created_file($location_creation))
+    if (!delete_old_created_file($location_creation, $location_raw_data))
     {
         die('Could not delete old files. Don\'t want to continue!');
     }
@@ -308,7 +308,7 @@
 <style type="text/css">
 <!--
     table {
-        width: 100%;
+        /*width: 100%;*/
     }
     td {
         vertical-align: top;
@@ -374,8 +374,8 @@
                 </div>
                 <div class="art-headerobject"></div>
                 <div class="art-logo">
-                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">datamaps.eu</a></h1>
-                                                    <h2 id="slogan-text" class="art-logo-text">Erstelle deine eigene Visualisierung von Gemeinde-, Bezirks-, und Bundesland-Daten</h2>
+                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">DataMaps.eu</a></h1>
+                                                    <h2 id="slogan-text" class="art-logo-text">Erstellen Sie Visualisierungen von ortsbezogenen Daten</h2>
                                 </div>
             </div>
             <div class="art-nav">
@@ -390,6 +390,9 @@
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li><a href="http://www.datamaps.eu/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
+	</li>
+    <li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
+	<li><a href="http://www.datamaps.eu/vorlagen/" title="Vorlagen"><span class="l"> </span><span class="r"> </span><span class="t">Vorlagen</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li><a href="http://www.datamaps.eu/galerie/" title="Galerie"><span class="l"> </span><span class="r"> </span><span class="t">Galerie</span></a>
@@ -426,9 +429,8 @@
           <p style="border:1px solid #000000;padding:10px;background-color:#6F6;margin-bottom:10px;font-size:1.3em;line-height:100%;">
             <strong>Hinweis:</strong> <br />
             <span style="font-style:italic">
-              Dieses Feature wurde neu entwickelt und befindet sich nun in der Testphase.
-              Biete meldet Fehler und Wünsche an
-              <a href="mailtol:info@datamaps.eu">info@datamaps.eu</a> weiter.
+              Dieses Feature wurde neu entwickelt und befindet sich nun in der Testphase.<br/>
+              Bitte Fehler und Wünsche ins <a href="http://datenlandkarten.uservoice.com/forums/100819-feedback?lang=de&utm_campaign=Widgets&utm_content=tab-widget&utm_medium=Popin+Widget&utm_source=datenlandkarten.uservoice.com">Feedback-Forum</a> schreiben oder per E-Mail an <a href="mailto:info@datamaps.eu">info@datamaps.eu</a> senden.<br/>EntwicklerInnen können den Code auch auf <a href="https://github.com/meisterluk/datenlandkarte" target="_blank">github</a> forken und Pull-Requests für Bugfixes erstellen.
             </span>
           </p>
 <?php } ?>
@@ -451,7 +453,7 @@
                 Commons Namensnennung-Weitergabe unter gleichen
                 Bedingungen 3.0 Österreich Lizenz</a> weitergeben zu dürfen.
                 Ich bin damit einverstanden, dass die eingegebenen Daten
-                langfristig gespeichert werden und der Öffentlichkeit
+                langfristig im <a href="/rohdaten">Rohdatenverzeichnis</a> gespeichert werden und der Öffentlichkeit
                 zugänglich bleiben.<br>
 
                 Andernfalls werden die eingegebenen Daten genau für 1 Tag
@@ -503,15 +505,16 @@
 
           <table cellpadding="6" id="form">
             <tr>
-              <td>Titel:</td>
+              <td><strong>Titel:</strong></td>
               <td><input type="text" maxlength="50" tabindex="1" name="title" value="<?=$defaults['title']; ?>" /></td>
             </tr>
             <tr>
-              <td>Untertitel / Quelle:</td>
+              <td><strong>Untertitel / Quelle:</strong></td>
               <td><input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['subtitle']; ?>" /></td>
             </tr>
             <tr>
-              <td>Visualisierung:</td>
+              <td><strong>Welche Vorlage soll verwendet werden?</strong><br/>
+              (<a href="/vorlagen">derzeit verfügbare Vorlagen anzeigen</a>)</td>
               <td>
 <?php if ($defaults['vis'] === 'bl') { ?>
                   <input type="radio" name="vis" value="bl" id="bls" checked="checked" />
@@ -599,19 +602,19 @@
               </td>
             </tr>
             <tr>
-              <td>Hebefaktor:</td>
+              <td><strong>Hebefaktor</strong> (Jeder Wert wirt damit multipliziert.<br/>Damit kann man z.B. »0,45« in Prozentwerte umrechnen):</td>
               <td><input type="text" name="fac" value="<?=$defaults['fac']; ?>" /></td>
             </tr>
             <tr>
-              <td>Anzahl der Nachkommastellen (0-3):</td>
+              <td><strong>Anzahl der Nachkommastellen (0-3):</strong></td>
               <td><input type="text" name="dec" maxlength="1" value="<?=$defaults['dec']; ?>" /></td>
             </tr>
             <tr>
-              <td>Anzahl der Farben (2-10):</td>
+              <td><strong>Anzahl der Farben (2-10):</strong></td>
               <td><input type="text" name="colors" maxlength="2" value="<?=$defaults['colors']; ?>" /></td>
             </tr>
             <tr>
-              <td>Farbrichtung:</td>
+              <td><strong>Farbrichtung</strong> (<a href="/tool/img/farbpalette.png" target="_blank">Beispiele anzeigen</a>):</td>
               <td>
                 <select name="grad">
 <?php
@@ -719,4 +722,16 @@
     <div id="wp-footer">
     </div>
 </body>
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.ihrwebprofi.at/piwik/" : "http://www.ihrwebprofi.at/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 10);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://www.ihrwebprofi.at/piwik/piwik.php?idsite=10" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Tag -->
 </html>

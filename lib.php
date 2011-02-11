@@ -369,7 +369,7 @@
         $filename['svg'] = $img_path.$shareit.'.svg';
         $filename['png'] = $img_path.$shareit.'.png';
         $filename['bpng'] = $img_path.'_big'.$shareit.'.png';
-
+		
         $fp = fopen($filename['svg'], 'w');
         if (!$fp)
             return -1;
