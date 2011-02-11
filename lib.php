@@ -31,6 +31,7 @@
             }
         }
 
+        chdir($base);
         chdir($raw_data_folder);
         $files = glob(date('Y', $time).'*-0.json');
         if (!$files)

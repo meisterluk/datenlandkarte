@@ -20,18 +20,13 @@
     }
     */
 
-    $param = ($_GET) ? $_GET : $_POST;
-    if (!empty($param['q']))
+    function json2svg($json_obj)
     {
-        $param['q'] = stripslashes($param['q']);
-        $request = json_decode($param['q'], true);
-        if (!$request) die();
-
-        $return = sanitize($request['title'], $request['subtitle'],
-            $request['dec'], $request['colors'], $request['grad']);
+        $return = sanitize($json_obj['title'], $json_obj['subtitle'],
+            $json_obj['dec'], $json_obj['colors'], $json_obj['grad']);
 
         $pseudo_post = array();
-        switch ($request['base'][1])
+        switch ($json_obj['base'][1])
         {
             case 'bl':
                 $pseudo_post['vis'] = 'bl';
@@ -41,20 +36,20 @@
                 break;
             case 'gm':
                 $pseudo_post['vis'] = 'gm';
-                if (is_int($request['base'][0]))
+                if (is_int($json_obj['base'][0]))
                 {
                     $pseudo_post['gm_spec'] = 'bl';
-                    $pseudo_post['gm_bl'] = $request['base'][0];
+                    $pseudo_post['gm_bl'] = $json_obj['base'][0];
                 } else {
                     $pseudo_post['gm_spec'] = 'oe';
                 }
                 break;
             case 'bz':
                 $pseudo_post['vis'] = 'bz';
-                if (is_int($request['base'][0]))
+                if (is_int($json_obj['base'][0]))
                 {
                     $pseudo_post['bz_spec'] = 'bl';
-                    $pseudo_post['bz_bl'] = $request['base'][0];
+                    $pseudo_post['bz_bl'] = $json_obj['base'][0];
                 } else {
                     $pseudo_post['bz_spec'] = 'austria';
                 }
@@ -62,20 +57,50 @@
         }
 
         $s = select_svg_file($pseudo_post);
-        if (!$s) die();
+        if (!$s) return false;
 
-        $data = json2data($pseudo_post, $request['data']);
-        if (!$data) die();
+        $data = json2data($pseudo_post, $json_obj['data']);
+        if (!$data) return false;
 
         $svg = substitute($s, $return[0][0], $return[1][0],
             $return[2][0], $return[3][0], $return[4][0], $data);
 
-        if (!$svg) die();
+        if (!$svg) return false;
 
-        header('Content-type: image/svg+xml; charset=utf-8');
-        die($svg);
+        return $svg;
     }
 
+    $param = ($_GET) ? $_GET : $_POST;
+    if (!empty($param['data']))
+    {
+        $param['data'] = stripslashes($param['data']);
+        $path = $location_raw_data.basename(base64_decode($param['data']));
+        if (file_exists($path))
+        {
+            $content = file_get_contents($path);
+            if (!$content) die();
+
+            $json = json_decode($content, true);
+            if (!$json) die();
+
+            $svg = json2svg($json);
+            if (!$svg) die();
+        } else {
+            die();
+        }
+    } else if (!empty($param['q']))
+    {
+        $param['q'] = stripslashes($param['q']);
+        $json = json_decode($param['q'], true);
+        if (!$json) die();
+
+        $svg = json2svg($json);
+    }
+
+    if ($svg) {
+        header('Content-type: image/svg+xml; charset=utf-8');
+        echo $svg;
+    } else {
 ?><!DOCTYPE html>
 <html>
   <head>
@@ -142,4 +167,4 @@
         <strong>(sub)title:</strong> String for (sub)title.
     </p>
   </body>
-</html>
+</html><?php } ?>
