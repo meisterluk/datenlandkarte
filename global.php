@@ -1,6 +1,7 @@
 <?php
     // Ordner
     $location_creation = './upload/';
+    $location_raw_data = './data/';
     $location_pattern_svgs = './svgs/';
 
     // Initialisierung

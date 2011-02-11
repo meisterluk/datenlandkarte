@@ -89,8 +89,8 @@
                 </div>
                 <div class="art-headerobject"></div>
                 <div class="art-logo">
-                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">DataMaps.eu</a></h1>
-                                                    <h2 id="slogan-text" class="art-logo-text">Erstellen Sie Visualisierungen von ortsbezogenen Daten</h2>
+                                <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">datamaps.eu</a></h1>
+                                                    <h2 id="slogan-text" class="art-logo-text">Erstelle deine eigene Visualisierung von Gemeinde-, Bezirks-, und Bundesland-Daten</h2>
                                 </div>
             </div>
             <div class="art-nav">
@@ -105,9 +105,6 @@
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li class="active"><a class="active" href="http://www.datamaps.eu/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
-	</li>
-	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
-	<li><a href="http://www.datamaps.eu/vorlagen/" title="Vorlagen"><span class="l"> </span><span class="r"> </span><span class="t">Vorlagen</span></a>
 	</li>
 	<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
 	<li><a href="http://www.datamaps.eu/galerie/" title="Galerie"><span class="l"> </span><span class="r"> </span><span class="t">Galerie</span></a>
@@ -137,39 +134,28 @@
 
           <img src="img/cc.png" alt="Creative Commons" width="32" style="float:left; margin:10px" />
           <p style="line-height:50px; vertical-align:middle">
-            Die folgenden Daten unterstehen der <a href="http://creativecommons.org/licenses/by-sa/3.0/at/" target="_blank">Creative Commons Namensnennung-Weitergabe unter gleichen Bedingungen 3.0 Österreich Lizenz</a>.
+            Die folgenden Daten unterstehen der Creative Commons-Lizenz.
           </p>
 
           <table cellpadding="6" style="width:100%; clear:left">
 <?php
-        $files = list_public_data($location_creation);
+        $files = list_public_data($location_raw_data);
         if ($files)
         {
             foreach ($files as $key => $f) {
-                switch (substr($f, -4))
-                {
-                    case '.txt':
-                        $type = 'Rohdaten';
-                        break;
-                    case '.png':
-                        $type = 'PNG';
-                        break;
-                    case '.svg':
-                        $type = 'SVG';
-                        break;
-                }
-                if (!file_exists($location_creation.$f))
+                $file = $location_raw_data.$f;
+                if (!file_exists($file))
                     continue;
 ?>
             <tr>
               <td>
-                <a href="<?=$location_creation; ?><?=htmlspecialchars($f, ENT_NOQUOTES); ?>">
+                <a href="api.php?data=<?=urlencode(base64_encode($f)); ?>">
                   <?=htmlspecialchars($f, ENT_NOQUOTES); ?>
                 </a>
               </td>
-              <td><?=date('Y-m-d', filemtime($location_creation.$f)); ?></td>
-              <td><?=$type; ?></td>
-              <td><?=sprintf("%.1f", ((float)filesize($location_creation.$f) / 1024)); ?> KB</td>
+              <td><?=date('Y-m-d', filemtime($file)); ?></td>
+              <td>Rohdaten</td>
+              <td><?=sprintf("%.1f", ((float)filesize($file) / 1024)); ?> KB</td>
             </tr>
 <?php
             }
@@ -214,16 +200,4 @@
     <div id="wp-footer">
     </div>
 </body>
-<!-- Piwik -->
-<script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.ihrwebprofi.at/piwik/" : "http://www.ihrwebprofi.at/piwik/");
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-try {
-var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 10);
-piwikTracker.trackPageView();
-piwikTracker.enableLinkTracking();
-} catch( err ) {}
-</script><noscript><p><img src="http://www.ihrwebprofi.at/piwik/piwik.php?idsite=10" style="border:0" alt="" /></p></noscript>
-<!-- End Piwik Tracking Tag -->
 </html>

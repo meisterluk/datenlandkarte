@@ -9,15 +9,14 @@
 
     // Function to detect non-public files in upload folder
     // and try to delete them
-    function delete_old_created_file($folder, $time=false)
+    function delete_old_created_file($folder, $raw_data_folder, $time=false)
     {
         if ($time === false)
             $time = time();
 
         $base = getcwd();
         chdir($folder);
-        $date = date('Ymd');
-        $files = glob(date('Y', $time).'*{-0.svg,-0.png,-0.txt,-1.png}', GLOB_BRACE);
+        $files = glob(date('Y', $time).'*{.svg,.png}', GLOB_BRACE);
         if (!$files)
             $files = array();
 
@@ -31,6 +30,22 @@
                     return false;
             }
         }
+
+        chdir($raw_data_folder);
+        $files = glob(date('Y', $time).'*-0.json');
+        if (!$files)
+            $files = array();
+
+        foreach ($files as $file)
+        {
+            if (substr($file, 0, 8) != date('Ymd', $time))
+            {
+                $status = unlink($file);
+                if ($status === false)
+                    return false;
+            }
+        }
+
         chdir($base);
         return true;
     }
@@ -40,7 +55,7 @@
     {
         $base = getcwd();
         chdir($folder);
-        $files = glob('*-1.{svg,png,txt}', GLOB_BRACE);
+        $files = glob('*.json', GLOB_BRACE);
         if (!$files) return array();
         chdir($base);
 
@@ -340,6 +355,8 @@
     // Create files as defined by user
     function create_file($svg, $img_path, $json_data)
     {
+        global $location_raw_data;
+
         $json_source = create_json($json_data[0], $json_data[1], $json_data[2],
             $json_data[3], $json_data[4], $json_data[5], $json_data[6]);
 
@@ -349,9 +366,9 @@
         if ($json_data[0]['shareit'] == 'on')
         {
             $shareit = '-1';
-            $filename['txt'] = $img_path.$shareit.'.txt';
+            $filename['json'] = $location_raw_data.basename($img_path).$shareit.'.json';
 
-            $fp = fopen($filename['txt'], 'w');
+            $fp = fopen($filename['json'], 'w');
             if (!$fp) return -1;
 
             $w = fwrite($fp, $json_source);
