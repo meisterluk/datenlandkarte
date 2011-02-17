@@ -278,7 +278,7 @@
     function check_input_value($value)
     {
         // if it is a real zero
-        if (preg_match('/^0([.,]0+)?$/', $value))
+        if (preg_match('/^0([.,]0+)?$/', trim($value)))
         {
             return 0;
         } else {
@@ -286,7 +286,7 @@
             if ($value === '')
             {
                 return true;
-            } elseif ((int)$value == 0) {
+            } elseif ((float)$value == 0.0) {
                 return false;
             } else {
                 return $value;
@@ -387,7 +387,7 @@
         $filename['svg'] = $img_path.$shareit.'.svg';
         $filename['png'] = $img_path.$shareit.'.png';
         $filename['bpng'] = $img_path.'_big'.$shareit.'.png';
-		
+
         $fp = fopen($filename['svg'], 'w');
         if (!$fp)
             return -1;
