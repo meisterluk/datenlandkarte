@@ -202,9 +202,30 @@
         'Preitenegg', 'Reichenfels', 'Sankt Andrä',
         'Sankt Georgen im Lavanttal', 'Sankt Paul im Lavanttal', 'Wolfsberg'
     );
+	$gemeinden[8] = array(
+        'Altach', 'Düns', 'Dünserberg', 'Feldkirch', 'Frastanz', 'Fraxern',
+        'Göfis', 'Götzis', 'Klaus', 'Koblach', 'Laterns', 'Mäder', 'Meiningen',
+        'Rankweil', 'Röns', 'Röthis', 'Satteins', 'Schlins', 'Schnifis', 'Sulz',
+        'Übersaxen', 'Viktorsberg', 'Weiler', 'Zwischenwasser', 'Dornbirn',
+        'Hohenems', 'Lustenau', 'Alberschwende', 'Andelsbuch', 'Au', 'Bezau',
+        'Bildstein', 'Bizau', 'Bregenz', 'Buch', 'Damüls', 'Doren', 'Egg',
+        'Eichenberg', 'Fußach', 'Gaißau', 'Hard', 'Hittisau', 'Höchst', 'Hörbranz',
+        'Hohenweiler', 'Kennelbach', 'Krumbach', 'Langen bei Bregenz', 'Langenegg',
+        'Lauterach', 'Lingenau', 'Lochau', 'Mellau', 'Mittelberg', 'Möggers', 'Reuthe',
+        'Riefensberg', 'Schnepfau', 'Schoppernau', 'Schröcken', 'Schwarzach', 'Schwarzenberg',
+        'Sibratsgfäll', 'Sulzberg', 'Warth', 'Wolfurt', 'Bartholomäberg', 'Blons',
+        'Bludesch', 'Brand', 'Bürs', 'Dalaas', 'Fontanella', 'Gaschurn', 'Innerbraz',
+        'Klösterle', 'Lech', 'Lorüns', 'Ludesch', 'Nenzing', 'Nüziders', 'Raggal',
+        'Sankt Gallenkirch', 'Sankt Gerold', 'Schruns', 'Silbertal', 'Sonntag',
+        'Stallehr', 'Thüringen', 'Thüringerberg', 'Tschagguns', 'Vandans', 'Bludenz',
+        'Bürserberg','Sankt Anton im Montafon'
+    );
 
             if ($index == 'oe' || $index = 'austria')
                 $gemeinden[$index] = array_merge($gemeinden[2]);
+
+            if ($index == 'oe' || $index = 'austria')
+                $gemeinden[$index] = array_merge($gemeinden[8]);
 
             if ($index === false)
                 $result = $gemeinden;

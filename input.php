@@ -180,36 +180,15 @@
 <link rel="pingback" href="http://www.datamaps.eu/xmlrpc.php" />
 <link rel="alternate" type="application/rss+xml" title="datamaps.eu &raquo; Feed" href="http://www.datamaps.eu/feed/" />
 <link rel="alternate" type="application/rss+xml" title="datamaps.eu &raquo; Kommentar Feed" href="http://www.datamaps.eu/comments/feed/" />
-<link rel='stylesheet' id='NextGEN-css'  href='http://www.datamaps.eu/wp-content/plugins/nextgen-gallery/css/nggallery.css?ver=1.0.0' type='text/css' media='screen' />
-<link rel='stylesheet' id='shutter-css'  href='http://www.datamaps.eu/wp-content/plugins/nextgen-gallery/shutter/shutter-reloaded.css?ver=1.3.0' type='text/css' media='screen' />
-<link rel='stylesheet' id='feedreading_style-css'  href='http://www.datamaps.eu/wp-content/plugins/feed-reading-blogroll/css/feedreading_blogroll.css?ver=1.5.6' type='text/css' media='all' />
-<link rel='stylesheet' id='prlipro-post-css'  href='http://www.datamaps.eu/wp-content/plugins/pretty-link/pro/css/prlipro-post.css?ver=3.0.4' type='text/css' media='all' />
-<script type='text/javascript' src='http://www.datamaps.eu/wp-content/plugins/nextgen-gallery/shutter/shutter-reloaded.js?ver=1.3.0'></script>
 <script type='text/javascript' src='http://www.datamaps.eu/wp-includes/js/swfobject.js?ver=2.2'></script>
 <script type='text/javascript' src='http://www.datamaps.eu/wp-includes/js/jquery/jquery.js?ver=1.4.2'></script>
-<script type='text/javascript' src='http://www.datamaps.eu/wp-includes/js/comment-reply.js?ver=20090102'></script>
-<script type='text/javascript' src='http://www.datamaps.eu/wp-content/feedreading_blogroll.js?ver=1.5.6'></script>
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.datamaps.eu/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.datamaps.eu/wp-includes/wlwmanifest.xml" /> 
 <link rel='index' title='datamaps.eu' href='http://www.datamaps.eu/' />
 <link rel='next' title='Galerie' href='http://www.datamaps.eu/galerie/' />
-				<meta name="DC.publisher" content="datamaps.eu" />
-		<meta name="DC.publisher.url" content="http://www.datamaps.eu/" />
-		<meta name="DC.title" content="Datenlandkarte erstellen" />
-		<meta name="DC.identifier" content="http://www.datamaps.eu/erstellen/" />
-		<meta name="DC.date.created" scheme="WTN8601" content="2011-02-02T20:09:28" />
-		<meta name="DC.created" scheme="WTN8601" content="2011-02-02T20:09:28" />
-		<meta name="DC.date" scheme="WTN8601" content="2011-02-02T20:09:28" />
-		<meta name="DC.creator.name" content="Harm, Robert" />
-		<meta name="DC.creator" content="Harm, Robert" />
-		<meta name="DC.rights.rightsHolder" content="@RobertHarm" />		
-		<meta name="DC.language" content="de-DE" scheme="rfc1766" />
-		<meta name="DC.rights.license" content="http://creativecommons.org/licenses/by/3.0/at/" />
-		<meta name="DC.license" content="http://creativecommons.org/licenses/by/3.0/at/" />
 	<!--Facebook Like Button OpenGraph Settings Start-->
 	<meta property="og:site_name" content="datamaps.eu"/>
 	<meta property="og:title" content="Datenlandkarte erstellen"/>
-		<meta property="og:description" content="Hier können Sie selbst Datenlandkarten erstellen. Gleichzeitig werden, falls Sie diese Option aktiviert lassen, die Rohdaten der Visualisie"/>
+		<meta property="og:description" content="Hier können Sie selbst Datenlandkarten erstellen"/>
 	
 	<meta property="og:url" content="http://www.datamaps.eu/erstellen/"/>
 	<meta property="fb:admins" content="1039929046" />
@@ -219,7 +198,6 @@
 		<!--Facebook Like Button OpenGraph Settings End-->
 	      <link rel="shorturl" href="http://datenlandkarte.at/gs8" />
     
-<meta name='NextGEN' content='1.7.3' />
 <script type="text/javascript" src="http://www.datamaps.eu/wp-content/themes/datamaps/script.js"></script>
 <script type="text/javascript">
 <!--
@@ -355,6 +333,7 @@
 </style>
 </head>
 <body class="page page-id-2 page-template page-template-default">
+<div id="art-page-background-middle-texture">
 <div id="art-main">
     <div class="art-sheet">
         <div class="art-sheet-tl"></div>
@@ -375,7 +354,7 @@
                 <div class="art-headerobject"></div>
                 <div class="art-logo">
                                 <h1 id="name-text" class="art-logo-name"><a href="http://www.datamaps.eu/">DataMaps.eu</a></h1>
-                                                    <h2 id="slogan-text" class="art-logo-text">Erstellen Sie Visualisierungen von ortsbezogenen Daten</h2>
+                                                    <h2 id="slogan-text" class="art-logo-text">map your data</h2>
                                 </div>
             </div>
             <div class="art-nav">
@@ -417,7 +396,22 @@
           <form action="input.php" method="post">
 
 
-        <h2 class="art-postheader">Datenlandkarte erstellen</h2>
+        <h2 class="art-postheader">Datenlandkarte erstellen
+        
+        <div style="float:right;">
+        <!-- Begin ConveyThis Button -->
+		<script type="text/javascript">
+            var conveythis_src = 'de';
+        </script>
+        <div class="conveythis">
+            <a class="conveythis_drop" title="Translate" href="http://www.translation-services-usa.com/"><span class="conveythis_button_1">automatic translation</span></a>
+        </div>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://s1.conveythis.com/e2/_v_3/javascript/e3.js"></script>
+        <!-- End ConveyThis Button -->
+        </div>
+        
+        </h2>
         <div class="art-postcontent">
           <noscript>
             <p>
@@ -434,6 +428,7 @@
             </span>
           </p>
 <?php } ?>
+
 
           <div id="cc_header">
             <div id="cc_header_img">
@@ -719,6 +714,7 @@
     <div class="cleared"></div>
     <p class="art-page-footer"></p>
 </div>
+</div><!--MiddleTextureEnd-->
     <div id="wp-footer">
     </div>
 </body>
