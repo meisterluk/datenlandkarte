@@ -4,7 +4,7 @@ README
 :project:       datenlandkarten
 :author:        meisterluk
 :date:          11.02.06
-:version:       1.0
+:version:       2.0
 :license:       Emailware
 
 Setup
@@ -16,21 +16,17 @@ Setup
 ToDos
 -----
 
-* Bug: Data get lost for list input.
-* Bug: If no correct value is entered: do not show any color areas.
+* ToDo: Change behaviour: Only show radio button if pattern SVG exists
+* ToDo: Testing
 
 Features
 --------
 
 * User-defined color palettes
 * Google Chart API binding
-* Public API offering
 * Additional fields such as source.
-* manual\d should become manual[]
-* Sanitization and Parameter collection sucks
 * SVG Upload if SVG not available
 * More global.php variables / configuration
-* 2-directional folding
 
 Bugs
 ----

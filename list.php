@@ -106,7 +106,7 @@
 <div class="art-post post-2 page type-page hentry" id="post-2">
 	    <div class="art-post-body">
 	            <div class="art-post-inner art-article">
-          <form action="input.php" method="post">
+          <form action="index.php" method="post">
 
 
         <h2 class="art-postheader">Rohdatenverzeichnis

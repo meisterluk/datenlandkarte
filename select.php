@@ -17,7 +17,7 @@
         else
             $fac = (float)$_POST['fac'];
 
-        $error = _error_msg_for_data($data);
+        $error = alloc_error_data($data);
         if ($error === false) // no error
             $data = include_factor($data, $fac);
         else
