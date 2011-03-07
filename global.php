@@ -71,131 +71,131 @@
     $geo_hierarchy = array(
         0 => array(
             'name' => 'Länder',
-            'filename' => 'countries_',
+            'filename' => 'countries',
 
             1 => array(
                 'name' => 'Albanien',
-                'filename' => 'albania_'
+                'filename' => 'albania'
             ),
             2 => array(
                 'name' => 'Andorra',
-                'filename' => 'andorra_'
+                'filename' => 'andorra'
             ),
             3 => array(
                 'name' => 'Belgien',
-                'filename' => 'belgium_',
+                'filename' => 'belgium',
             ),
             4 => array(
                 'name' => 'Bosnien und Herzegowina',
-                'filename' => 'bosna_herzegovina_',
+                'filename' => 'bosna_herzegovina',
             ),
             5 => array(
                 'name' => 'Bulgarien',
-                'filename' => 'bulgaria_',
+                'filename' => 'bulgaria',
             ),
             6 => array(
                 'name' => 'Dänemark',
-                'filename' => 'danmark_',
+                'filename' => 'danmark',
             ),
             7 => array(
                 'name' => 'Deutschland',
-                'filename' => 'germany_',
+                'filename' => 'germany',
             ),
             8 => array(
                 'name' => 'Estland',
-                'filename' => 'estonia_',
+                'filename' => 'estonia',
             ),
             9 => array(
                 'name' => 'Finnland',
-                'filename' => 'finland_',
+                'filename' => 'finland',
             ),
             10 => array(
                 'name' => 'Frankreich',
-                'filename' => 'french_',
+                'filename' => 'french',
             ),
             11 => array(
                 'name' => 'Griechenland',
-                'filename' => 'greece_',
+                'filename' => 'greece',
             ),
             12 => array(
                 'name' => 'Irland',
-                'filename' => 'ireland_',
+                'filename' => 'ireland',
             ),
             13 => array(
                 'name' => 'Island',
-                'filename' => 'island_',
+                'filename' => 'island',
             ),
             14 => array(
                 'name' => 'Italien',
-                'filename' => 'italia_',
+                'filename' => 'italia',
             ),
             15 => array(
                 'name' => 'Kasachstan',
-                'filename' => 'kazackhstan_',
+                'filename' => 'kazackhstan',
             ),
             16 => array(
                 'name' => 'Kosovo',
-                'filename' => 'kosovo_',
+                'filename' => 'kosovo',
             ),
             17 => array(
                 'name' => 'Kroatien',
-                'filename' => 'croatia_',
+                'filename' => 'croatia',
             ),
             18 => array(
                 'name' => 'Lettland',
-                'filename' => 'latvia_',
+                'filename' => 'latvia',
             ),
             19 => array(
                 'name' => 'Liechtenstein',
-                'filename' => 'liechtenstein_',
+                'filename' => 'liechtenstein',
             ),
             20 => array(
                 'name' => 'Litauen',
-                'filename' => 'lithuania_',
+                'filename' => 'lithuania',
             ),
             21 => array(
                 'name' => 'Luxemburg',
-                'filename' => 'luxembourg_',
+                'filename' => 'luxembourg',
             ),
             22 => array(
                 'name' => 'Malta',
-                'filename' => 'malta_',
+                'filename' => 'malta',
             ),
             23 => array(
                 'name' => 'Mazedonien',
-                'filename' => 'macedonia_',
+                'filename' => 'macedonia',
             ),
             24 => array(
                 'name' => 'Moldawien',
-                'filename' => 'moldavia_',
+                'filename' => 'moldavia',
             ),
             25 => array(
                 'name' => 'Monaco',
-                'filename' => 'monaco_',
+                'filename' => 'monaco',
             ),
             26 => array(
                 'name' => 'Montenegro',
-                'filename' => 'montenegro_',
+                'filename' => 'montenegro',
             ),
             27 => array(
                 'name' => 'Niederlande',
-                'filename' => 'netherlands_',
+                'filename' => 'netherlands',
             ),
             28 => array(
                 'name' => 'Norwegen',
-                'filename' => 'norway_',
+                'filename' => 'norway',
             ),
             29 => array(
                 'name' => 'Österreich',
-                'filename' => 'austria_',
+                'filename' => 'austria',
 
                 0 => array(
                     'name' => 'Föderale Ebene',
-                    'filename' => 'at_federal_',
+                    'filename' => 'at_federal',
 
                     0 => array(
                         'name' => 'Bundesländer Österreichs',
-                        'filename' => 'bl_',
+                        'filename' => 'bl',
 
                         1 => array(
                             'name' => 'Burgenland',
@@ -236,24 +236,24 @@
                     ),
                     1 => array(
                         'name' => 'Bezirke Österreichs',
-                        'filename' => 'bzaustria_',
+                        'filename' => 'bzaustria',
 
                         // this is automatically filled
                     ),
                     2 => array(
                         'name' => 'Gemeinden Österreichs',
-                        'filename' => 'gmaustria_',
+                        'filename' => 'gmaustria',
 
                         // this is automatically filled
                     )
                 ),
                 1 => array(
                     'name' => 'Provinzen Ebene',
-                    'filename' => 'at_provinces_',
+                    'filename' => 'at_provinces',
 
                     0 => array(
                         'name' => 'Bezirke eines Bundeslands',
-                        'filename' => 'blbezirke_',
+                        'filename' => 'blbezirke',
 
                         1 => array(
                             'name' => 'Wien',
@@ -583,11 +583,11 @@
                 ),
                 2 => array(
                     'name' => 'Lokale Ebene',
-                    'filename' => 'at_local_',
+                    'filename' => 'at_local',
 
                     0 => array(
                         'name' => 'Gemeinden eines Bundeslands',
-                        'filename' => 'blgemeinden_',
+                        'filename' => 'blgemeinden',
 
                         2 => array(
                             'name' => 'Kärnten',
@@ -1508,80 +1508,80 @@
             ),
             30 => array(
                 'name' => 'Polen',
-                'filename' => 'Poland_',
+                'filename' => 'Poland',
             ),
             31 => array(
                 'name' => 'Portugal',
-                'filename' => 'portugal_',
+                'filename' => 'portugal',
             ),
             32 => array(
                 'name' => 'Rumänien',
-                'filename' => 'romania_',
+                'filename' => 'romania',
             ),
             33 => array(
                 'name' => 'Russland',
-                'filename' => 'russia_',
+                'filename' => 'russia',
             ),
             34 => array(
                 'name' => 'San Marino',
-                'filename' => 'san_marino_',
+                'filename' => 'san_marino',
             ),
             35 => array(
                 'name' => 'Schweden',
-                'filename' => 'sweden_',
+                'filename' => 'sweden',
             ),
             36 => array(
                 'name' => 'Schweiz',
-                'filename' => 'switzerland_',
+                'filename' => 'switzerland',
             ),
             37 => array(
                 'name' => 'Serbien',
-                'filename' => 'serbia_',
+                'filename' => 'serbia',
             ),
             38 => array(
                 'name' => 'Slowakei',
-                'filename' => 'slovakia_',
+                'filename' => 'slovakia',
             ),
             39 => array(
                 'name' => 'Slowenien',
-                'filename' => 'slovenia_',
+                'filename' => 'slovenia',
             ),
             40 => array(
                 'name' => 'Spanien',
-                'filename' => 'spain_',
+                'filename' => 'spain',
             ),
             41 => array(
                 'name' => 'Tschechien',
-                'filename' => 'czech_',
+                'filename' => 'czech',
             ),
             42 => array(
                 'name' => 'Türkei',
-                'filename' => 'turkey_',
+                'filename' => 'turkey',
             ),
             43 => array(
                 'name' => 'Ukraine',
-                'filename' => 'ukraine_',
+                'filename' => 'ukraine',
             ),
             44 => array(
                 'name' => 'Ungarn',
-                'filename' => 'hungary_',
+                'filename' => 'hungary',
             ),
             45 => array(
                 'name' => 'Vatikanstadt',
-                'filename' => 'vatican_city_',
+                'filename' => 'vatican_city',
             ),
             46 => array(
                 'name' => 'Vereinigtes Königreich',
-                'filename' => 'united_kingdom_',
+                'filename' => 'united_kingdom',
             ),
             47 => array(
                 'name' => 'Weißrussland',
-                'filename' => 'belarus_',
+                'filename' => 'belarus',
             )
         ),
         1 => array(
             'name' => 'Kontinente',
-            'filename' => 'continents_',
+            'filename' => 'continents',
 
             0 => array(
                 'name' => 'Europa',
@@ -1594,12 +1594,35 @@
         ),
         2 => array(
             'name' => 'Internationale Organisationen',
-            'filename' => 'int_organ_'
+            'filename' => 'int_organ'
         ),
         3 => array(
             'name' => 'Sonstige',
-            'filename' => 'others_'
+            'filename' => 'others'
         )
     );
+
+    // Autofill geo_hierarchy
+    $counter = 0;
+    foreach ($geo_hierarchy[0][29][1][0] as $bl)
+    {
+        if (is_array($bl)) // exclude filename & name
+        {
+            foreach ($bl as $gemeinde)
+            {
+                $geo_hierarchy[0][29][0][1][$counter++] = $gemeinde;
+            }
+        }
+    }
+    foreach ($geo_hierarchy[0][29][2][0] as $bl)
+    {
+        if (is_array($bl)) // exclude filename & name
+        {
+            foreach ($bl as $bezirk)
+            {
+                $geo_hierarchy[0][29][0][2][$counter++] = $bezirk;
+            }
+        }
+    }
    }
 ?>
