@@ -11,6 +11,19 @@
     {
         return htmlspecialchars($str, ENT_NOQUOTES);
     }
+    function print_array_values($array, $depth=0)
+    {
+        if ($depth === 0)
+            echo '<pre>';
+        foreach ($array as $val)
+        {
+            echo str_repeat(' ', $depth)._e($val)."\n";
+            print_array_value($val, $depth+4);
+        }
+
+        if ($depth === 0)
+            echo '</pre>';
+    }
 
     function geo_input_tree($array, $indent, $selected=NULL, $path=NULL)
     {

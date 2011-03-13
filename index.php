@@ -24,8 +24,11 @@
     require_once('lib/sanitize.php');
     require_once('lib/html.php');
 
-    echo print_geo_filenames($geo_hierarchy, 0);
-    die();
+    if ($_GET['mode'] == 'show_svg_filenames')
+    {
+        print_array_values($geo_hierarchy);
+        die();
+    }
 
 /*    if ($_POST) {
         $invalid = check_userinput($_POST);

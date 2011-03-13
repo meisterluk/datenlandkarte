@@ -100,6 +100,39 @@
             7 => array(
                 'name' => 'Deutschland',
                 'filename' => 'germany',
+
+                0 => array(
+                    'name' => 'Föderale Ebene',
+                    'filename' => 'at_federal',
+
+                    0 => array(
+                        'name' => 'Bundesländer Deutschlands',
+                        'filename' => 'bl'
+                    )
+                ),
+                0 => array(
+                    'name' => 'Lokale Ebene',
+                    'filename' => 'at_local',
+
+                    0 => array(
+                        'name' => 'Bezirke einer Stadt',
+                        'filename' => 'bz',
+
+                        0 => array(
+                            'name' => 'Berlin',
+                            'filename' => 'berlin'
+                        )
+                    ),
+                    1 => array(
+                        'name' => 'Provinzen einer Stadt',
+                        'filename' => 'pv',
+
+                        0 => array(
+                            'name' => 'Berlin',
+                            'filename' => 'berlin'
+                        )
+                    )
+                )
             ),
             8 => array(
                 'name' => 'Estland',

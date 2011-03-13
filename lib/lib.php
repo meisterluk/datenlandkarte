@@ -67,16 +67,17 @@
         {
             if (is_array($geo))
             {
-                $ext = (endswith($geo['filename'], '_') ? '' : '.svg');
-                $out .= $i.$path.$geo['filename'].$ext."\n";
+                $x = 0;
+                $x += ((isset($geo['name'])) ? 1 : 0);
+                $x += ((isset($geo['filename'])) ? 1 : 0);
+
+                if (!endswith($geo['filename'], '_'))# && (count($geo) - $x) > 0)
+                    $out .= $i.$path.$geo['filename'].".svg\n";
             }
 
-            $x = 0;
-            $x += ((isset($geo['name'])) ? 1 : 0);
-            $x += ((isset($geo['filename'])) ? 1 : 0);
-            if (is_array($geo) && (count($geo) - $x) > 0)
+            if (is_array($geo))
             {
-                $out .= print_geo_filenames($geo, $indent+4, $path.$geo['filename']);
+                $out .= print_geo_filenames($geo, $indent+4, $path.$geo['filename'].'_');
             }
         }
         return $out;
