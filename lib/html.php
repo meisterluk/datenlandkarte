@@ -1,6 +1,5 @@
 <?php
-    require_once('alloc.php');
-    require_once('svg.php');
+    require_once($root.'lib/svg.php');
 
     /***
         HTML Management
@@ -25,76 +24,35 @@
             echo '</pre>';
     }
 
-    function geo_input_tree($array, $indent, $selected=NULL, $path=NULL)
+    function split_vis_path($vis_path)
     {
-        $indentation = str_repeat(' ', $indent);
-        $out = '';
-
-        if ($path === NULL)
-            $path = 'vis';
-
-        foreach ($array as $key => $value)
-        {
-            if ($key === 'name' || $key === 'filename')
-                continue;
-
-            // do not print children at bottom of hierarchy
-            $copy = array_keys($value);
-            $pos1 = array_search('filename', $copy);
-            $pos2 = array_search('name', $copy);
-            if ($pos1 !== false) unset($copy[$pos1]);
-            if ($pos2 !== false) unset($copy[$pos2]);
-            $has_subelements = !is_empty($copy);
-
-            if (!$has_subelements)
-                continue;
-
-            $p = $path.'_'.$key;
-            if (startswith($selected, $p))
-                $s = ' checked="checked"';
-            else
-                $s = '';
-
-            $filename = Svg::select_file($p);
-
-            $out .= $indentation.'<label id="'.$p.'">'."\n";
-            $out .= $indentation.'  <input type="radio" name="'._e($path).'" value="'._e($key).'"'.$s.' />'."\n";
-            $out .= $indentation.'  '._e($value['name'])."\n";
-            $out .= $indentation.'</label> <br />'."\n\n";
-
-            $return = geo_input_tree($value, $indent+4, $selected, $p);
-            if (file_exists($filename) && !is_empty($return))
+        $vis_path = explode('_', $vis_path);
+        if ($vis_path[0] != 'vis')
+            return false;
+        else {
+            $new = array();
+            foreach ($vis_path as $id => $vp)
             {
-                $out .= $indentation.'<div class="subselect">'."\n";
-                $out .= $return;
-                $out .= $indentation.'</div>'."\n";
+                if ($id == 0)
+                    continue;
+                $new[] = (int)$vp;
             }
+            return $new;
         }
-
-        return $out;
     }
 
-    function create_error_messages($invalid, $indent=10)
+    function create_error_messages($error_obj, $indent=10)
     {
         $indent = str_repeat(' ', (int)$indent);
-        $out .= $indent.'<p style="font-size:120%" class="error">Es traten '.
-            'Fehler auf:</p>'."\n";
+        $out .= $indent.'<p style="font-size:120%" class="error">'
+            .'Es traten Fehler auf:</p>'."\n";
         $out .= $indent.'<ul>'."\n";
 
-        $li = $indent.'<li>%s</li>'."\n";
+        $li = $indent.'<li class="%s">%s</li>'."\n";
 
-        if ($invalid) {
-            foreach ($invalid as $field)
-            {
-                $error = alloc_input_error($field);
-                $out .= sprintf($li, _e($error));
-            }
-        } else {
-            $msg = _error_msg_for_data($data);
-            if ($msg !== false)
-            {
-                o(_e($msg));
-            }
+        foreach ($error_obj->iterate() as $error)
+        {
+            $out .= sprintf($li, _e($error[1]), _e($error[0]));
         }
 
         $out .= $indent.'</ul>'."\n";
@@ -160,5 +118,27 @@
         }
 
         return substr($out, 0, -1);
+    }
+
+    function overwrite_defaults(&$defaults)
+    {
+        foreach ($defaults as $key => $def)
+        {
+            if (!(is_array($def) || is_object($def) || is_resource($def)))
+                $defaults[$key] = _e(stripslashes($def));
+        }
+        $defaults['title'] = ' value="'.$defaults['title'].'"';
+        $defaults['subtitle'] = ' value="'.$defaults['subtitle'].'"';
+        $defaults['fac'] = ' value="'.$defaults['fac'].'"';
+        $defaults['dec'] = ' value="'.$defaults['dec'].'"';
+        $defaults['colors'] = ' value="'.$defaults['colors'].'"';
+        $defaults['grad'] = array($defaults['grad'], ' selected="selected"');
+        $defaults['list_delim'] = ' value="'.$defaults['list_delim'].'"';
+        $defaults['kvalloc_delim1'] = ' value="'.$defaults['kvalloc_delim1'].'"';
+        $defaults['kvalloc_delim2'] = ' value="'.$defaults['kvalloc_delim2'].'"';
+
+        $defaults['shareit'] = ($_POST['shareit'] == 'on') ? ' checked="checked"' : '';
+        $defaults['format'] = array((!is_empty($_POST['format'])) ?
+            _e(stripslashes($_POST['format'])) : 'manual', ' selected="selected"');
     }
 ?>

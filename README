@@ -11,7 +11,7 @@ Setup
 -----
 
 1. Upload all files and folder
-2. Give a+w permission for upload folder.
+2. Set a+w permission for upload folder.
 
 ToDos
 -----
@@ -33,6 +33,7 @@ Bugs
 
 * The geo hierarchy might be more efficiently stored using an appropriate
   data structure ([unknown kind]Tree?)
+* Introduce static methods where possible
 
 Please report bugs to ...
 

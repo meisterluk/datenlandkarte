@@ -59,10 +59,21 @@
         return $files;
     }
 
+    function short_json_filename($filename)
+    {
+        $info = pathinfo($filename);
+        $pos = strpos($info['filename'], '-');
+        return substr($filename, $pos+1);
+    }
 
-    function create_filename
-        $file_title = $title;
-        $file_title = preg_replace('/[[:^alnum:]]/', '_', $file_title);
-        $file_subtitle = $subtitle;
-        $file_subtitle = preg_replace('/[[:^alnum:]]/', '_', $file_subtitle);
+    function create_json_filename($title=NULL, $subtitle=NULL, $public=NULL,
+        $timestamp=NULL, $format=NULL)
+    {
+        $title = preg_replace('/[[:^alnum:]]+/', '_', $title);
+        $subtitle = preg_replace('/[[:^alnum:]]+/', '_', $subtitle);
+        $datetime = date('Ymd', $timestamp || time());
+        $public = ($public) ? '1' : '0';
+
+        return $datetime.'-'.$title.'-'.$subtitle.'-'.$public.'.json';
+    }
 ?>

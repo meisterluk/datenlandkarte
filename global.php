@@ -1,4 +1,5 @@
 <?php
+    $root = './';
     require_once('lib/lib.php');
 
     // Ordner
@@ -67,7 +68,6 @@
     // Eine Ebene drüber befindet sich in
     //     name der Ausgabe-Name
     //     filename der Dateiname (summiert sich über die Ebenen auf)
-   if ($load_geo) { // optional, to save memory
     $geo_hierarchy = array(
         0 => array(
             'name' => 'Länder',
@@ -1643,7 +1643,7 @@
         {
             foreach ($bl as $gemeinde)
             {
-                $geo_hierarchy[0][29][0][1][$counter++] = $gemeinde;
+                $geo_hierarchy[0][29][0][1][$counter++] = &$gemeinde;
             }
         }
     }
@@ -1653,9 +1653,8 @@
         {
             foreach ($bl as $bezirk)
             {
-                $geo_hierarchy[0][29][0][2][$counter++] = $bezirk;
+                $geo_hierarchy[0][29][0][2][$counter++] = &$bezirk;
             }
         }
     }
-   }
 ?>

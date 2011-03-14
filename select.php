@@ -1,7 +1,8 @@
 <?php
     if (!$_POST) header('Location: input.php');
 
-    require_once('lib.php');
+    $root = './';
+    require_once('lib/lib.php');
 
     $keys = get_keys_by_vis($_POST);
 

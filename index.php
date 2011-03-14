@@ -18,30 +18,20 @@
     *
     */
 
-    $load_geo = true;
+    $root = './';
     require_once('global.php');
     require_once('lib/lib.php');
-    require_once('lib/sanitize.php');
+    require_once('lib/files.php');
+    require_once('lib/userinput.php');
     require_once('lib/html.php');
+
+    $g = new Geo($geo_hierarchy);
+    $n = new Notifications();
 
     if ($_GET['mode'] == 'show_svg_filenames')
     {
-        print_array_values($geo_hierarchy);
+        print_array_values($g->get_svg());
         die();
-    }
-
-/*    if ($_POST) {
-        $invalid = check_userinput($_POST);
-        $keys = get_keys_by_vis($_POST);
-        $data = get_data($_POST, $keys);
-
-        if (!$invalid && is_array($data))
-        {
-            unset($keys);
-            unset($data);
-            require_once('select.php');
-            die();
-        }
     }
 
     // Remove any old created files if there are any
@@ -50,96 +40,17 @@
         die('Could not delete old files. Don\'t want to continue!');
     }
 
-    // AJAX Request handler
-    if ($_GET['method'] === 'check_svg') {
-        $path = (string)select_svg_file($_GET);
-        if (!file_exists($path))
-        {
-            die('Leider ist keine Basiskarte für diese Auswahl verfügbar.');
-        }
-        die();
-    } else if ($_GET['method'] === 'get_data' && !empty($_GET['vis'])) {
-        $keys = get_keys_by_vis($_GET);
-        $error_msg_keys_missing = 'Die notwendigen Datensätze sind leider '.
-            'noch nicht verfügbar';
-        $error_msg_keys_missing_html = '        <p class="error">'."\n".
-            '          '.$error_msg_keys_missing."\n".'        </p>'."\n";
-        if ($_GET['interface'] == 'manual')
-        {
-        }
-            elseif ($_GET['interface'] == 'kvalloc')
-        {
-            $keys = get_keys_by_vis($_GET);
-            if (empty($keys)) {
-                die($error_msg_keys_missing);
-            }
-            $i = 0;
-            foreach ($keys as $key => $value) {
-                if ($i == (count($keys)-1))
-                    echo $value.';Wert für '.$value;
-                else
-                    echo $value.';Wert für '.$value."\n";
-                $i++;
-            }
-            die();
-        }
-            elseif ($_GET['interface'] == 'list')
-        {
-            $keys = get_keys_by_vis($_GET);
-            if (empty($keys)) {
-                die($error_msg_keys_missing);
-            }
-            $i = 0;
-            foreach ($keys as $key => $value) {
-                if ($i == (count($keys)-1))
-                    echo 'Wert für '.$value;
-                else
-                    echo 'Wert für '.$value."\n";
-                $i++;
-            }
-            die();
-        }
-            elseif ($_GET['interface'] == 'json')
-        {
-            $keys = get_keys_by_vis($_GET);
-            if (empty($keys)) {
-                die($error_msg_keys_missing);
-            }
-            echo "{\n";
-            $i = 0;
-            foreach ($keys as $key => $value) {
-                if ($i != count($keys)-1)
-                    echo '    "'.$value.'" : "Wert für '.$value.'",'."\n";
-                else
-                    echo '    "'.$value.'" : "Wert für '.$value.'"'."\n";
-                $i++;
-            }
-            die('}');
-        }
-    } */
-
     // Defaultvalues
     $defaults = array();
     if ($_POST)
     {
-        $title = $_POST['title'];
-        $subtitle = $_POST['subtitle'];
-        $fac = $_POST['fac'];
-        $dec = $_POST['dec'];
-        $colors = $_POST['colors'];
-        $grad = $_POST['grad'];
-
-        $data = (!is_empty($_POST['data']) && $_POST) ? $_POST['data'] : array();
-        $list_delim = _e($_POST['list_delim']);
-        $kvalloc_delim1 = _e($_POST['kvalloc_delim1']);
-        $kvalloc_delim2 = _e($_POST['kvalloc_delim2']);
-
-        $defaults = sanitize($title, $subtitle, $fac, $dec,
-            $colors, $grad, $data);
+        $uinput = UserInput($_POST, $n);
+        $defaults = $uinput->sanitize();
     } else {
-        $defaults = sanitize();
+        $uinput = UserInput(NULL, $n);
+        $defaults = $uinput->sanitize();
     }
-    $defaults = overwrite_defaults($defaults);
+    overwrite_defaults($defaults);
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
@@ -236,18 +147,6 @@
                     break;
             }
         }
-        function write_svg_error(msg)
-        {
-            if (msg == "0")
-                jQuery('#svg_check').html('<span class="error_field">Error:</span> '
-                    + 'Basiskarte ist nicht verfügbar. '
-                    + "Ändere bitte die Vorlage.");
-        }
-        function check_svg_exists(path)
-        {
-            jQuery.get('api.php', {'method' : 'check_svg',
-                'vispath' : path}, write_svg_error);
-        }
         function selected2vis()
         {
             path = jQuery('#vis > label > input:checked').parent().attr('id');
@@ -264,7 +163,6 @@
 
         jQuery('input').click(function () {
             update_subselect();
-            check_svg_exists(selected2vis());
             value = jQuery('#format option:selected').val();
             update_format(value, selected2vis());
         });
