@@ -16,6 +16,8 @@ Setup
 ToDos
 -----
 
+* Give vis_path its own class
+
 * ToDo: Change behaviour: Only show radio button if pattern SVG exists
 * ToDo: Testing
 

@@ -110,7 +110,7 @@
                         'filename' => 'bl'
                     )
                 ),
-                0 => array(
+                1 => array(
                     'name' => 'Lokale Ebene',
                     'filename' => 'at_local',
 
@@ -1636,14 +1636,14 @@
     );
 
     // Autofill geo_hierarchy
-    $counter = 0;
     foreach ($geo_hierarchy[0][29][1][0] as $bl)
     {
         if (is_array($bl)) // exclude filename & name
         {
             foreach ($bl as $gemeinde)
             {
-                $geo_hierarchy[0][29][0][1][$counter++] = &$gemeinde;
+                if (is_array($gemeinde))
+                    $geo_hierarchy[0][29][0][1][] = $gemeinde;
             }
         }
     }
@@ -1653,7 +1653,8 @@
         {
             foreach ($bl as $bezirk)
             {
-                $geo_hierarchy[0][29][0][2][$counter++] = &$bezirk;
+                if (is_array($bezirk))
+                    $geo_hierarchy[0][29][0][2][] = $bezirk;
             }
         }
     }

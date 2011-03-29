@@ -448,5 +448,17 @@
                 'data'      => $data
             );
         }
+
+        /*
+            FEATURES
+         */
+        // Function to create JSON object
+        function export_json()
+        {
+            $export = $this->sanitize();
+            unset($export['fac']);
+            $json = json_encode($export);
+            return $json;
+        }
     }
 ?>

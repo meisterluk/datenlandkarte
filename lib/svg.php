@@ -54,29 +54,17 @@
             return array_slice($v, 1);
         }
 
-        // Function to create svg filename of pattern svg
-        // Take eg. $_POST and returns filename or false,
-        // if $_POST has invalid structure.
-        static public function select_file($vis, $geo=NULL)
+        // Creates filename of pattern svg by vis_path
+        //
+        // @param geo a Geo object
+        // @return a filename
+        //         NULL if vis_path is invalid
+        static public function select_file($vis_path, &$geo)
         {
-            if (is_empty($vis))
-                return false;
-            if (is_empty($geo))
-            {
-                global $geo_hierarchy;
-                $geo = $geo_hierarchy;
-            }
+            if (is_empty($vis_path))
+                return NULL;
 
-            $indizes = self::_vis_split($vis);
-            $filename = '';
-            foreach ($indizes as $index)
-            {
-                $filename .= $geo['filename'];
-                $geo = $geo[$index];
-            }
-            $filename .= $geo['filename'].'.svg';
-
-            return $filename;
+            return $geo->filename_path($vis_path).'.svg';
         }
 
 

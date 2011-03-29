@@ -1,6 +1,6 @@
 <?php
-    #error_reporting(E_ALL);
-    #ini_set('display_errors', true);
+    //error_reporting(E_ALL);
+    //ini_set('display_errors', true);
 
     /*
     * ----------------------------------------------------------------------------
@@ -21,9 +21,10 @@
     $root = './';
     require_once('global.php');
     require_once('lib/lib.php');
-    require_once('lib/files.php');
-    require_once('lib/userinput.php');
     require_once('lib/html.php');
+    require_once('lib/userinput.php');
+    require_once('lib/geo.php');
+    require_once('lib/files.php');
 
     $g = new Geo($geo_hierarchy);
     $n = new Notifications();
@@ -44,10 +45,10 @@
     $defaults = array();
     if ($_POST)
     {
-        $uinput = UserInput($_POST, $n);
+        $uinput = new UserInput($_POST, $n, $g);
         $defaults = $uinput->sanitize();
     } else {
-        $uinput = UserInput(NULL, $n);
+        $uinput = new UserInput(NULL, $n, $g);
         $defaults = $uinput->sanitize();
     }
     overwrite_defaults($defaults);
@@ -161,7 +162,7 @@
             return old;
         }
 
-        jQuery('input').click(function () {
+        /* jQuery('input').click(function () {
             update_subselect();
             value = jQuery('#format option:selected').val();
             update_format(value, selected2vis());
@@ -183,6 +184,7 @@
         update_subselect();
         value = jQuery('#format option:selected').val();
         update_format(value, selected2vis());
+        */
     });
 -->
 </script>
@@ -396,9 +398,7 @@
               (<a href="/vorlagen">derzeit verfügbare Vorlagen anzeigen</a>)</td>
               <td id="vis">
 <?php
-    $vispath = post2vis($_POST, false);
-    $vispath = (!$vispath) ? NULL : $vispath;
-    echo geo_input_tree($geo_hierarchy, 16, $vispath);
+    echo $g->input_html(16);
 ?>
               </td>
             </tr>
