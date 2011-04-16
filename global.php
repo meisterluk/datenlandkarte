@@ -11,7 +11,7 @@
     $formats = array(
         'manual' => 'Manuell', 'list' => 'Liste',
         'json' => 'Javascript Object Notation (JSON)',
-        'kvalloc' => 'Schlüssel-Wert-Zuordnung'
+        'kvalloc' => 'CSV (comma separated value)'
     );
 
     // Initialisierung
@@ -66,8 +66,8 @@
 
     // ID als Identifier
     // Eine Ebene drüber befindet sich in
-    //     name der Ausgabe-Name
-    //     filename der Dateiname (summiert sich über die Ebenen auf)
+    //     |name|      der Ausgabe-Name
+    //     |filename|  der Dateiname (kombiniert über alle Ebenen mit "_")
     $geo_hierarchy = array(
         0 => array(
             'name' => 'Länder',
@@ -1636,6 +1636,7 @@
     );
 
     // Autofill geo_hierarchy
+    // ! Do not edit
     foreach ($geo_hierarchy[0][29][1][0] as $bl)
     {
         if (is_array($bl)) // exclude filename & name

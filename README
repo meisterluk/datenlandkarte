@@ -4,7 +4,7 @@ README
 :project:       datenlandkarten
 :author:        meisterluk
 :date:          11.02.06
-:version:       2.0
+:version:       2.1-design
 :license:       LGPL v3.0
 
 Setup
@@ -16,18 +16,14 @@ Setup
 ToDos
 -----
 
-* Give vis_path its own class
-
-* ToDo: Change behaviour: Only show radio button if pattern SVG exists
-* ToDo: Testing
+* v2.2-coding
+* v2.3-ui
+* v2.4-bugfix
+* v2.5-testing
 
 Features
 --------
 
-* User-defined color palettes
-* Google Chart API binding
-* Additional fields such as source.
-* SVG Upload if SVG not available
 * More global.php variables / configuration
 
 Bugs

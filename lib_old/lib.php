@@ -1,6 +1,6 @@
 <?php
     require_once($root.'lib/html.php');
-    require_once($root.'lib/sanitize.php');
+    require_once($root.'lib/userinput.php');
 
     // A stupid strlen reimplementation
     // because PHP is not capable of Unicode
