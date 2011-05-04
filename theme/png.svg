@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="100"
+   height="100"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.44"
+     inkscape:cx="50"
+     inkscape:cy="50"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="748"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-952.36218)">
+    <rect
+       style="opacity:0.5;color:#000000;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3777"
+       width="51.286766"
+       height="31.433823"
+       x="45.588238"
+       y="963.75928" />
+    <rect
+       style="opacity:0.5;color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3777-4"
+       width="51.286766"
+       height="31.433823"
+       x="24.356617"
+       y="987.74823" />
+    <rect
+       style="opacity:0.5;color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3777-4-7"
+       width="51.286766"
+       height="31.433823"
+       x="7.8124986"
+       y="1009.9908" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3753"
+       style="font-size:8px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Palatino;-inkscape-font-specification:Palatino"
+       transform="translate(3.4926471,924.97248)"><flowRegion
+         id="flowRegion3755"><rect
+           id="rect3757"
+           width="28.308823"
+           height="50.735298"
+           x="6.8014708"
+           y="24.632353" /></flowRegion><flowPara
+         id="flowPara3759"
+         style="font-size:40px">P</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3761"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Palatino;-inkscape-font-specification:Palatino"
+       transform="translate(-14.338236,958.06071)"><flowRegion
+         id="flowRegion3763"><rect
+           id="rect3765"
+           width="35.47794"
+           height="47.426472"
+           x="47.794117"
+           y="16.727942"
+           style="font-size:40px" /></flowRegion><flowPara
+         id="flowPara3767"
+         style="font-size:40px">N</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3769"
+       style="font-size:8px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Palatino;-inkscape-font-specification:Palatino"
+       transform="translate(43.566176,948.50189)"><flowRegion
+         id="flowRegion3771"><rect
+           id="rect3773"
+           width="31.066177"
+           height="45.036766"
+           x="16.911764"
+           y="53.308823" /></flowRegion><flowPara
+         id="flowPara3775"
+         style="font-size:40px">G</flowPara></flowRoot>  </g>
+</svg>

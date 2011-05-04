@@ -1,0 +1,657 @@
+<?php
+    /*
+        VisPath
+        =======
+
+        A vis_path object identifying a position in the geo hierarchy.
+        This is implemented in a class to make operations on vis_paths
+        more easily.
+
+
+        MAIN
+            @method is_valid
+            @method is_root
+            @method from_indizes
+            @method to_indizes
+            @method get_error
+        NAVIGATION
+            @method up
+            @method down
+            @method next
+            @method previous
+        GETTERS
+            @method get
+            @method get_top
+            @method get_root
+            @method get_length
+        SETTERS
+            @method set
+            @method set_default
+    */
+
+    require_once($root.'lib/lib.php');
+
+    class VisPath
+    {
+        private $default = 'vis';
+        private $root = 'vis';
+
+        private $vis_path;
+        private $valid = NULL;
+
+        private $error;
+
+        //
+        // Set vis_path to an initial value
+        //
+        // @param vis_path initial vis_path
+        // @param notifications a Notifications object to use
+        //
+        public function __construct($vis_path=NULL, &$notifications=NULL)
+        {
+            if ($notifications === NULL)
+                $this->error = new Notifications();
+            else
+                $this->error = $notifications;
+
+            if (is_empty($vis_path))
+                $this->set_default();
+            else
+                $this->set($vis_path);
+        }
+
+        //
+        // String representation of vis_path
+        //
+        // @return a string repr
+        //
+        public function __toString()
+        {
+            // TODO
+            return (string)'<VisPath '.$this->vis_path.'>';
+        }
+
+        //
+        // Check for validity of stored vis_path and save bool to valid attrib.
+        //
+        // @return bool of validity
+        //
+        public function is_valid()
+        {
+            if (is_bool($this->valid))
+                return $this->valid;
+
+            if (preg_match('/^vis(_\d+)*$/', $this->vis_path))
+                return ($this->valid = true);
+            else
+                return ($this->valid = false);
+        }
+
+        //
+        // Is vis_path root element?
+        //
+        // @return bool
+        //
+        public function is_root()
+        {
+            return ($this->vis_path === $this->root);
+        }
+
+        //
+        // Combine vis_path indizes to a vis_path
+        // Reverse function of to_indizes()
+        //
+        // @param indizes the indizes to convert
+        // @return the new vis_path
+        //
+        public function from_indizes($indizes)
+        {
+            $this->vis_path = $this->default.'_'.implode('_', $indizes);
+            return $this->vis_path;
+        }
+
+        //
+        // Return stored vis_path as indizes
+        //
+        // @return array of indizes
+        //         false if vis_path is invalid
+        //
+        public function to_indizes()
+        {
+            if (!$this->is_valid())
+                return false;
+            if ($this->is_root())
+                return array();
+
+            $pos = strpos($this->vis_path, '_');
+            $vp = substr($this->vis_path, $pos+1);
+            return explode('_', $vp);
+        }
+
+        //
+        // A getter method for vis_path attribute
+        //
+        // @return string of vis_path attribute
+        //
+        public function get()
+        {
+            return $this->vis_path;
+        }
+
+        //
+        // Get top/last element
+        //
+        // @return int of last element
+        //
+        public function get_top()
+        {
+            $all = $this->to_indizes();
+            return (int)$all[count($all)-1];
+        }
+
+        //
+        // A getter method for root attribute
+        //
+        // @return vis_path to root element (string)
+        //
+        public function get_root()
+        {
+            return $this->root;
+        }
+
+        //
+        // Get length of vis_path
+        //
+        // @return integer indicating length
+        //
+        public function get_length()
+        {
+            // count($this->to_indizes()) works, but optimized is:
+            return substr_count($this->vis_path, '_');
+        }
+
+        //
+        // Get basename of vis_path (all elements except last one)
+        //
+        // @return valid vis_path of basename
+        //         NULL if vis_path is root
+        //
+        public function get_basename()
+        {
+            if ($this->is_root())
+                return NULL;
+            return substr($this->vis_path, 0, strrpos($this->vis_path, '_'));
+        }
+
+        //
+        // A setter method for vis_path
+        //
+        // @param vis_path new vis_path (string)
+        // @return bool for validity of new vis_path
+        //
+        public function set($vis_path)
+        {
+            $vis_path = strtolower(trim($vis_path));
+            $this->valid = NULL;
+            $this->vis_path = $vis_path;
+
+            if (!$this->is_valid())
+                return $this->error->add('Invalid VisPath given: '.
+                    $vis_path, 3);
+            return true;
+        }
+
+        //
+        // Set vis_path attribute to default value
+        //
+        // @return bool for validity of new vis_path
+        //
+        public function set_default()
+        {
+            $this->vis_path = $this->default;
+
+            if (!$this->is_valid())
+                return $this->error->add('Default vis_path is invalid: '.
+                    $vis_path, 2);
+            return true;
+        }
+
+        //
+        // Method to return vis_path to one level above in hierarchy
+        //
+        // @return vis_path with one level up
+        //         NULL if vis_path is set to root
+        //         false if vis_path is invalid
+        //
+        public function up()
+        {
+            if (!$this->is_valid())
+                return false;
+            if ($this->is_root())
+            {
+                $this->error->add('Trying going up at VisPath root element', 2);
+                return NULL;
+            }
+
+            $index = strrpos($this->vis_path, '_');
+            $nvp = substr($this->vis_path, 0, $index);
+            $this->vis_path = $nvp;
+
+            return $nvp;
+        }
+
+        //
+        // Method to go deeper into vis_path hierarchy
+        // (ie. appends last_element parameter)
+        //
+        // @return vis_path one level deeper
+        //         false if vis_path is invalid
+        //
+        public function down($last_element)
+        {
+            $tmp = $this->set($this->vis_path.'_'.$last_element);
+            if (!$tmp)
+                return false;
+            return $this->vis_path;
+        }
+
+        //
+        // Increments last item at vis_path.
+        //
+        // @return new vis_path (string)
+        //         NULL if vis_path is root
+        //         false if vis_path is invalid
+        //
+        public function next()
+        {
+            if ($this->is_root())
+                return NULL;
+
+            $indizes = $this->to_indizes();
+            if (!$indizes)
+                return false;
+
+            $last = array_pop($indizes);
+            $last = (int)$last;
+            $last++;
+            $indizes[] = $last;
+
+            return $this->from_indizes($indizes);
+        }
+
+        //
+        // Decrements last item at vis_path.
+        //
+        // @return new vis_path (string)
+        //         NULL if vis_path is at root element
+        //         false if last element in vis_path is 0 or vis_path is invalid
+        //
+        public function previous()
+        {
+            if ($this->is_root())
+                return NULL;
+
+            $indizes = $this->to_indizes();
+            if (!$indizes)
+                return false;
+
+            $last = array_pop($indizes);
+            if ((int)$last === 0)
+                return false;
+
+            $last = (int)$last;
+            $last--;
+            $indizes[] = $last;
+
+            $this->from_indizes($indizes);
+            return $this->vis_path;
+        }
+
+        //
+        // Getter method for Notifications instance
+        //
+        // @return a Notifications instance
+        //
+        public function get_error()
+        {
+            return $this->error;
+        }
+    }
+
+    /*
+        Geo
+        ===
+
+        A Geo class stores a geo_hierarchy and manages it's access.
+        Most of the methods expect a VisPath as parameter and use
+        parameter passing by reference to improve performance.
+
+        GETTERS
+            @method get
+            @method get_children
+            @method get_filename
+            @method get_name
+        WALK
+            @method iterate
+            @method next
+        HELPER
+            @method _exists
+        REAL FEATURES
+            @method build_input_html
+    */
+
+    class Geo
+    {
+        public $hierarchy;
+
+        //
+        // Constructor
+        //
+        // @param ref a reference to a geo_hierarchy
+        //
+        public function __construct(&$ref)
+        {
+            $this->hierarchy = &$ref;
+        }
+
+        //
+        // Check whether or not vis_path is pointing to valid element
+        //
+        // @param vis_path a vis path instance
+        // @return bool value for existence
+        //         NULL if vis_path is invalid
+        //
+        public function _exists(&$vis_path)
+        {
+            if (!$vis_path->is_valid())
+                return NULL;
+
+            $indizes = $vis_path->to_indizes();
+            $current = &$this->hierarchy;
+
+            if (!is_empty($indizes))
+            {
+                foreach ($indizes as $index)
+                {
+                    if (array_key_exists($index, $current))
+                        $current = &$current[$index];
+                    else
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        //
+        // Magic getter method
+        // Enables direct access to geo hierarchy
+        //
+        // @param vis_path a vis path instance
+        // @return partition of geo hierarchy at vis path
+        //         false if vis path is invalid
+        //         NULL if vis path is pointing to empty element
+        //
+        public function get(&$vis_path)
+        {
+            if (!$vis_path->is_valid())
+                return false;
+
+            $indizes = $vis_path->to_indizes();
+            $current = &$this->hierarchy;
+
+            if (!is_empty($indizes))
+            {
+                foreach ($indizes as $index)
+                {
+                    $current = &$current[$index];
+                    if (!isset($current))
+                        return NULL;
+                }
+            }
+
+            return $current;
+        }
+
+        //
+        // Check number of children at vis_path
+        //
+        // @param vis_path the vis path to follow
+        // @return integer for number
+        //         false if vis path is invalid
+        //         NULL if vis path is pointing to empty element
+        //
+        public function get_children(&$vis_path)
+        {
+            $current = $this->get($vis_path);
+            if ($current === false || $current === NULL)
+                return $current;
+            $c = (count($current) - 2);
+            return ($c < 0) ? 0 : $c;
+        }
+
+        //
+        // Get filename for vis_path
+        //
+        // @param vis_path the vis_path to follow
+        // @return the filename
+        //         false if vis_path is invalid or pointing to Nirvana
+        //         NULL if vis_path is pointing to root
+        //
+        public function get_filename(&$vis_path)
+        {
+            if (!$vis_path->is_valid())
+                return false;
+
+            $indizes = $vis_path->to_indizes();
+            $pos = &$this->hierarchy;
+            $filename = '';
+
+            if (!is_empty($indizes))
+            {
+                $i = 0;
+                $vis[] = 0; // an additional element to make enough iterations
+
+                foreach ($indizes as $index)
+                {
+                    // 'filename' for root element is optional
+                    if ($i != 0)
+                    {
+                        if (!isset($pos['filename']))
+                            return false;
+
+                        $filename .= $pos['filename'].'_';
+                    }
+                    $pos = &$pos[$index];
+                    $i++;
+                }
+                $filename .= $pos['filename'];
+            } else
+                return NULL;
+
+            return $filename;
+        }
+
+        //
+        // Get name attribute at vis_path position
+        //
+        // @param vis_path vis path to follow
+        // @return name value at vis_path
+        //         false if vis path is invalid
+        //         NULL if vis path is pointing to empty element
+        //
+        public function get_name(&$vis_path)
+        {
+            $current = $this->get($vis_path);
+            if ($current === NULL || $current === false)
+                return $current;
+            return $current['name'];
+        }
+
+        //
+        // Iteration over name & filename attributes at vis_path
+        //
+        // @param vis_path vis path to follow
+        // @return an array(array(name, filename), array(name, filename), ...)
+        //         false if vis path is invalid
+        //         NULL if vis path is pointing to empty element
+        //
+        public function iterate(&$vis_path)
+        {
+            if (!$vis_path->is_valid())
+                return false;
+
+            $indizes = $vis_path->to_indizes();
+            $current = &$this->hierarchy;
+            $iteration = array();
+
+            if (!is_empty($indizes))
+            {
+                foreach ($indizes as $index)
+                {
+                    $current = &$current[$index];
+                    if (!isset($current))
+                        return NULL;
+                    $iteration[] = array(
+                        'name' => $current['name'],
+                        'filename' => $current['filename']
+                    );
+                }
+            }
+
+            return $iteration;
+        }
+
+        //
+        // Find next element at vis_path in geo hierarchy
+        //
+        // @param vis_path
+        // @return vis_path to next element
+        //         false vis_path is invalid or is pointing to empty element
+        //         NULL if we are at the end of the hierarchy
+        //
+        public function next(&$vis_path)
+        {
+            $top = NULL;
+            $current = &$this->get($vis_path);
+            if ($current === NULL || $current === false)
+                return $current;
+
+            while (true)
+            {
+                if ($top === NULL)
+                {
+                    $tmp = $vis_path->down(0);
+                    if ($this->_exists($vis_path))
+                        return $vis_path;
+                    else
+                        $vis_path->up(); // undo
+
+                    $tmp = $vis_path->down(1);
+                    if ($this->_exists($vis_path))
+                        return $vis_path;
+                    else
+                        $vis_path->up(); // undo
+                } else {
+                    $tmp = $vis_path->down($top+1);
+                    if ($this->_exists($vis_path))
+                        return $vis_path;
+                    else
+                        $vis_path->up(); // undo
+                }
+
+                $tmp = $vis_path->next();
+                if ($tmp === NULL)
+                    return NULL;
+                if ($this->_exists($vis_path))
+                    return $vis_path;
+                else
+                    $vis_path->previous(); // undo
+
+                $top = $vis_path->get_top();
+
+                $tmp = $vis_path->up();
+                if ($tmp === NULL)
+                    return NULL;
+            }
+
+            return false; // unpleasant situation
+        }
+
+
+
+        //
+        // get all hierarchy nodes, which will appear in HTML form
+        //
+        // @param indent indentation level (int)
+        // @param selected vis_path pointing to selected node
+        // @return HTML in a tree structure
+        //
+        public function build_input_html($indent=10, $selected=NULL)
+        {
+            $out = '';
+            $vp = new VisPath();
+            $vis_path = $this->next($vp);
+            $in = ($vp->get_length() - 1);
+            $old_in = $in;
+
+            while ($vis_path !== NULL)
+            {
+                $has_children = ($this->get_children($vp) != 0);
+
+                // if it has no children, nothing can be selected -> ignore it
+                if ($has_children)
+                {
+                    $name = $this->get_name($vp);
+                    $id = $vp->get();
+                    $filename = $this->get_filename($vp);
+                    $indentation = str_repeat(' ', $indent + $in * 4);
+                    // </prolog>
+
+                    if ($selected == $id || startswith($selected, trim($id, '_').'_'))
+                        $check = ' checked="checked"';
+                    else
+                        $check = '';
+
+                    // TODO: only if file_exists
+                    if (true)// && file_exists($filename))
+                    {
+                        if ($in > $old_in)
+                            $out .= substr($indentation, 0, -4).'<div class="subselect">'."\n";
+
+                        if ($in < $old_in)
+                            for ($i=$old_in; $i>$in; $i--)
+                                $out .= str_repeat(' ', $indent + ($i - 1) * 4).'</div>'."\n";
+
+                        $out .= $indentation.'<label id="'._e($id).'">'."\n";
+                        $out .= $indentation.'  <input type="radio" name="'._e($vp->get_basename())
+                            .'" id="'._e($id).'" value="'._e($id).'"'.$check.' />'."\n";
+                        $out .= $indentation.'  '._e($name)."\n";
+                        $out .= $indentation.'</label> <br />'."\n";
+                    }
+
+                    // <epilog>
+                    $old_in = $in;
+                    $in = $vp->get_length();
+                }
+
+                $vis_path = $this->next($vp);
+            }
+            // end it
+            for ($i=$old_in; $i>0; $i--)
+                $out .= str_repeat(' ', $indent + ($i - 1) * 4).'</div>'."\n";
+            return $out;
+        }
+    }
+/*
+    TODO
+    $root = '../';
+
+    require_once($root.'global.php');
+    header('Content-type: text/plain; charset=utf-8');
+    $vp = new VisPath('vis');
+
+    $g = new Geo($geo_hierarchy);
+    echo $g->build_input_html();
+*/
+?>

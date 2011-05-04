@@ -1,6 +1,11 @@
 <?php
-    //error_reporting(E_ALL);
-    //ini_set('display_errors', true);
+    #error_reporting(E_ALL);
+    #ini_set('display_errors', true);
+    if ($_POST) {
+        header('Content-type: text/plain; charset=utf-8');
+        print_r($_POST);
+        exit;
+    }
 
     /*
         Projekt:       datenlandkarten
@@ -30,37 +35,37 @@
     $root = './';
     require_once('global.php');
     require_once('lib/lib.php');
-    require_once('lib/html.php');
-    require_once('lib/userinput.php');
-    require_once('lib/geo.php');
-    require_once('lib/files.php');
 
     $g = new Geo($geo_hierarchy);
     $n = new Notifications();
+    $f = new FileManager($location_creation, $location_raw_data, $location_pattern_svgs);
+    $u = new UserInterface($g, $n);
 
-    if ($_GET['mode'] == 'show_svg_filenames')
+    // special feature: show geo filenames
+    if ($_GET && $_GET['mode'] == 'show_geo_filenames')
     {
-        print_array_values($g->get_svg());
+        header('Content-type: text/plain; charset=utf-8');
+
+        $vp = new VisPath();
+        $vis_path = $g->next($vp);
+
+        while ($vis_path !== NULL)
+        {
+            $filename = $g->get_filename($vp);
+            echo $filename."\n";
+            $vis_path = $g->next($vp);
+        }
         die();
     }
 
     // Remove any old created files if there are any
-    if (!delete_old_created_file($location_creation, $location_raw_data))
+    if ($f->delete_private_files() < 0)
     {
         die('Could not delete old files. Don\'t want to continue!');
     }
 
     // Defaultvalues
-    $defaults = array();
-    if ($_POST)
-    {
-        $uinput = new UserInput($_POST, $n, $g);
-        $defaults = $uinput->sanitize();
-    } else {
-        $uinput = new UserInput(NULL, $n, $g);
-        $defaults = $uinput->sanitize();
-    }
-    overwrite_defaults($defaults);
+    $defaults = $u->get_basic_attributes();
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
@@ -98,13 +103,14 @@
     <!--Facebook Like Button OpenGraph Settings End-->
     <link rel="shorturl" href="http://datenlandkarte.at/gs8" />
     <script type="text/javascript" src="http://www.datamaps.eu/wp-content/themes/datamaps/script.js"></script>
-<script type="text/javascript">
-<!--
-    /* jQuery ftw */
+    <script type="text/javascript">
+    <!--
+    var toggle = true;
     jQuery(document).ready(function () {
         function update_subselect()
         {
             jQuery('.subselect').hide();
+            jQuery('#vis > .subselect').show();
             jQuery('input:checked').each(function () {
                 index = jQuery(this).parent().attr('id');
                 jQuery('#' + index + ' + br + .subselect').show();
@@ -112,11 +118,11 @@
         }
         function update_format(init, path)
         {
-            $('#data_manual, #data_list, #data_json, #data_kvalloc').hide();
-            $('#data_' + init).show();
+            jQuery('.data_manual, .data_list, .data_json, .data_kvalloc').hide();
+            jQuery('.data_' + init).show();
 
             jQuery.get('api.php', {'method' : init + '_form',
-                'vispath' : path}, write_form);
+                'vis_path' : path, 'indent' : 12}, write_form);
         }
         function write_form(msg)
         {
@@ -124,42 +130,39 @@
             {
                 case 'manual':
                     if (msg == '0')
-                        $('#data_manual').text('');
+                        jQuery('.data_manual').text('');
                     else
-                        $('#data_manual').html(msg);
+                        jQuery('.data_manual').html(msg);
                     break;
                 case 'list':
                     if (msg == '0')
                     {
-                        $('#data_list').hide();
+                        jQuery('.data_list').hide();
                     } else {
-                        $('#data_list').show();
-                        $('#list').text(msg);
+                        jQuery('.data_list').show();
                     }
                     break;
                 case 'json':
                     if (msg == '0')
                     {
-                        $('#data_json').hide();
+                        jQuery('.data_json').hide();
                     } else {
-                        $('#data_json').show();
-                        $('#json').text(msg);
+                        jQuery('.data_json').show();
                     }
                     break;
                 case 'kvalloc':
                     if (msg == '0')
                     {
-                        $('#data_kvalloc').hide();
+                        jQuery('.data_kvalloc').hide();
                     } else {
-                        $('#data_kvalloc').show();
-                        $('#kvalloc').text(msg);
+                        jQuery('.data_kvalloc').show();
                     }
                     break;
             }
         }
         function selected2vis()
         {
-            path = jQuery('#vis > label > input:checked').parent().attr('id');
+            path = jQuery('#vis > .subselect > label > input:checked').parent().attr('id');
             old = undefined;
 
             while (path != undefined) {
@@ -171,7 +174,7 @@
             return old;
         }
 
-        /* jQuery('input').click(function () {
+        jQuery('input').click(function () {
             update_subselect();
             value = jQuery('#format option:selected').val();
             update_format(value, selected2vis());
@@ -182,82 +185,70 @@
             update_format(value, selected2vis());
         });
 
-        jQuery('#submit').click(function () {
+        /*jQuery('#submit').click(function () {
             if (jQuery('#svg_check').text() != ''
                 || jQuery('#manual_request').text() != '')
                 return false;
             else
                 return true;
-        });
+        });*/
 
         update_subselect();
         value = jQuery('#format option:selected').val();
         update_format(value, selected2vis());
-        */
-    });
--->
-</script>
-<style type="text/css">
-<!--
-    table {
-        /*width: 100%;*/
-    }
-    td {
-        vertical-align: top;
-    }
-    select {
-        min-width: 50%;
-    }
-    textarea {
-        width: 100%;
-        font-family: "Courier New", Courier, monospace;
-    }
-    input, textarea { background-color: #CCC; }
-    input:hover, textarea:hover { background-color: #EEE; }
 
-    .error_field {
-        font-weight: bold;
-        color: #C00;
-    }
-    .error {
-        padding: 20px;
-        font-style: italic;
-    }
-    .delimiter {
-        float: right;
-        height: 14px;
-        font-family: "Courier New", Courier, monospace;
-    }
-    .subselect {
-        margin-left: 30px;
-    }
-    .download {
-        background-color: #EEE;
-        margin: 20px;
-        clear: both;
-        padding: 10px;
-        min-height: 110px;
-    }
-    #cc {
-        border: 1px solid #000000;
-        padding: 10px;
-        background-color: #6F6;
-        margin-bottom: 10px;
-        font-size: 1.3em;
-        line-height: 100%;
-    }
-    #cc_header {
-        border: 2px dashed #000;
-        padding: 10px;
-    }
-    #cc_header_img {
-        float: left;
-    }
-    #cc_header_text {
-        margin-left: 80px;
-    }
--->
-</style>
+
+        jQuery('.arrow').text('⇨');
+        jQuery('#advanced').hide();
+
+        jQuery('#advanced_options').click(function () {
+            jQuery('#advanced').toggle();
+            if (toggle)
+                jQuery('.arrow').text('⇩');
+            else
+                jQuery('.arrow').text('⇨');
+            toggle = (toggle) ? false : true;
+        });
+    });
+    -->
+    </script>
+    <style type="text/css">
+    <!--
+        .subselect {
+            margin-left: 10%;
+        }
+        table {
+            margin: auto;
+        }
+        input {
+            min-width: 50px;
+            width: 50%;
+        }
+        textarea {
+            min-width: 300px;
+            width: 60%;
+        }
+        .big {
+            font-size: 130%;
+            padding: 5px;
+        }
+        .two_symbols {
+            width: 30px;
+        }
+        .indent {
+            margin-left: 5%;
+        }
+        #beta {
+            margin: 10px;
+            background-color: #FE9;
+            padding: 10px;
+            font-style: italic;
+        }
+        .data_list, .data_json, .data_kvalloc {
+            display: none;
+        }
+    -->
+    </style>
 </head>
 <body class="page page-id-2 page-template page-template-default">
   <div id="art-page-background-middle-texture">
@@ -345,22 +336,19 @@
               Sie Javascript in ihrem Browser, wenn möglich.
             </p>
           </noscript>
-<?php if (time() < 1304028000) { ?>
-          <p id="cc">
+<?php if (time() < 1309392000) { ?>
+          <p id="beta">
             <strong>Hinweis:</strong> <br />
-            <span style="font-style:italic">
-              Dieses Feature wurde neu entwickelt und befindet sich nun in der Testphase.<br/>
-              Bitte Fehler und Wünsche ins
-              <a href="http://datenlandkarten.uservoice.com/forums/100819-feedback">Feedback-Forum</a>
-              schreiben oder per E-Mail an <a href="mailto:info@datamaps.eu">info@datamaps.eu</a>
-              senden. <br /> EntwicklerInnen können den Code auch auf
-              <a href="https://github.com/meisterluk/datenlandkarte" target="_blank">github</a>
-              forken und Pull-Requests für Bugfixes erstellen.
-            </span>
+            Dieses Werkzeug wurde neu entwickelt und befindet sich nun in der Testphase.<br/>
+            Bitte Fehler und Wünsche ins
+            <a href="http://datenlandkarten.uservoice.com/forums/100819-feedback">Feedback-Forum</a>
+            schreiben oder per E-Mail an <a href="mailto:info@datamaps.eu">info@datamaps.eu</a>
+            senden. <br /> EntwicklerInnen können den Code auch auf
+            <a href="https://github.com/meisterluk/datenlandkarte" target="_blank">github</a>
+            forken und Pull-Requests für Bugfixes erstellen.
           </p>
 <?php } ?>
-
-
+<!--
           <div id="cc_header">
             <div id="cc_header_img">
               <img src="img/cc.png" alt="Creative Commons" width="64" />
@@ -387,44 +375,33 @@
               </p>
             </div>
           </div>
+-->
 
-          <div class="error">
-            <div id="svg_check"></div>
-            <div id="manual_request"></div>
-          </div>
 
           <table cellpadding="6" id="form">
             <tr>
-              <td><strong>Titel:</strong></td>
-              <td><input type="text" maxlength="50" tabindex="1" name="title"<?=$defaults['title']; ?> /></td>
-            </tr>
-            <tr>
-              <td><strong>Untertitel / Quelle:</strong></td>
-              <td><input type="text" maxlength="120" tabindex="2" name="subtitle"<?=$defaults['subtitle']; ?> /></td>
-            </tr>
-            <tr>
-              <td><strong>Welche Vorlage soll verwendet werden?</strong><br/>
-              (<a href="/vorlagen">derzeit verfügbare Vorlagen anzeigen</a>)</td>
-              <td id="vis">
-<?php
-    echo $g->input_html(16);
-?>
+              <td>
+                <strong>Titel:</strong> <br />
+                <small>Überschrift der Graphik</small>
+              </td>
+              <td>
+                <input type="text" maxlength="50" tabindex="1" name="title" value="<?=$defaults['title']; ?>" />
               </td>
             </tr>
             <tr>
-              <td><strong>Hebefaktor</strong> (Jeder Wert wirt damit multipliziert.<br/>Damit kann man z.B. »0,45« in Prozentwerte umrechnen):</td>
-              <td><input type="text" name="fac"<?=$defaults['fac']; ?> /></td>
+              <td>
+                <strong>Untertitel:</strong> <br />
+                <small>Untertext des Titels</small>
+              </td>
+              <td>
+                <input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['subtitle']; ?>" />
+              </td>
             </tr>
             <tr>
-              <td><strong>Anzahl der Nachkommastellen (0-3):</strong></td>
-              <td><input type="text" name="dec" maxlength="1"<?=$defaults['dec']; ?> /></td>
-            </tr>
-            <tr>
-              <td><strong>Anzahl der Farben (2-10):</strong></td>
-              <td><input type="text" name="colors" maxlength="2"<?=$defaults['colors']; ?> /></td>
-            </tr>
-            <tr>
-              <td><strong>Farbrichtung</strong> (<a href="/tool/img/farbpalette.png" target="_blank">Beispiele anzeigen</a>):</td>
+              <td>
+                <strong>Farbrichtung:</strong> <br />
+                <a href="./img/farbpalette.png" target="_blank"><small>Beispiele anzeigen</small></a>
+              </td>
               <td>
                 <select name="grad">
 <?php
@@ -440,69 +417,151 @@
                 </select>
               </td>
             </tr>
-            <tr><td colspan="2">&nbsp;</td></tr>
             <tr>
-              <td colspan="2">
-                  <strong>Eingabeformat:</strong>
-                  <select name="format" id="format" style="float:right">
+              <td>
+                <label for="visibility">
+                  <strong>
+                    Öffentliches Teilen der Daten:
+                  </strong> <br />
+                  <small>
+                    Ich lizensiere die Daten unter
+                    <a href="http://creativecommons.org/licenses/by-sa/3.0/at/">CC By-SA</a>
+                    und stelle sie öffentlich zur Verfügung
+                  </small>
+                </label>
+              </td>
+              <td>
+                <input type="checkbox" name="visibility" id="visibility" />
+              </td>
+            <tr>
+              <td>
+                <strong>Welche Vorlage soll verwendet werden?</strong><br/>
+                <small>
+                  <a href="./vorlagen">Vorlagen, an denen wir arbeiten</a>
+                </small>
+              </td>
+              <td id="vis">
 <?php
-
-    foreach ($formats as $key => $f) {
-        if ($key === $defaults['format'][0])
-            $ch = $defaults['format'][1];
-        else
-            $ch = '';
+    echo $g->build_input_html(16, $default_vis_path);
 ?>
-                    <option value="<?=_e($key); ?>"<?=$ch; ?>><?=_e($f); ?></option>
-<?php } ?>
-                  </select> <br />
-
-                  <strong>Daten:</strong> (fehlende Angabe werden weiß dargestellt) <br /><br />
-
-                  <div id="data_manual">
-                    <table cellpadding="6">
-<?php
-    /* if (!$_POST)
-        $keys = get('bundeslaender');
-    foreach ($keys as $key => $bl) { 
-?>
-                      <tr>
-                        <td style="padding-left:30px"><?=_e($bl); ?>:</td>
-                        <td><input type="text" name="manual[]" value="<?=$defaults['manual'.$key]; ?>" /></td>
-                      </tr>
-<?php } */ ?>
-                    </table>
-                  </div>
-                  <div id="data_list">
-                    <textarea name="list" id="list" rows="5" cols="50"></textarea>
-                    <p>
-                      Trennzeichen zwischen Datensätzen: (\n für Zeilenumbruch, \\ für Backslash)
-                      <input type="text" name="list_delim"<?=$defaults['list_delim']; ?> size="3" class="delimiter" />
-                    </p>
-                  </div>
-                  <div id="data_json">
-                    <textarea name="json" id="json" rows="5" cols="50"></textarea>
-                  </div>
-                  <div id="data_kvalloc">
-                    <textarea name="kvalloc" id="kvalloc" rows="5" cols="50"></textarea>
-                    1. Trennzeichen (zw. Schlüssel-Wert-Elementen) (\n für Zeilenumbruch, \\ für Backslash)
-                    <input type="text" name="kvalloc_delim1"<?=$defaults['kvalloc_delim1']; ?> size="3" class="delimiter" /> <br />
-                    2. Trennzeichen (zw. Schlüssel und Wert)
-                    <input type="text" name="kvalloc_delim2"<?=$defaults['kvalloc_delim2']; ?> size="3" class="delimiter" />
-                  </div>
               </td>
             </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><input type="submit" id="submit" value="Erstellen" /></td>
-            </tr>
           </table>
-          </form>
-        </div>
-                    <div class="cleared"></div>
-                                    </div>
-            <div class="cleared"></div>
-        </div>
+
+          <div class="big" id="advanced_options">
+            <span class="arrow"></span> Erweiterte Optionen
+          </div>
+          <div class="indent" id="advanced">
+            <table cellpadding="6" id="form">
+              <tr>
+                <td>
+                  <strong>Autor:</strong> <br />
+                  <small>Ihre Identität oder ihr Nickname</small>
+                </td>
+                <td><input type="text" name="author" maxlength="1"<?=$defaults['author']; ?> /></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Quelle:</strong>
+                </td>
+                <td><input type="text" name="source" maxlength="1"<?=$defaults['source']; ?> /></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Anzahl der Farben:</strong>
+                </td>
+                <td>
+                  <select name="colors">
+<?php
+                for ($i=2; $i<=10; $i++)
+                    echo str_repeat(' ', 20).'<option>'.($i).'</option>'."\n";
+?>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Hebefaktor:</strong> <br />
+                  <small>Jeder Wert wirt mit dem Hebefaktor multipliziert.<br />
+                  zB mit dem Hebefaktor 0.01 lässt sich in Prozente umrechnen</small>
+                </td>
+                <td><input type="text" name="fac" value="<?=$defaults['fac']; ?>" /></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Anzahl der Nachkommastellen (0-3):</strong> <br />
+                  <small>... der Zahlen in der Legende</small>
+                </td>
+                <td><input type="text" name="dec" maxlength="1"<?=$defaults['dec']; ?> /></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Eingabeformat:</strong>
+                </td>
+                <td>
+                  <select name="format" id="format">
+<?php
+        foreach ($formats as $key => $f)
+            echo str_repeat(' ', 20).'<option value="'._e($key).'">'._e($f).'</option>'."\n";
+?>
+                  </select>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="big">
+            Daten
+          </div>
+          <p><strong>Notiz.</strong> fehlende Angabe werden weiß dargestellt</p>
+          <p class="data_list data_kvalloc">
+            <strong>Notiz.</strong>
+            In Trennzeichen darf \n für einen Zeilenumbruch verwendet werden.
+            <span title="\ wird zu \\ und \\\ wird zu \\\\">
+              Dafür muss jeder Backslashfolge ein weiterer vorangestellt werden.
+            </span>
+          </p>
+
+          <div class="data_manual indent">
+            <table cellpadding="6">
+<?php
+        $vp = new VisPath();
+        $i = 0;
+        foreach ($g->get($vp) as $key => $value) {
+            if (!is_int($key))
+                continue;
+?>
+              <tr>
+                <td><?=_e($value['name']); ?>:</td>
+                <td><input type="text" name="manual[]" value="<?=$_POST['manual'.($i++)]; ?>" /></td>
+              </tr>
+<?php } ?>
+            </table>
+          </div>
+          <div class="data_list">
+            <textarea name="list" id="list" rows="5" cols="50"></textarea>
+            <p>
+              Trennzeichen:
+              <input type="text" class="two_symbols" name="list_delim" value="<?=_e($_POST['list_delim']); ?>" size="3" class="delimiter" />
+            </p>
+          </div>
+          <div class="data_json">
+            <textarea name="json" id="json" rows="5" cols="50"></textarea>
+          </div>
+          <div class="data_kvalloc">
+            <textarea name="kvalloc" id="kvalloc" rows="5" cols="50"></textarea> <br />
+            1. Trennzeichen (zw. Schlüssel-Wert-Paar)
+            <input type="text" class="two_symbols" name="kvalloc_delim1" value="<?=_e($_POST['kvalloc_delim1']); ?>" size="3" class="delimiter" /> <br />
+            2. Trennzeichen (zw. Schlüssel und Wert)
+            <input type="text" class="two_symbols" name="kvalloc_delim2" value="<?=_e($_POST['kvalloc_delim2']); ?>" size="3" class="delimiter" />
+          </div>
+        <input type="submit" id="submit" value="Erstellen" />
+      </form>
+
+
+
+        <div class="cleared"></div>
+      </div>
     </div>
 
 

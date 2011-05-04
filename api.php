@@ -1,33 +1,24 @@
 <?php
     $root = './';
-    require_once('global.php');
-    require_once('lib/lib.php');
-    require_once('lib/html.php');
-    require_once('lib/geo.php');
-    require_once('lib/svg.php');
+    require_once($root.'global.php');
+    require_once($root.'lib/lib.php');
 
     $g = new Geo($geo_hierarchy);
 
+    if (endswith($_GET['method'], '_form'))
+    {
+        $vp = new VisPath($_GET['vis_path']);
+        $keys = $g->get($vp);
+    }
+
     if ($_GET['method'] == 'manual_form') {
-        $keys = $g->get_keys_by_vis_path($_GET['vispath']);
-        if (!$keys) die('0');
-        $html = create_manual_form($keys, 18);
-        die($html);
+        die(create_manual_form($keys, $_GET['indent']));
     } else if ($_GET['method'] == 'list_form') {
-        $keys = $g->get_keys_by_vis_path($_GET['vispath']);
-        if (!$keys) die('0');
-        $html = create_list_form($keys, 18);
-        die($html);
+        die(create_list_form($keys, $_GET['indent']));
     } else if ($_GET['method'] == 'json_form') {
-        $keys = $g->get_keys_by_vis_path($_GET['vispath']);
-        if (!$keys) die('0');
-        $html = create_json_form($keys, 18);
-        die($html);
+        die(create_json_form($keys, $_GET['indent']));
     } else if ($_GET['method'] == 'kvalloc_form') {
-        $keys = $g->get_keys_by_vis_path($_GET['vispath']);
-        if (!$keys) die('0');
-        $html = create_kvalloc_form($keys, 18);
-        die($html);
+        die(create_kvalloc_form($keys, $_GET['indent']));
     }
 
 

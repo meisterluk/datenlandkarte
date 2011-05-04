@@ -1,6 +1,5 @@
 <?php
-    $root = './';
-    require_once('lib/lib.php');
+    require_once($root.'lib/lib.php');
 
     // Ordner
     $location_creation = './upload/';
@@ -13,6 +12,9 @@
         'json' => 'Javascript Object Notation (JSON)',
         'kvalloc' => 'CSV (comma separated value)'
     );
+
+    // At first visit, this path is selected
+    $default_vis_path = 'vis';
 
     // Initialisierung
     $color_gradients = array();
