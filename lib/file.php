@@ -5,6 +5,19 @@
 
         Handles all actions with filesystems.
         Deletes old raw data and creates PNG.
+
+
+        HELPERS
+            @method _filter_old_files
+            @method _format2glob
+            @method _sanitize
+        MAIN
+            @method base_map_exists
+            @method get_base_map
+            @method list_files
+            @method delete_private_files
+            @method create_svg
+            @method upload_base_map
     */
 
     class FileManager
@@ -12,15 +25,15 @@
         private $folder_creation;
         private $folder_raw_data;
         private $folder_base_map;
-        public $timestamp = 'Ymd';
+        public static $timestamp         = 'Ymd';
         // When modifying, don't forget to adjust _filter_old_private_files
-        public $format = '%timestamp-%title-%subtitle-%visibility';
-        public $extension_svg     = '.svg';
-        public $extension_png     = '.png';
-        public $extension_big_png = '.big.png';
-        public $extension_json    = '.json';
-        public $visibility_public = 1;
-        public $visibility_private = 0;
+        public static $format = '%timestamp-%title-%subtitle-%visibility';
+        public static $extension_svg     = '.svg';
+        public static $extension_png     = '.png';
+        public static $extension_big_png = '.big.png';
+        public static $extension_json    = '.json';
+        public $visibility_public        = 1;
+        public $visibility_private       = 0;
 
         //
         // Constructor
@@ -52,7 +65,7 @@
                 $time = time();
 
             $filtered = array();
-            $today = date($this->timestamp, $time);
+            $today = date(self::$timestamp, $time);
             foreach ($files as $file)
             {
                 $info = pathinfo($file);
@@ -87,6 +100,35 @@
         }
 
         //
+        // Process format
+        //
+        // @param format a format string to replace elements of
+        // @param data a data object
+        // @param now optional UNIX timestamp to modify current time
+        // @return the string
+        //
+        static public function create_format($format, &$data, $now=NULL)
+        {
+            if ($now === NULL)
+                $now = time();
+            $now = date(self::$timestamp, $now);
+
+            $format = str_replace('%timestamp', $now, $format);
+            $format = str_replace('%subtitle', $data->subtitle, $format);
+            $format = str_replace('%title', $data->title, $format);
+            $format = str_replace('%visibility',
+                (int)$data->visibility, $format);
+            $format = str_replace('%dec', $data->dec, $format);
+            $format = str_replace('%grad', $data->grad, $format);
+            $format = str_replace('%apiversion',
+                $data->apiversion, $format);
+            $format = str_replace('%author', $data->author, $format);
+            $format = str_replace('%source', $data->source, $format);
+
+            return $format;
+        }
+
+        //
         // Sanitizes a string for usage in filename
         //
         // @param value the string to sanitize
@@ -100,25 +142,30 @@
         }
 
         //
-        // Get a vis_path and check whetever or not base map exists
+        // Get a VisPath object and check whetever or not corresponding
+        // base map exists
         //
-        // @param vis_path the vis path to check
+        // @param vispath a VisPath instance
+        // @param geo a Geo instance
         // @return boolean of file_exists
         //
-        public function base_map_exists(&$vis_path)
+        public function base_map_exists(&$geo, &$vispath)
         {
-            return file_exists($folder_base_map.$vis_path->get_path());
+            $filename = $this->folder_base_map.
+                $geo->get_filename($vispath).self::$extension_svg;
+            return file_exists($filename);
         }
 
         //
-        // Get a the content of a base map based on a given vis_path
+        // Get the content of a base map based on a given basename
         //
-        // @param svg_path a SvgPath object
+        // @param basename basename of a file
         // @return the SVG as string or false
         //
-        public function get_base_map(&$vis_path)
+        public function get_base_map($basename)
         {
-            $svg = file_get_contents($folder_base_map.$vis_path->get_path());
+            $svg = file_get_contents($this->folder_base_map.
+                $basename.self::$extension_svg);
             if ($svg === false)
                 return false;
             return $svg;
@@ -137,8 +184,8 @@
             $base = getcwd();
             chdir($this->folder_creation);
 
-            $files = glob($format.'{'.$this->extension_svg.','.
-                $this->extension_png.','.$this->extension_big_png.'}',
+            $files = glob($format.'{'.self::$extension_svg.','.
+                $this->extension_png.','.self::$extension_big_png.'}',
                 GLOB_BRACE);
             foreach ($files as $key => $file)
                 $files[$key] = $this->folder_creation.$file;
@@ -153,6 +200,7 @@
                 $files = array_merge($files, $files2);
             else if ($files === false)
                 $files = $files2;
+            chdir($base);
 
             return $files;
         }
@@ -169,7 +217,7 @@
                 $time = time();
 
             $format = str_replace('%visibility',
-                (string)$this->visibility_private, $this->format);
+                (string)$this->visibility_private, self::$format);
             $private_files = $this->list_files($format);
             $old_private_files = $this->_filter_old_files
                 ($private_files, $time);
@@ -194,9 +242,9 @@
         //
         public function create_svg(&$data, &$svg)
         {
-            $format = $data->create_format($this->format);
+            $format = $this->create_format(self::$format, $data);
             $filebase = $this->folder_creation.$format;
-            $fp = fopen($filebase.$this->extension_svg, 'w');
+            $fp = fopen($filebase.self::$extension_svg, 'w');
             if (!$fp)
                 return -1;
 
@@ -217,14 +265,14 @@
                 $img->destroy();
             */
 
-            exec('convert '.$filebase.$this->extension_svg.' '.
-                $filebase.$this->extension_png);
-            exec('convert -scale 300% '.$filebase.$this->extension_svg.' '.
-                $filebase.$this->extension_big_png);
+            exec('convert '.$filebase.(self::$extension_svg).' '.
+                $filebase.self::$extension_png);
+            exec('convert -scale 300% '.$filebase.(self::$extension_svg).' '.
+                $filebase.self::$extension_big_png);
 
-            $files = array($filebase.$this->extension_svg,
-                           $filebase.$this->extension_png,
-                           $filebase.$this->extension_big_png
+            $files = array($filebase.self::$extension_svg,
+                           $filebase.self::$extension_png,
+                           $filebase.self::$extension_big_png
             );
 
             foreach ($files as $file)

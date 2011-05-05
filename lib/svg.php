@@ -23,29 +23,32 @@
 
     class Svg
     {
+        private $geo;
         private $data;
         private $file;
         private $svg;
 
         public $error;
 
-        public $invalid_value_color = '#FFFFFF';
-        public $invalid_legend_color = '#FFFFFF';
+        public static $invalid_value_color = '#FFFFFF';
+        public static $invalid_legend_color = '#FFFFFF';
 
 
         //
         // Constructor
         //
+        // @param geo a Geo instance
         // @param data a Data instance
         // @param file a FileManager instance
         // @param error a Notifications instance
         //
-        public function __construct(&$data, &$file, &$error=NULL)
+        public function __construct(&$geo, &$data, &$file, &$error=NULL)
         {
-            $this->data = $data;
-            $this->file = $file;
+            $this->geo  = &$geo;
+            $this->data = &$data;
+            $this->file = &$file;
             if ($error)
-                $this->error = $error;
+                $this->error = &$error;
             else
                 $this->error = new Notifications();
         }
@@ -57,9 +60,10 @@
         //
         public function fetch()
         {
-            $svg = $this->get_base_map($this->data->vispath);
+            $filename = $this->geo->get_filename($this->data->vispath);
+            $svg = $this->file->get_base_map($filename);
             if (!$svg)
-                return $this->error->add("Cannot read base map");
+                return $this->error->add('Cannot read base map', 3);
 
             $this->svg = $svg;
             return $svg;
@@ -107,7 +111,7 @@
                         sprintf($format, $prev);
 
                 $this->svg = str_replace('%legende'.$i.'%',
-                        $this->_xml_sanitize($text));
+                        $this->_xml_sanitize($text), $this->svg);
             }
 
             return $this->svg;
@@ -131,14 +135,15 @@
         //
         // Save the map in a file. Use FileManager instance in file attribute
         //
-        // @return bool true on success. false on failure.
+        // @return an array of written files.
+        //         false on failure.
         //
         public function save()
         {
             $result = $this->file->create_svg($this->data, $this->svg);
             if ($result < 0)
                 return false;
-            return true;
+            return $result;
         }
 
         //
@@ -169,7 +174,7 @@
             static $call_num = 0;
 
             if ($call_num >= count($this->data->colors->palette))
-                $value = $this->invalid_legend_color;
+                $value = self::$invalid_legend_color;
             else
                 $value = $this->data->colors->palette[$call_num];
 
@@ -186,10 +191,11 @@
         public function _get_appropriate_color($value)
         {
             if ($this->data->is_invalid_value($value))
-                return $this->invalid_value_color;
+                return self::$invalid_value_color;
 
             $palette =& $this->data->colors->palette;
             $scale =& $this->data->scale;
+            //var_dump(get_object_vars($this->data->colors));
 
             $index = 0;
             if ($scale[0] < $scale[1]) // ascending order
@@ -200,7 +206,7 @@
                         return $this->_xml_sanitize($palette[$index]);
                     $index++;
                 }
-                return $this->_xml_sanitize($this->invalid_value_color);
+                return $this->_xml_sanitize(self::$invalid_value_color);
 
             } else { // descending order
 
@@ -210,7 +216,7 @@
                         return $this->_xml_sanitize($palette[$index]);
                     $index++;
                 }
-                return $this->_xml_sanitize($this->invalid_value_color);
+                return $this->_xml_sanitize(self::$invalid_value_color);
             }
         }
 

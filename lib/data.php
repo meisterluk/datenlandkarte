@@ -13,6 +13,7 @@
             @method import_vispath
             @method import_color
         MAIN
+            @method import_ui
             @method export_json
         HELPERS
             @method is_invalid_value
@@ -28,14 +29,15 @@
         public $source;
         public $visibility;
         public $dec;
+        public $scale;
 
         // objects
         public $colors;
         public $data;
         public $vispath;
 
-        public $invalid_value = NULL;
-        public $current_apiversion = 2;
+        public static $invalid_value = NULL;
+        public static $current_apiversion = 2;
 
         //
         // Setter method for titles
@@ -54,16 +56,19 @@
 
         //
         // Setter method
-        // Will set default value if NULL is given as any parameter
+        // Will set default value if NULL is given for optional parameter
         //
+        // @param scale scale attribute (array)
         // @param apiversion apiversion attribute (integer)
         // @param author author attribute (string)
         // @param source source attribute (string)
         // @param dec dec attribute (integer)
         //
-        public function set($apiversion=NULL, $author=NULL,
+        public function set($scale, $apiversion=NULL, $author=NULL,
             $source=NULL, $dec=NULL)
         {
+            $this->scale = $scale;
+
             if (!$apiversion)
                 $this->apiversion = 1;
             else
@@ -97,16 +102,6 @@
         }
 
         //
-        // Setter method for data attribute / importer Data instances
-        //
-        // @param data Data instance
-        //
-        public function import_data(&$data)
-        {
-            $this->data = $data;
-        }
-
-        //
         // Setter method for vispath attribute / importer VisPath instances
         //
         // @param vispath VisPath instance
@@ -127,6 +122,32 @@
         }
 
         //
+        // Setter method for data attribute
+        //
+        // @param data an array containing data
+        //
+        public function import_data(&$data)
+        {
+            $this->data = $data;
+        }
+
+        //
+        // Import data from UserInterface instance
+        //
+        // @param ui A UserInterface instance
+        //
+        public function import_ui(&$ui)
+        {
+            $this->set_titles($ui->title, $ui->subtitle);
+            $this->set($ui->scale, $ui->apiversion, $ui->author,
+                $ui->source, $ui->dec);
+            $this->set_visibility($ui->visibility);
+            $this->import_vispath($ui->vispath);
+            $this->import_color($ui->colors);
+            $this->import_data($ui->data);
+        }
+
+        //
         // Export data to JSON
         //
         // @return a string with JSON content
@@ -139,7 +160,7 @@
                 $json['subtitle'] = $this->subtitle;
 
             // even though it's optional, I want to see apiversion in all JSONs
-            $json['apiversion'] = $this->current_apiversion;
+            $json['apiversion'] = self::$current_apiversion;
             if (!is_empty($this->author))
                 $json['author'] = $this->author;
             if (!is_empty($this->source))
@@ -164,7 +185,7 @@
         //
         public function is_invalid_value($value)
         {
-            return ($value === $this->invalid_value);
+            return ($value === self::$invalid_value);
         }
     }
 ?>

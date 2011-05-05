@@ -24,6 +24,7 @@
             @method get_top
             @method get_root
             @method get_length
+            @method get_basename
         SETTERS
             @method set
             @method set_default
@@ -33,8 +34,8 @@
 
     class VisPath
     {
-        private $default = 'vis';
-        private $root = 'vis';
+        private static $default = 'vis';
+        private static $root = 'vis';
 
         private $vis_path;
         private $valid = NULL;
@@ -52,7 +53,7 @@
             if ($notifications === NULL)
                 $this->error = new Notifications();
             else
-                $this->error = $notifications;
+                $this->error = &$notifications;
 
             if (is_empty($vis_path))
                 $this->set_default();
@@ -94,7 +95,7 @@
         //
         public function is_root()
         {
-            return ($this->vis_path === $this->root);
+            return ($this->vis_path === self::$root);
         }
 
         //
@@ -106,7 +107,7 @@
         //
         public function from_indizes($indizes)
         {
-            $this->vis_path = $this->default.'_'.implode('_', $indizes);
+            $this->vis_path = self::$default.'_'.implode('_', $indizes);
             return $this->vis_path;
         }
 
@@ -196,8 +197,8 @@
             $this->vis_path = $vis_path;
 
             if (!$this->is_valid())
-                return $this->error->add('Invalid VisPath given: '.
-                    $vis_path, 3);
+                return $this->error->add('Invalid VisPath given: '
+                    .$vis_path, 3);
             return true;
         }
 
@@ -208,11 +209,11 @@
         //
         public function set_default()
         {
-            $this->vis_path = $this->default;
+            $this->vis_path = self::$default;
 
             if (!$this->is_valid())
-                return $this->error->add('Default vis_path is invalid: '.
-                    $vis_path, 2);
+                return $this->error->add('Default vis_path is invalid: '
+                    .$vis_path, 2);
             return true;
         }
 
@@ -229,7 +230,7 @@
                 return false;
             if ($this->is_root())
             {
-                $this->error->add('Trying going up at VisPath root element', 2);
+                $this->error->add('Trying going up at VisPath root element', 1);
                 return NULL;
             }
 
@@ -331,6 +332,7 @@
             @method get_children
             @method get_filename
             @method get_name
+            @method get_full_name
         WALK
             @method iterate
             @method next
@@ -343,15 +345,18 @@
     class Geo
     {
         public $hierarchy;
+        private $file;
 
         //
         // Constructor
         //
         // @param ref a reference to a geo_hierarchy
+        // @param file a FileManager instance
         //
-        public function __construct(&$ref)
+        public function __construct(&$ref, &$file)
         {
             $this->hierarchy = &$ref;
+            $this->file = &$file;
         }
 
         //
@@ -489,6 +494,41 @@
         }
 
         //
+        // Get full name (eg. array('Länder', 'Österreich', 'Föderale Ebene'))
+        //
+        // @return array of names
+        //         false if vis_path is invalid
+        //         NULL if vis_path is pointing to empty element
+        //
+        public function get_full_name(&$vis_path)
+        {
+            if (!$vis_path->is_valid())
+                return false;
+
+            $indizes = $vis_path->to_indizes();
+            $current = &$this->hierarchy;
+            $names = array();
+            $omit = true; // omit first element
+
+            if (!is_empty($indizes))
+            {
+                foreach ($indizes as $index)
+                {
+                    if (!$omit)
+                        $names[] = $current['name'];
+                    $current = &$current[$index];
+                    $omit = false;
+
+                    if (!isset($current))
+                        return NULL;
+                }
+                $names[] = $current['name'];
+            }
+
+            return $names;
+        }
+
+        //
         // Iteration over name & filename attributes at vis_path
         //
         // @param vis_path vis path to follow
@@ -582,6 +622,8 @@
 
         //
         // get all hierarchy nodes, which will appear in HTML form
+        // Creates a tree structure of radio buttons
+        // Attention! This method has bugs.
         //
         // @param indent indentation level (int)
         // @param selected vis_path pointing to selected node
@@ -614,7 +656,7 @@
                         $check = '';
 
                     // TODO: only if file_exists
-                    if (true)// && file_exists($filename))
+                    if (true || file_exists($filename))
                     {
                         if ($in > $old_in)
                             $out .= substr($indentation, 0, -4).'<div class="subselect">'."\n";
@@ -642,16 +684,46 @@
                 $out .= str_repeat(' ', $indent + ($i - 1) * 4).'</div>'."\n";
             return $out;
         }
+
+        //
+        // get all hierarchy nodes, which will appear in HTML form
+        // Creates a flat structure of radio buttons
+        //
+        // @param indent indentation level (int)
+        // @param selected vis_path pointing to selected node
+        // @return HTML with radio buttons
+        //
+        public function build_flat_radio_html($indent=10, $selected=NULL)
+        {
+            $out = '';
+            $vp = new VisPath();
+            $vis_path = $this->next($vp);
+
+            while ($vis_path !== NULL)
+            {
+                $id = $vp->get();
+                $has_children = ($this->get_children($vp) != 0);
+                $indentation = str_repeat(' ', $indent + $in * 4);
+                // </prolog>
+
+                if ($selected == $id || startswith($selected, trim($id, '_').'_'))
+                    $check = ' checked="checked"';
+                else
+                    $check = '';
+
+                if ($has_children && $this->file->base_map_exists($this, $vp))
+                {
+                    $out .= $indentation.'<label>'."\n";
+                    $out .= $indentation.'  <input type="radio" name="vis_path" id="'.
+                        _e($id).'" value="'._e($id).'"'.$check.' />'."\n";
+                    $out .= $indentation.'  '._e(implode(' / ', $this->get_full_name($vp)))."\n";
+                    $out .= $indentation.'</label> <br />'."\n";
+                }
+
+                // <epilog>
+                $vis_path = $this->next($vp);
+            }
+            return $out;
+        }
     }
-/*
-    TODO
-    $root = '../';
-
-    require_once($root.'global.php');
-    header('Content-type: text/plain; charset=utf-8');
-    $vp = new VisPath('vis');
-
-    $g = new Geo($geo_hierarchy);
-    echo $g->build_input_html();
-*/
 ?>

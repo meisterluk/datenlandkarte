@@ -1,107 +1,16 @@
 <?php
-    if (!$_POST) header('Location: input.php');
+    if (!$_POST || !isset($ui))
+        header('Location: index.php');
 
-    $root = './';
-    require_once('lib/lib.php');
+    $d = new Data();
+    $d->import_ui($ui);
 
-    $keys = get_keys_by_vis($_POST);
-
-    $error = array();
-    if (!$keys)
-    {
-        $error[] = 'Es konnte keine valide Karte verwendet werden';
-    } else {
-        $data = get_data($_POST, $keys);
-
-        if (empty($_POST['fac']))
-            $fac = 1.0;
-        else
-            $fac = (float)$_POST['fac'];
-
-        $error = alloc_error_data($data);
-        if ($error === false) // no error
-            $data = include_factor($data, $fac);
-        else
-            $error = array($error);
-    }
-
-    // Create files
-    if (empty($error))
-    {
-        $image = select_svg_file($_POST);
-
-        // sanitize parameters
-        $return = sanitize($_POST['title'], $_POST['subtitle'],
-            $_POST['dec'], $_POST['colors'], $_POST['grad']);
-        $file_title = $return[0][1];
-        $file_subtitle = $return[1][1];
-
-        $title = $return[0][0];
-        $subtitle = $return[1][0];
-
-        if ($file_title)
-            $file_title = '-'.$file_title;
-        if ($file_subtitle)
-            $file_subtitle = '-'.$file_subtitle;
-
-        $dec = $return[2][0];
-        $colors = $return[3][0];
-
-        if (file_exists($image))
-        {
-            // Create SVG
-            $svg = substitute($image, $title, $subtitle,
-                $dec, $colors, (int)$_POST['grad'], $data);
-
-            $date = date('Ymd');
-            $img_path = $location_creation.
-                $date.$file_title.$file_subtitle;
-
-            $json_data = array($_POST, $title, $subtitle, $dec,
-                $colors, (int)$_POST['grad'], $data);
-            $return = create_file($svg, $img_path, $json_data);
-            if (is_int($return))
-            {
-                switch ($status)
-                {
-                    case -1:
-                        $error[] = 'Konnte Datei nicht öffnen. '.
-                            'Keine Zugriffsrechte.';
-                        break;
-                    case -2:
-                        $error[] = 'Konnte Datei nicht schreiben. '.
-                                'Keine Zugriffsrechte.';
-                        break;
-                    case -3:
-                        $error[] = 'Tut uns leid. Es scheinen Parameter '.
-                            'fehlerhaft sein. Konnte die Daten nicht '.
-                            'speichern.';
-                        break;
-                }
-            } else {
-                if ($return)
-                {
-                    $list = '';
-                    foreach ($return as $short => $f)
-                    {
-                        if (!$f)
-                        {
-                            $list .= strtoupper($short).', ';
-                        }
-                    }
-                    if ($list) {
-                        $error[] = 'Sorry, could not create '.
-                            trim($list, ', ').' files.';
-                    }
-                }
-                $files = $return;
-            }
-        } else {
-            $error[] = 'Konnte Basiskarte ('.
-                htmlspecialchars(basename($image), ENT_NOQUOTES).
-                ') nicht finden.';
-        }
-    }
+    $svg = new Svg($g, $d, $f, $n);
+    $xml = $svg->fetch();
+    $svg->write_titles();
+    $svg->write_legend();
+    $svg->write_areas();
+    $svg->save();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
  xmlns:og='http://opengraphprotocol.org/schema/'>

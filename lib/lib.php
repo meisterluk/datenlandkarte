@@ -103,6 +103,37 @@
     }
 
     //
+    // A debug function for UI
+    //
+    function debug_ui(&$ui)
+    {
+        @header('Content-type: text/plain; charset=utf-8');
+        echo "BASIC\n=====\n\n";
+        echo 'Title:           '.$ui->title."\n";
+        echo 'Subtitle:        '.$ui->subtitle."\n";
+        echo 'Visibility:      '.$ui->visibility."\n";
+        echo 'Author:          '.$ui->author."\n";
+        echo 'Source:          '.$ui->source."\n";
+        echo 'Dec imal points: '.$ui->dec."\n";
+        echo 'API Version:     '.$ui->apiversion."\n";
+
+        echo "\nOBJECTS\n=======\n\n";
+        echo 'VisPath::vis_path:   '.$ui->vispath->get()."\n";
+        echo 'Colors::title_bg:    '.$ui->colors->title_bg."\n";
+        echo 'Colors::subtitle_bg: '.$ui->colors->subtitle_bg."\n";
+        echo 'Colors::palette:     '; echo @implode(', ', $ui->colors->palette)."\n";
+
+        echo "\nDATA\n----\n\n";
+        echo str_replace("\n", "\n    ", print_r($ui->data, true));
+
+
+        echo "\n\nERROR\n-----\n\n";
+        //echo str_replace("\n", "\n    ", print_r($ui->error->filter(2), true));
+        echo str_replace("\n", "\n    ", print_r($ui->error, true));
+        die();
+    }
+
+    //
     // I hate PHPs idea to addslash $_POST
     //
     function striptease(&$post)
@@ -117,49 +148,121 @@
         return $post;
     }
 
-    //
-    // A very simple notifications class
-    // Acting like a stack. Used for error messages.
-    // 0 = Note. 2 = Warning. 3 = error.
-    //
+    /*
+        Notifications
+        =============
+
+        A very simple notifications class
+        Acting like a stack. Used for error messages.
+
+        Possible "classes":
+
+            0
+              Note.
+            2
+              Warning.
+            3
+              error.
+
+        @method add
+        @method reset
+        @method _cmp
+        @method filter
+        @method iterate
+        @method translate_classes
+    */
     class Notifications
     {
-        private $notes = array();
+        private $msgs = array();
 
-        public function add($msg, $class=5)
+        //
+        // Add message with associated class
+        //
+        // @param msg the message to store
+        // @param class optional, the class (integer)
+        // @return always returns false!
+        //         So it can be used directly in functions
+        //
+        public function add($msg, $class=3)
         {
-            $this->notes[] = array($msg, $class);
+            $this->msgs[] = array($msg, $class);
             return false;
         }
 
+        //
+        // Reset stored messages
+        //
         public function reset()
         {
-            $this->notes = array();
+            $this->msgs = array();
         }
 
-        static public function _sort($note1, $note2)
+        //
+        // A comparison method
+        //
+        // @param msg1 the first message
+        // @param msg2 the second message
+        // @return an integer indicating difference of msg1 and msg2
+        //
+        static public function _cmp($msg1, $msg2)
         {
-            return strcmp($note1[1], $note2[1]);
+            return strcmp($msg1[1], $msg2[1]);
         }
 
-        public function to_css_classes($classes=NULL)
+        //
+        // A filtering method
+        //
+        // @param min a minimum value the class has to be
+        // @param greater_than test for class >= min on true, <= on false
+        // @return a partition of 
+        //
+        public function filter($min=3, $greater_than=true)
+        {
+            $result = array();
+            foreach ($this->msgs as $value)
+            {
+                if (($greater_than && $value[1] >= $min)
+                 || (!$greater_than && $value[1] <= $min))
+                {
+                    $result[] = $value;
+                }
+            }
+            return $result;
+        }
+
+        //
+        // Translate classes
+        // Takes a class and replaces it with associated value in given
+        // classes parameter. Check out the method's source code for
+        // the names of CSS classes (default classes parameter).
+        //
+        // @param classes a map between source classes and translated classes
+        //
+        public function translate_classes($classes=NULL)
         {
             if ($classes === NULL)
                 $classes = array(0 => 'note', 1 => 'note note2',
                     2 => 'warning', 3 => 'error');
 
-            foreach ($this->notes as $key => $value)
+            foreach ($this->msgs as $key => $value)
             {
                 if (is_int($value[1]))
-                    $this->notes[$key][1] = $classes[$value[1]];
+                    $this->msgs[$key][1] = $classes[$value[1]];
             }
         }
 
+        //
+        // Iteration method
+        // Returns array messages. Some kind of a getter method with
+        // pre-sorting capabilities.
+        //
+        // @return array of messages
+        //
         public function iterate()
         {
-            usort($this->notes, array(&$this, '_sort'));
+            usort($this->msgs, array(&$this, '_cmp'));
 
-            return $this->notes;
+            return $this->msgs;
         }
     }
 ?>

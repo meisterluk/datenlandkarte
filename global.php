@@ -16,14 +16,13 @@
     // At first visit, this path is selected
     $default_vis_path = 'vis';
 
-    // Initialisierung
-    $color_gradients = array();
-
     // Zahl-Farbe Zuordnung
     $color_allocation = array(
         0 => 'Rot', 1 => 'Orange', 2 => 'Gelb', 3 => 'Grün',
         4 => 'Türkis', 5 => 'Blau', 6 => 'Pink', 7 => 'Schwarz'
     );
+
+    $color_gradients = array();
 
     $color_gradients[0] = array(
         '#F4C6C6', '#F4C6C6', '#F0B0B0', '#EB9A9A', '#E78484', '#E26E6E',
@@ -232,39 +231,39 @@
                         'name' => 'Bundesländer Österreichs',
                         'filename' => 'bl',
 
-                        1 => array(
+                        0 => array(
                             'name' => 'Burgenland',
                             'filename' => 'burgenland'
                         ),
-                        2 => array(
+                        1 => array(
                             'name' => 'Kärnten',
                             'filename' => 'carinthia'
                         ),
-                        3 => array(
+                        2 => array(
                             'name' => 'Niederösterreich',
                             'filename' => 'loweraustria'
                         ),
-                        4 => array(
+                        3 => array(
                             'name' => 'Oberösterreich',
                             'filename' => 'upperaustria'
                         ),
-                        5 => array(
+                        4 => array(
                             'name' => 'Salzburg',
                             'filename' => 'salzburg'
                         ),
-                        6 => array(
+                        5 => array(
                             'name' => 'Steiermark',
                             'filename' => 'styria'
                         ),
-                        7 => array(
+                        6 => array(
                             'name' => 'Tirol',
                             'filename' => 'tyrol'
                         ),
-                        8 => array(
+                        7 => array(
                             'name' => 'Vorarlberg',
                             'filename' => 'vorarlberg'
                         ),
-                        9 => array(
+                        8 => array(
                             'name' => 'Wien',
                             'filename' => 'vienna'
                         )
@@ -291,100 +290,44 @@
                         'filename' => 'blbezirke',
 
                         1 => array(
-                            'name' => 'Wien',
-                            'filename' => 'vienna',
+                            'name' => 'Burgenland',
+                            'filename' => 'burgenland',
 
+                            0 => array(
+                                'name' => 'Eisenstadt',
+                                'filename' => 'eisenstadt'
+                            ),
                             1 => array(
-                                'name' => 'Innere Stadt',
-                                'filename' => 'innere_stadt'
+                                'name' => 'Eisenstadt Umgebung',
+                                'filename' => 'eisenstadt_ug'
                             ),
                             2 => array(
-                                'name' => 'Leopoldstadt',
-                                'filename' => 'leopoldstadt'
+                                'name' => 'Güssing',
+                                'filename' => 'guessing'
                             ),
                             3 => array(
-                                'name' => 'Landstrasse',
-                                'filename' => 'landstrasse'
+                                'name' => 'Jennersdorf',
+                                'filename' => 'jennersdorf'
                             ),
                             4 => array(
-                                'name' => 'Wieden',
-                                'filename' => 'wieden'
+                                'name' => 'Mattersdorf',
+                                'filename' => 'mattersdorf'
                             ),
                             5 => array(
-                                'name' => 'Margareten',
-                                'filename' => 'margareten'
+                                'name' => 'Neusiedl am See',
+                                'filename' => 'neusiedl'
                             ),
                             6 => array(
-                                'name' => 'Mariahilf',
-                                'filename' => 'mariahilf'
+                                'name' => 'Oberwart',
+                                'filename' => 'oberwart'
                             ),
                             7 => array(
-                                'name' => 'Neubau',
-                                'filename' => 'neubau'
+                                'name' => 'Rust',
+                                'filename' => 'rust'
                             ),
                             8 => array(
-                                'name' => 'Josefstadt',
-                                'filename' => 'josefstadt'
-                            ),
-                            9 => array(
-                                'name' => 'Alsergrund',
-                                'filename' => 'alsergrund'
-                            ),
-                            10 => array(
-                                'name' => 'Favoriten',
-                                'filename' => 'favoriten'
-                            ),
-                            11 => array(
-                                'name' => 'Simmering',
-                                'filename' => 'simmering'
-                            ),
-                            12 => array(
-                                'name' => 'Meidling',
-                                'filename' => 'meidling'
-                            ),
-                            13 => array(
-                                'name' => 'Hietzing',
-                                'filename' => 'hietzing'
-                            ),
-                            14 => array(
-                                'name' => 'Penzing',
-                                'filename' => 'penzing'
-                            ),
-                            15 => array(
-                                'name' => 'Rudolfsheim-Fünfhaus',
-                                'filename' => 'rudolfsheim_fuenfhaus'
-                            ),
-                            16 => array(
-                                'name' => 'Ottakring',
-                                'filename' => 'ottakring'
-                            ),
-                            17 => array(
-                                'name' => 'Hernals',
-                                'filename' => 'hernals'
-                            ),
-                            18 => array(
-                                'name' => 'Währing',
-                                'filename' => 'waehring'
-                            ),
-                            19 => array(
-                                'name' => 'Döbling',
-                                'filename' => 'doebling'
-                            ),
-                            20 => array(
-                                'name' => 'Brigittenau',
-                                'filename' => 'brigittenau'
-                            ),
-                            21 => array(
-                                'name' => 'Florisdorf',
-                                'filename' => 'florisdorf'
-                            ),
-                            22 => array(
-                                'name' => 'Donaustadt',
-                                'filename' => 'donaustadt'
-                            ),
-                            23 => array(
-                                'name' => 'Liesing',
-                                'filename' => 'liesing'
+                                'name' => 'Oberpullendorf',
+                                'filename' => 'oberpullendorf'
                             )
                         ),
                         2 => array(
@@ -613,6 +556,267 @@
                                 'name' => 'Wels Stadt',
                                 'filename' => 'wels_stadt'
                             )
+                        ),
+                        5 => array(
+                            'name' => 'Salzburg',
+                            'filename' => 'salzburg',
+
+                            0 => array(
+                                'name' => 'Hallein',
+                                'filename' => 'hallein'
+                            ),
+                            1 => array(
+                                'name' => 'Salzburg Land',
+                                'filename' => 'salzburg_ug'
+                            ),
+                            2 => array(
+                                'name' => 'Salzburg Stadt',
+                                'filename' => 'salzburg_city'
+                            ),
+                            3 => array(
+                                'name' => 'St. Johann im Pongau',
+                                'filename' => 'johann'
+                            ),
+                            4 => array(
+                                'name' => 'Tamsweg',
+                                'filename' => 'tamsweg'
+                            ),
+                            5 => array(
+                                'name' => 'Zell am See',
+                                'filename' => 'zell_see'
+                            )
+                        ),
+                        6 => array(
+                            'name' => 'Steiermark',
+                            'filename' => 'styria',
+
+                            0 => array(
+                                'name' => 'Bruck an der Mur',
+                                'filename' => 'bruck_mur'
+                            ),
+                            1 => array(
+                                'name' => 'Deutschlandsberg',
+                                'filename' => 'deutschlandsberg'
+                            ),
+                            2 => array(
+                                'name' => 'Feldbach',
+                                'filename' => 'feldbach'
+                            ),
+                            3 => array(
+                                'name' => 'Fürstenfeld',
+                                'filename' => 'fuerstenfeld'
+                            ),
+                            4 => array(
+                                'name' => 'Graz',
+                                'filename' => 'graz'
+                            ),
+                            5 => array(
+                                'name' => 'Graz Umgebung',
+                                'filename' => 'graz_ug'
+                            ),
+                            6 => array(
+                                'name' => 'Hartberg',
+                                'filename' => 'hartberg'
+                            ),
+                            7 => array(
+                                'name' => 'Judenburg',
+                                'filename' => 'judenburg'
+                            ),
+                            8 => array(
+                                'name' => 'Knittelfeld',
+                                'filename' => 'knittelfeld'
+                            ),
+                            9 => array(
+                                'name' => 'Leibnitz',
+                                'filename' => 'leibnitz'
+                            ),
+                            10 => array(
+                                'name' => 'Leoben',
+                                'filename' => 'leoben'
+                            ),
+                            11 => array(
+                                'name' => 'Liezen',
+                                'filename' => 'liezen'
+                            ),
+                            12 => array(
+                                'name' => 'Mürzzuschlag',
+                                'filename' => 'muerzzuschlag'
+                            ),
+                            13 => array(
+                                'name' => 'Murau',
+                                'filename' => 'murau'
+                            ),
+                            14 => array(
+                                'name' => 'Radkersburg',
+                                'filename' => 'radkersburg'
+                            ),
+                            15 => array(
+                                'name' => 'Voitsberg',
+                                'filename' => 'voitsberg'
+                            ),
+                            16 => array(
+                                'name' => 'Weiz',
+                                'filename' => 'weiz'
+                            )
+                        ),
+                        7 => array(
+                            'name' => 'Tirol',
+                            'filename' => 'tyrol',
+
+                            0 => array(
+                                'name' => 'Imst',
+                                'filename' => 'imst'
+                            ),
+                            1 => array(
+                                'name' => 'Innsbruck',
+                                'filename' => 'innsbruck'
+                            ),
+                            2 => array(
+                                'name' => 'Innsbruck Land',
+                                'filename' => 'innsbruck_land'
+                            ),
+                            3 => array(
+                                'name' => 'Kitzbühel',
+                                'filename' => 'kitzbuehel'
+                            ),
+                            4 => array(
+                                'name' => 'Kufstein',
+                                'filename' => 'kufstein'
+                            ),
+                            5 => array(
+                                'name' => 'Landeck',
+                                'filename' => 'landeck'
+                            ),
+                            6 => array(
+                                'name' => 'Lienz',
+                                'filename' => 'lienz'
+                            ),
+                            7 => array(
+                                'name' => 'Reutte',
+                                'filename' => 'reutte'
+                            ),
+                            8 => array(
+                                'name' => 'Schwaz',
+                                'filename' => 'schwaz'
+                            )
+                        ),
+                        8 => array(
+                            'name' => 'Vorarlberg',
+                            'filename' => 'vorarlberg',
+
+                            0 => array(
+                                'name' => 'Bludenz',
+                                'filename' => 'bludenz'
+                            ),
+                            1 => array(
+                                'name' => 'Bregenz',
+                                'filename' => 'bregenz'
+                            ),
+                            2 => array(
+                                'name' => 'Dornbirn',
+                                'filename' => 'dornbirn'
+                            ),
+                            3 => array(
+                                'name' => 'Feldkirch',
+                                'filename' => 'feldkirch'
+                            )
+                        ),
+                        9 => array(
+                            'name' => 'Wien',
+                            'filename' => 'vienna',
+
+                            1 => array(
+                                'name' => 'Innere Stadt',
+                                'filename' => 'innere_stadt'
+                            ),
+                            2 => array(
+                                'name' => 'Leopoldstadt',
+                                'filename' => 'leopoldstadt'
+                            ),
+                            3 => array(
+                                'name' => 'Landstrasse',
+                                'filename' => 'landstrasse'
+                            ),
+                            4 => array(
+                                'name' => 'Wieden',
+                                'filename' => 'wieden'
+                            ),
+                            5 => array(
+                                'name' => 'Margareten',
+                                'filename' => 'margareten'
+                            ),
+                            6 => array(
+                                'name' => 'Mariahilf',
+                                'filename' => 'mariahilf'
+                            ),
+                            7 => array(
+                                'name' => 'Neubau',
+                                'filename' => 'neubau'
+                            ),
+                            8 => array(
+                                'name' => 'Josefstadt',
+                                'filename' => 'josefstadt'
+                            ),
+                            9 => array(
+                                'name' => 'Alsergrund',
+                                'filename' => 'alsergrund'
+                            ),
+                            10 => array(
+                                'name' => 'Favoriten',
+                                'filename' => 'favoriten'
+                            ),
+                            11 => array(
+                                'name' => 'Simmering',
+                                'filename' => 'simmering'
+                            ),
+                            12 => array(
+                                'name' => 'Meidling',
+                                'filename' => 'meidling'
+                            ),
+                            13 => array(
+                                'name' => 'Hietzing',
+                                'filename' => 'hietzing'
+                            ),
+                            14 => array(
+                                'name' => 'Penzing',
+                                'filename' => 'penzing'
+                            ),
+                            15 => array(
+                                'name' => 'Rudolfsheim-Fünfhaus',
+                                'filename' => 'rudolfsheim_fuenfhaus'
+                            ),
+                            16 => array(
+                                'name' => 'Ottakring',
+                                'filename' => 'ottakring'
+                            ),
+                            17 => array(
+                                'name' => 'Hernals',
+                                'filename' => 'hernals'
+                            ),
+                            18 => array(
+                                'name' => 'Währing',
+                                'filename' => 'waehring'
+                            ),
+                            19 => array(
+                                'name' => 'Döbling',
+                                'filename' => 'doebling'
+                            ),
+                            20 => array(
+                                'name' => 'Brigittenau',
+                                'filename' => 'brigittenau'
+                            ),
+                            21 => array(
+                                'name' => 'Florisdorf',
+                                'filename' => 'florisdorf'
+                            ),
+                            22 => array(
+                                'name' => 'Donaustadt',
+                                'filename' => 'donaustadt'
+                            ),
+                            23 => array(
+                                'name' => 'Liesing',
+                                'filename' => 'liesing'
+                            )
                         )
                     )
                 ),
@@ -624,7 +828,13 @@
                         'name' => 'Gemeinden eines Bundeslands',
                         'filename' => 'blgemeinden',
 
-                        2 => array(
+                        0 => array(
+                            'name' => 'Burgenland',
+                            'filename' => 'burgenland'
+
+                            # TODO: missing
+                        ),
+                        1 => array(
                             'name' => 'Kärnten',
                             'filename' => 'carinthia',
 
@@ -1149,7 +1359,37 @@
                                 'filename' => 'wolfsberg'
                             )
                         ),
-                        8 => array(
+                        2 => array(
+                            'name' => 'Niederösterreich',
+                            'filename' => 'loweraustria'
+
+                            # TODO: missing
+                        ),
+                        3 => array(
+                            'name' => 'Oberösterreich',
+                            'filename' => 'upperaustria'
+
+                            # TODO: missing
+                        ),
+                        4 => array(
+                            'name' => 'Salzburg',
+                            'filename' => 'salzburg'
+
+                            # TODO: missing
+                        ),
+                        5 => array(
+                            'name' => 'Steiermark',
+                            'filename' => 'styria'
+
+                            # TODO: missing
+                        ),
+                        6 => array(
+                            'name' => 'Tirol',
+                            'filename' => 'tyrol'
+
+                            # TODO: missing
+                        ),
+                        7 => array(
                             'name' => 'Vorarlberg',
                             'filename' => 'vorarlberg',
 
@@ -1537,6 +1777,12 @@
                                 'name' => 'Sankt Anton im Montafon',
                                 'filename' => 'sankt_anton_montafon'
                             )
+                        ),
+                        8 => array(
+                            'name' => 'Wien',
+                            'filename' => 'vienna'
+
+                            # TODO: missing
                         )
                     )
                 )
@@ -1625,6 +1871,18 @@
             1 => array(
                 'name' => 'Afrika',
                 'filename' => 'africa'
+            ),
+            2 => array(
+                'name' => 'Asien',
+                'filename' => 'asia'
+            ),
+            3 => array(
+                'name' => 'Südamerika',
+                'filename' => 'southamerica'
+            ),
+            4 => array(
+                'name' => 'Nordamerika',
+                'filename' => 'northamerica'
             )
         ),
         2 => array(

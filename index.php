@@ -1,11 +1,6 @@
 <?php
     #error_reporting(E_ALL);
     #ini_set('display_errors', true);
-    if ($_POST) {
-        header('Content-type: text/plain; charset=utf-8');
-        print_r($_POST);
-        exit;
-    }
 
     /*
         Projekt:       datenlandkarten
@@ -36,13 +31,13 @@
     require_once('global.php');
     require_once('lib/lib.php');
 
-    $g = new Geo($geo_hierarchy);
     $n = new Notifications();
     $f = new FileManager($location_creation, $location_raw_data, $location_pattern_svgs);
+    $g = new Geo($geo_hierarchy, $f);
     $u = new UserInterface($g, $n);
 
-    // special feature: show geo filenames
-    if ($_GET && $_GET['mode'] == 'show_geo_filenames')
+    // special feature: show svg filenames
+    if ($_GET && $_GET['mode'] == 'show_svg_filenames')
     {
         header('Content-type: text/plain; charset=utf-8');
 
@@ -67,6 +62,22 @@
     // Defaultvalues
     $defaults = $u->get_basic_attributes();
 
+    if ($_POST)
+    {
+        $_POST = striptease($_POST);
+        $ui = new UserInterface($g, $n);
+        $ui->from_webinterface($_POST, $color_gradients, $color_allocation);
+        //debug_ui($ui);
+
+        // if errors exist
+        $errors = $ui->error->filter(2);
+        if (!$errors)
+        {
+            include "select.php";
+            exit;
+        }
+
+    }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
  xmlns:og='http://opengraphprotocol.org/schema/'>
@@ -107,15 +118,6 @@
     <!--
     var toggle = true;
     jQuery(document).ready(function () {
-        function update_subselect()
-        {
-            jQuery('.subselect').hide();
-            jQuery('#vis > .subselect').show();
-            jQuery('input:checked').each(function () {
-                index = jQuery(this).parent().attr('id');
-                jQuery('#' + index + ' + br + .subselect').show();
-            });
-        }
         function update_format(init, path)
         {
             jQuery('.data_manual, .data_list, .data_json, .data_kvalloc').hide();
@@ -129,53 +131,49 @@
             switch (jQuery('#format option:selected').val())
             {
                 case 'manual':
-                    if (msg == '0')
+                    if (msg == '0' || msg == '1')
                         jQuery('.data_manual').text('');
                     else
                         jQuery('.data_manual').html(msg);
                     break;
                 case 'list':
-                    if (msg == '0')
-                    {
+                    if (msg == '0' || msg == '1') {
+                        jQuery('#error > ul').append(
+                            $('<li>Konnte Geodaten nicht anfragen</li>'));
                         jQuery('.data_list').hide();
                     } else {
                         jQuery('.data_list').show();
+                        jQuery('#list').text(msg);
                     }
                     break;
                 case 'json':
-                    if (msg == '0')
-                    {
+                    if (msg == '0' || msg == '1') {
+                        jQuery('#error > ul').append(
+                            $('<li>Konnte Geodaten nicht anfragen</li>'));
                         jQuery('.data_json').hide();
                     } else {
                         jQuery('.data_json').show();
+                        jQuery('#json').text(msg);
                     }
                     break;
                 case 'kvalloc':
-                    if (msg == '0')
-                    {
+                    if (msg == '0' || msg == '1') {
+                        jQuery('#error > ul').append(
+                            $('<li>Konnte Geodaten nicht anfragen</li>'));
                         jQuery('.data_kvalloc').hide();
                     } else {
                         jQuery('.data_kvalloc').show();
+                        jQuery('#kvalloc').text(msg);
                     }
                     break;
             }
         }
         function selected2vis()
         {
-            path = jQuery('#vis > .subselect > label > input:checked').parent().attr('id');
-            old = undefined;
-
-            while (path != undefined) {
-                old = path;
-                path = jQuery('#' + path + ' + br + .subselect '
-                    + '> label > input:checked').parent().attr('id');
-            }
-
-            return old;
+            return jQuery('#vis input:checked').attr('id');
         }
 
         jQuery('input').click(function () {
-            update_subselect();
             value = jQuery('#format option:selected').val();
             update_format(value, selected2vis());
         });
@@ -193,7 +191,6 @@
                 return true;
         });*/
 
-        update_subselect();
         value = jQuery('#format option:selected').val();
         update_format(value, selected2vis());
 
@@ -219,8 +216,13 @@
         }
         table {
             margin: auto;
+            width: 100%;
         }
-        input {
+        #vis {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+        input, select {
             min-width: 50px;
             width: 50%;
         }
@@ -236,7 +238,7 @@
             width: 30px;
         }
         .indent {
-            margin-left: 5%;
+            margin-left: 5% !important;
         }
         #beta {
             margin: 10px;
@@ -348,6 +350,19 @@
             forken und Pull-Requests für Bugfixes erstellen.
           </p>
 <?php } ?>
+
+          <div id="error">
+            <ul>
+<?php
+    if (is_array($errors))
+        foreach ($errors as $err)
+        {
+            echo str_repeat(' ', 14).'<li><span style="color:#F00;'.
+                'font-weight:bold">Error:</span> '.$err[0].'</li>'."\n";
+        }
+?>
+            </ul>
+          </div>
 <!--
           <div id="cc_header">
             <div id="cc_header_img">
@@ -378,7 +393,7 @@
 -->
 
 
-          <table cellpadding="6" id="form">
+          <table cellpadding="6" id="main_form">
             <tr>
               <td>
                 <strong>Titel:</strong> <br />
@@ -440,10 +455,12 @@
                   <a href="./vorlagen">Vorlagen, an denen wir arbeiten</a>
                 </small>
               </td>
-              <td id="vis">
+              <td>
+                <div id="vis">
 <?php
-    echo $g->build_input_html(16, $default_vis_path);
+    echo $g->build_flat_radio_html(18, $default_vis_path);
 ?>
+                </div>
               </td>
             </tr>
           </table>
@@ -452,31 +469,37 @@
             <span class="arrow"></span> Erweiterte Optionen
           </div>
           <div class="indent" id="advanced">
-            <table cellpadding="6" id="form">
+            <table cellpadding="6" id="sub_form">
               <tr>
                 <td>
                   <strong>Autor:</strong> <br />
                   <small>Ihre Identität oder ihr Nickname</small>
                 </td>
-                <td><input type="text" name="author" maxlength="1"<?=$defaults['author']; ?> /></td>
+                <td><input type="text" name="author"<?=$defaults['author']; ?> /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Quelle:</strong>
                 </td>
-                <td><input type="text" name="source" maxlength="1"<?=$defaults['source']; ?> /></td>
+                <td><input type="text" name="source"<?=$defaults['source']; ?> /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Anzahl der Farben:</strong>
                 </td>
                 <td>
-                  <select name="colors">
-<?php
-                for ($i=2; $i<=10; $i++)
-                    echo str_repeat(' ', 20).'<option>'.($i).'</option>'."\n";
-?>
-                  </select>
+                  <input type="text" name="colors" maxlength="3" /></td>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Farbpalette:</strong> <br />
+                  <small>Statt der Farbrichtung kann man hier auch manuell
+                  eine Farbpalette angeben.<br />
+                  Trennen Sie die Hexfarben mit einem Komma</small>
+                </td>
+                <td>
+                  <input type="text" name="palette" /></td>
                 </td>
               </tr>
               <tr>
@@ -513,8 +536,8 @@
           <div class="big">
             Daten
           </div>
-          <p><strong>Notiz.</strong> fehlende Angabe werden weiß dargestellt</p>
-          <p class="data_list data_kvalloc">
+          <p class="indent"><strong>Notiz.</strong> fehlende Angabe werden weiß dargestellt</p>
+          <p class="data_list data_kvalloc indent">
             <strong>Notiz.</strong>
             In Trennzeichen darf \n für einen Zeilenumbruch verwendet werden.
             <span title="\ wird zu \\ und \\\ wird zu \\\\">
@@ -538,50 +561,64 @@
 <?php } ?>
             </table>
           </div>
-          <div class="data_list">
+          <div class="data_list indent">
             <textarea name="list" id="list" rows="5" cols="50"></textarea>
             <p>
               Trennzeichen:
               <input type="text" class="two_symbols" name="list_delim" value="<?=_e($_POST['list_delim']); ?>" size="3" class="delimiter" />
             </p>
           </div>
-          <div class="data_json">
+          <div class="data_json indent">
             <textarea name="json" id="json" rows="5" cols="50"></textarea>
           </div>
-          <div class="data_kvalloc">
+          <div class="data_kvalloc indent">
             <textarea name="kvalloc" id="kvalloc" rows="5" cols="50"></textarea> <br />
             1. Trennzeichen (zw. Schlüssel-Wert-Paar)
-            <input type="text" class="two_symbols" name="kvalloc_delim1" value="<?=_e($_POST['kvalloc_delim1']); ?>" size="3" class="delimiter" /> <br />
+            <input type="text" class="two_symbols delimiter" name="kvalloc_delim1" value="<?=_e($_POST['kvalloc_delim1']); ?>" size="3" /> <br />
             2. Trennzeichen (zw. Schlüssel und Wert)
-            <input type="text" class="two_symbols" name="kvalloc_delim2" value="<?=_e($_POST['kvalloc_delim2']); ?>" size="3" class="delimiter" />
+            <input type="text" class="two_symbols delimiter" name="kvalloc_delim2" value="<?=_e($_POST['kvalloc_delim2']); ?>" size="3" />
           </div>
-        <input type="submit" id="submit" value="Erstellen" />
-      </form>
+          <p>
+            <input type="submit" id="submit" value="Erstellen" />
+          </p>
+        </form>
 
 
 
         <div class="cleared"></div>
       </div>
     </div>
-
-
-          <div class="cleared"></div>
-        </div>
+    <div class="cleared"></div>
+  </div>
 </div>
 <div class="cleared"></div>
-    <div class="art-footer">
-                <div class="art-footer-t"></div>
-                <div class="art-footer-l"></div>
-                <div class="art-footer-b"></div>
-                <div class="art-footer-r"></div>
-                <div class="art-footer-body">
+<div class="art-footer">
+  <div class="art-footer-t"></div>
+  <div class="art-footer-l"></div>
+  <div class="art-footer-b"></div>
+  <div class="art-footer-r"></div>
+  <div class="art-footer-body">
 
 
-                  <div class="art-footer-text">
-                      <p><div style="float:left;"><a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen"><img src="http://www.datamaps.eu/wp-content/uploads/open3logo.png" alt="Open3 Logo" width="177" height="33" /></a></div>
-<div style="float:right;text-align:right;"><a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition 'Offenes Wissen' auf http://opendefinition.org/ anzeigen"><img src="http://www.datamaps.eu/wp-content/uploads/badge-od.png" alt="Badge OD" width="80" height="15" /> <img src="http://www.datamaps.eu/wp-content/uploads/badge-ok.png" alt="Badge OK" width="80" height="15" /> <img src="http://www.datamaps.eu/wp-content/uploads/badge-oc.png" alt="Badge OC" width="80" height="15" /></a><br/>
-<a href="/impressum" style="text-decoration:none;" title="Impressum anzeigen">Ein Projekt von open3, dem Netzwerk zur Förderung von openSociety, openGovernment und OpenData</a></p></div>                  </div>
-                    <div class="cleared"></div>
+                      <div class="art-footer-text">
+                        <div style="float:left;">
+                          <a href="http://www.open3.at" target="_blank" title="Webseite open3.at aufrufen">
+                            <img src="http://www.datamaps.eu/wp-content/uploads/open3logo.png" alt="Open3 Logo" width="177" height="33" />
+                          </a>
+                        </div>
+                        <p style="float:right;text-align:right;">
+                          <a href="http://www.opendefinition.org/okd/deutsch/" target="_blank" title="Definition 'Offenes Wissen' auf http://opendefinition.org/ anzeigen">
+                            <img src="http://www.datamaps.eu/wp-content/uploads/badge-od.png" alt="Badge OD" width="80" height="15" /> 
+                            <img src="http://www.datamaps.eu/wp-content/uploads/badge-ok.png" alt="Badge OK" width="80" height="15" /> 
+                            <img src="http://www.datamaps.eu/wp-content/uploads/badge-oc.png" alt="Badge OC" width="80" height="15" />
+                          </a>
+                          <br />
+                          <a href="/impressum" style="text-decoration:none;" title="Impressum anzeigen">
+                            Ein Projekt von open3, dem Netzwerk zur Förderung von openSociety, openGovernment und OpenData
+                          </a>
+                        </p>
+                      </div>
+                      <div class="cleared"></div>
                 </div>
             </div>
             <div class="cleared"></div>

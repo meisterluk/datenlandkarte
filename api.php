@@ -3,7 +3,9 @@
     require_once($root.'global.php');
     require_once($root.'lib/lib.php');
 
-    $g = new Geo($geo_hierarchy);
+    $f = new FileManager($location_creation, $location_raw_data,
+            $location_pattern_svgs);
+    $g = new Geo($geo_hierarchy, $f);
 
     if (endswith($_GET['method'], '_form'))
     {

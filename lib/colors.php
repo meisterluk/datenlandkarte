@@ -33,14 +33,14 @@
     {
         public $error;
 
-        private $color_regex = "/^#([[:xdigit:]]{3}|[[:xdigit:]]{6})$/";
-        private $color_dark = '#000000';
-        private $color_bright = '#AAAAAA';
+        private static $color_regex = "/^#([[:xdigit:]]{3}|[[:xdigit:]]{6})$/";
+        private static $color_dark = '#000000';
+        private static $color_bright = '#AAAAAA';
         # if the palette is very mixed and does not start/end with s/w
         # I might consider taking one of these colors as background
         # colors for [sub]title, if complementary colors cannot be found
         #   Colors: blue, orange, red, violet, green
-        private $bgcolors = array('#000033', '#FFCC00', '#AA0000',
+        private static $bgcolors = array('#000033', '#FFCC00', '#AA0000',
             '#440033', '#002200');
 
         public $title_bg;
@@ -57,7 +57,7 @@
         public function __construct(&$error=NULL)
         {
             if ($error)
-                $this->error = $error;
+                $this->error = &$error;
             else
                 $this->error = new Notifications();
         }
@@ -68,28 +68,31 @@
         // @param grad is a string naming color gradients (eg. "rot")
         // @param colors is the number of colors to be displayed
         // @param color_gradients An array of palettes
+        // @param color_allocation an array of indizes and palette names
         //
-        public function from_grad_colors($grad, $colors, &$color_gradients)
+        public function from_grad_colors
+                ($grad, $colors, &$color_gradients, &$color_allocation)
         {
             // check validity of parameters
-            if (Colors::is_valid_grad($grad, $color_gradients) && is_int($colors)
-                && $colors > 0 && $colors <= max_count($color_gradients))
+            if (Colors::is_valid_grad($grad, $color_gradients) &&
+                is_int($colors) && $colors > 1 &&
+                $colors <= max_count($color_gradients))
             {
                 $this->grad = $grad;
                 $this->colors = $colors;
             } else
-                return $this->error->add("Farbabstufung oder Anzahl "
-                    ."der Farben invalid");
+                return $this->error->add('Farbabstufung oder Anzahl '
+                    .'der Farben invalid', 3);
 
             // create palette
             $palette = Colors::palette_from_grad($grad, $color_gradients);
             if ($palette === false)
-                return $this->error->add("Konnte Palette nicht erstellen");
+                return $this->error->add('Konnte Palette nicht erstellen', 3);
 
             $new_palette = Colors::adjust_palette($palette, $colors);
             if ($new_palette === false)
-                return $this->error->add("Konnte Palette nicht auf "
-                    ."Farbanzahl anpassen");
+                return $this->error->add('Konnte Palette nicht auf '
+                    .'Farbanzahl anpassen', 3);
 
             // create background color
             $this->palette = $new_palette;
@@ -102,11 +105,17 @@
         // Create a valid palette by given palette. Sets attributes
         // and checks palette for validity.
         //
+        // @param palette an array of string hopefully containing hexcolors
+        // @return true on success. false on failure.
+        //
         public function from_palette($palette)
         {
-            foreach ($palette as $color)
-                if (!$this->is_valid_hex_color($color))
-                    return $this->error->add("Invalide Farbe in Palette");
+            foreach ($palette as $key => $color)
+            {
+                $palette[$key] = trim($color);
+                if (!$this->is_valid_hex_color($palette[$key]))
+                    return $this->error->add('Invalide Farbe in Palette', 3);
+            }
 
             foreach ($palette as $key => $color)
                 if (strlen($color) == 7)
@@ -130,7 +139,7 @@
         //
         public function is_valid_hex_color($color)
         {
-            return (bool)preg_match($this->color_regex, $color);
+            return (bool)preg_match(self::$color_regex, $color);
         }
 
         //
@@ -336,7 +345,7 @@
         // Basically, the algorithm decided between color_dark and color_bright
         //
         // @param color
-        // @return either $this->color_dark or $this->color_bright
+        // @return either self::$color_dark or self::$color_bright
         //
         public function get_contrast_color($color)
         {
@@ -346,7 +355,7 @@
 
             $yiq = (($color[0] * 299) + ($color[1] * 587) + ($color[2] * 114));
             $yiq = $yiq / 1000;
-            return ($yiq >= 128) ? $this->color_dark : $this->color_bright;
+            return ($yiq >= 128) ? self::$color_dark : self::$color_bright;
         }
 
         //
@@ -412,7 +421,7 @@
             // || ($is_bright($val_first) && $is_dark($val_last)))
             if ($grey_gradient)
             {
-                foreach ($this->bgcolors as $bg)
+                foreach (self::$bgcolors as $bg)
                 {
                     $is_in_gradient = false;
                     foreach ($this->palette as $color)
@@ -422,33 +431,33 @@
                     }
                     if (!$is_in_gradient)
                     {
-                        $this->error->add("Found appropriate color "
-                            ."in bgcolors", 1);
+                        $this->error->add('Found appropriate color '
+                            .'in bgcolors', 0);
                         $this->title_bg = $bg;
                         $this->subtitle_bg = $bg;
 
                         return $bg;
                     }
                 }
-                $this->error->add("Sorry, no color found. Taking first of "
-                    ."bgcolors", 1);
-                $this->title_bg = $this->bgcolors[0];
-                $this->subtitle_bg = $this->bgcolors[0];
-                return $this->bgcolors[0];
+                $this->error->add('Sorry, no color found. Taking first of '
+                    .'bgcolors', 0);
+                $this->title_bg = self::$bgcolors[0];
+                $this->subtitle_bg = self::$bgcolors[0];
+                return self::$bgcolors[0];
 
             // very mixed colors
             } else if ((!$is_dark($val_first) && !$is_bright($val_last))
                     && (!$is_bright($val_first) && !$is_dark($val_last))) {
 
-                $this->error->add("Mixed colors. Select dark one.", 1);
-                $this->title_bg = $this->dark;
-                $this->subtitle_bg = $this->dark;
-                return $this->dark;
+                $this->error->add('Mixed colors. Select dark one.', 0);
+                $this->title_bg = self::$color_dark;
+                $this->subtitle_bg = self::$color_dark;
+                return self::$color_dark;
 
             // first color is bright or dark
             } else if ($is_bright($val_first) || $is_dark($val_first)) {
 
-                $this->error->add("Select complementary color of last one", 1);
+                $this->error->add('Select complementary color of last one', 0);
                 $bg = $this->get_complementary_color($this->palette
                         [count($this->palette)-1]);
                 $this->title_bg = $bg;
@@ -463,7 +472,7 @@
             var_dump("first is dark: ", $is_dark($val_first));
             var_dump("last is dark: ", $is_dark($val_last));*/
 
-                $this->error->add("Select complementary color of first one", 1);
+                $this->error->add('Select complementary color of first one', 0);
                 $bg = $this->get_complementary_color($this->palette[0]);
                 $this->title_bg = $bg;
                 $this->subtitle_bg = $bg;
@@ -472,7 +481,7 @@
             // other cases
             } else {
 
-                $this->error->add("Strange palette. Select contrast.", 1);
+                $this->error->add('Strange palette. Select contrast.', 0);
                 $bg = $this->get_contrast_color($this->palette
                         [count($this->palette) / 2]);
                 $this->title_bg = $bg;
@@ -485,8 +494,8 @@
         // Create a palette from grad and color_gradients
         //
         // @param grad A grad parameter (string)
-        // @param color_gradients An array of color gradients
-        // @return an array of hex colors (out of color_gradients)
+        // @param color_gradients An array of color palettes
+        // @return an array of hex colors (partition of color_gradients)
         //
         static public function palette_from_grad($grad, &$color_gradients)
         {
@@ -556,8 +565,8 @@
         //
         // Check whetever the given grad parameter is valid
         //
-        // @param grad value to check
-        // @param color_gradients the color_gradients of global.php
+        // @param grad value to check (index to color palette)
+        // @param color_gradients an array of color palettes
         // @return bool
         //
         static public function is_valid_grad($grad, &$color_gradients)
