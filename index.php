@@ -32,7 +32,8 @@
     require_once('lib/lib.php');
 
     $n = new Notifications();
-    $f = new FileManager($location_creation, $location_raw_data, $location_pattern_svgs);
+    $f = new FileManager($location_creation, $location_raw_data,
+        $location_pattern_svgs, $n);
     $g = new Geo($geo_hierarchy, $f);
     $u = new UserInterface($g, $n);
 
@@ -50,13 +51,7 @@
             echo $filename."\n";
             $vis_path = $g->next($vp);
         }
-        die();
-    }
-
-    // Remove any old created files if there are any
-    if ($f->delete_private_files() < 0)
-    {
-        die('Could not delete old files. Don\'t want to continue!');
+        exit;
     }
 
     // Defaultvalues
@@ -66,17 +61,20 @@
     {
         $_POST = striptease($_POST);
         $ui = new UserInterface($g, $n);
-        $ui->from_webinterface($_POST, $color_gradients, $color_allocation);
-        //debug_ui($ui);
+        $success = $ui->from_webinterface
+            ($_POST, $color_gradients, $color_allocation);
 
-        // if errors exist
-        $errors = $ui->error->filter(2);
-        if (!$errors)
+        if ($_GET['debug'] == true)
         {
-            include "select.php";
+            debug_ui($ui);
             exit;
         }
 
+        if ($success)
+        {
+            include 'select.php';
+            exit;
+        }
     }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
@@ -358,7 +356,7 @@
         foreach ($errors as $err)
         {
             echo str_repeat(' ', 14).'<li><span style="color:#F00;'.
-                'font-weight:bold">Error:</span> '.$err[0].'</li>'."\n";
+                'font-weight:bold">Error:</span> '._e($err[0]).'</li>'."\n";
         }
 ?>
             </ul>

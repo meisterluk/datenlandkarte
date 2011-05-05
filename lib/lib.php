@@ -1,4 +1,5 @@
 <?php
+    // importing whole library
     require_once($root.'lib/colors.php');
     require_once($root.'lib/data.php');
     require_once($root.'lib/file.php');
@@ -6,6 +7,24 @@
     require_once($root.'lib/lib.php');
     require_once($root.'lib/svg.php');
     require_once($root.'lib/ui.php');
+
+    /*
+        Library
+        =======
+
+        @function _e
+        @function str_length
+        @function startswith
+        @function endswith
+        @function capitalize
+        @function max_count
+        @function is_empty
+        @function debug_ui
+        @function striptease
+
+        @class Notifications
+    */
+
 
     //
     // Escape HTML
@@ -153,7 +172,7 @@
         =============
 
         A very simple notifications class
-        Acting like a stack. Used for error messages.
+        It handles (message, class) pairs. Used for error messages.
 
         Possible "classes":
 
@@ -181,7 +200,7 @@
         // @param msg the message to store
         // @param class optional, the class (integer)
         // @return always returns false!
-        //         So it can be used directly in functions
+        //         So it can be used directly in return contexts
         //
         public function add($msg, $class=3)
         {
@@ -199,6 +218,7 @@
 
         //
         // A comparison method
+        // (compares classes [int] in current implementation)
         //
         // @param msg1 the first message
         // @param msg2 the second message
@@ -206,7 +226,12 @@
         //
         static public function _cmp($msg1, $msg2)
         {
-            return strcmp($msg1[1], $msg2[1]);
+            if ($msg1[1] < $msg2[1])
+                return -1;
+            elseif ($msg[1] === $msg2[1])
+                return 0;
+            else
+                return 1;
         }
 
         //
@@ -214,7 +239,7 @@
         //
         // @param min a minimum value the class has to be
         // @param greater_than test for class >= min on true, <= on false
-        // @return a partition of 
+        // @return a partition of `msgs` attribute
         //
         public function filter($min=3, $greater_than=true)
         {
@@ -235,6 +260,8 @@
         // Takes a class and replaces it with associated value in given
         // classes parameter. Check out the method's source code for
         // the names of CSS classes (default classes parameter).
+        //
+        // Use the iterate() method to iterate over the result.
         //
         // @param classes a map between source classes and translated classes
         //

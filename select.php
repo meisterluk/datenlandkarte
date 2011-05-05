@@ -5,12 +5,17 @@
     $d = new Data();
     $d->import_ui($ui);
 
-    $svg = new Svg($g, $d, $f, $n);
-    $xml = $svg->fetch();
-    $svg->write_titles();
-    $svg->write_legend();
-    $svg->write_areas();
-    $svg->save();
+    // Remove any old created files if there are any
+    $success = $f->delete_private_files($d);
+    if ($success)
+    {
+        $svg = new Svg($g, $d, $f, $n);
+        $svg->fetch();
+        $svg->write_titles();
+        $svg->write_legend();
+        $svg->write_areas();
+        $files = $svg->save();
+    }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
  xmlns:og='http://opengraphprotocol.org/schema/'>
@@ -170,18 +175,15 @@
             </p>
           </noscript>
 <?php
-    if (!empty($error)) {
+    $errors = $n->filter(2);
+    if ($errors) {
 ?>
           <div class="error">
             <p>Es traten mindestens 1 Fehler auf:<p>
             <ul>
 <?php
-        foreach ($error as $e) {
-?>
-
-              <li><?=htmlspecialchars($e, ENT_NOQUOTES); ?></li>
-<?php
-        }
+        foreach ($errors as $e)
+            echo '              <li class="'._e($e[1]).'">'._e($e[0]).'</li>'."\n";
 ?>
             </ul>
           </div>
@@ -190,36 +192,36 @@
 ?>
 
 <h3 style="margin-top:15px;">Vorschau</h3>
- <img src="<?=$files['png']; ?>" alt="Preview" style="float:center;" width="900"/>
+ <img src="<?=$files[1]; ?>" alt="Preview" style="float:center;" width="900"/>
 
           <div class="download" style="min-height:40px;">
            <a href="javascript:back();">
-             <img src="img/back.png" alt="zurück zum Eingabeformular" style="float:left" />
+             <img src="theme/back.png" alt="zurück zum Eingabeformular" style="float:left" />
            </a>
            <h5 style="margin-top:10px;"><a href="javascript:back();">Parameter ändern und Grafik neu erstellen</a></h5>
           </div>
 
           <div class="download">
-           <a href="<?=$files['svg']; ?>">
-             <img src="img/svg.png" alt="SVG Graphic Datenlandkarte" style="float:left" />
+           <a href="<?=$files[0]; ?>">
+             <img src="theme/svg.png" alt="SVG Graphic Datenlandkarte" style="float:left" />
            </a>
-           <h5><a href="<?=$files['svg']; ?>">Download SVG</a></h5>
+           <h5><a href="<?=$files[0]; ?>">Download SVG</a></h5>
            <p>Scalable Vector Graphics</p>
           </div>
 
           <div class="download">
-           <a href="<?=$files['png']; ?>">
-             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left" />
+           <a href="<?=$files[1]; ?>">
+             <img src="theme/png.png" alt="PNG Graphic Datenlandkarte" style="float:left" />
            </a>
-           <h5><a href="<?=$files['png']; ?>">Download PNG</a></h5>
+           <h5><a href="<?=$files[1]; ?>">Download PNG</a></h5>
            <p>Portable Network Graphics</p>
           </div>
 
           <div class="download">
-           <a href="<?=$files['bpng']; ?>">
-             <img src="img/png.png" alt="PNG Graphic Datenlandkarte" style="float:left" />
+           <a href="<?=$files[2]; ?>">
+             <img src="theme/png.png" alt="PNG Graphic Datenlandkarte" style="float:left" />
            </a>
-           <h5><a href="<?=$files['bpng']; ?>">Download PNG (3fache Größe)</a></h5>
+           <h5><a href="<?=$files[2]; ?>">Download PNG (3fache Größe)</a></h5>
            <p>Portable Network Graphics</p>
           </div>
 <?php } ?>

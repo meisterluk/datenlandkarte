@@ -7,12 +7,15 @@
 
 
         MAIN
+
             @method fetch
             @method write_titles
             @method write_legend
             @method write_areas
             @method save
+
         HELPERS
+
             @method _replace_colors
             @method _replace_rects
             @method _get_appropriate_color
@@ -47,6 +50,7 @@
             $this->geo  = &$geo;
             $this->data = &$data;
             $this->file = &$file;
+
             if ($error)
                 $this->error = &$error;
             else
@@ -54,23 +58,27 @@
         }
 
         //
-        // Get base map
+        // Get base map and store it in `svg` attribute
         //
         // @return returns base map as string or false on failure
         //
         public function fetch()
         {
             $filename = $this->geo->get_filename($this->data->vispath);
+            if ($filename === false || $filename === NULL)
+                return $this->error->add('Dateiname der Basiskarte '.
+                    'konnte nicht evaluiert werden', 3);
+
             $svg = $this->file->get_base_map($filename);
-            if (!$svg)
-                return $this->error->add('Cannot read base map', 3);
+            if ($svg === false)
+                return $this->error->add('Konnte Basiskarte nicht lesen', 3);
 
             $this->svg = $svg;
             return $svg;
         }
 
         //
-        // Write titles to svg attribute
+        // Write titles to SVG source code
         //
         // @return new SVG source code
         //
@@ -85,7 +93,7 @@
         }
 
         //
-        // Write legend to svg attribute
+        // Write legend to SVG source code
         //
         // @return new SVG source code
         //
@@ -118,7 +126,7 @@
         }
 
         //
-        // Method to substitute the areas (in the SVG map) in svg attribute
+        // Substitute area colors in SVG source code
         //
         // @return new SVG source code
         //
@@ -136,12 +144,12 @@
         // Save the map in a file. Use FileManager instance in file attribute
         //
         // @return an array of written files.
-        //         false on failure.
+        //         false if not all files were written
         //
         public function save()
         {
             $result = $this->file->create_svg($this->data, $this->svg);
-            if ($result < 0)
+            if ($result === false || count($result) !== 3)
                 return false;
             return $result;
         }
@@ -149,8 +157,8 @@
         //
         // Stupid callback for preg_replace_callback to replace areas
         //
-        // @param match match by preg_replace_callback (not useful)
-        // @return string with latest color
+        // @param match match by preg_replace_callback (not in usage)
+        // @return string with new color (eg. fill="#112233")
         //
         public function _replace_colors($match=NULL)
         {
@@ -166,8 +174,8 @@
         //
         // Stupid callback to replace colors in rectangles of legend
         //
-        // @param match match by preg_replace_callback (not useful)
-        // @return string with latest color
+        // @param match match by preg_replace_callback (not in usage)
+        // @return string with new color (eg. fill="#112233")
         //
         public function _replace_rects($match)
         {
@@ -222,6 +230,7 @@
 
         public function _xml_sanitize($string)
         {
+            // HTML escaping equals XML escaping in _e
             return _e($string);
         }
     }

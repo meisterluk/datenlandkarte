@@ -11,63 +11,7 @@
         @function create_kvalloc_form
         @function override_defaults
 
-        class UserInterface
-        -------------------
-
-        FROM INTERFACES
-
-            @method from_api
-            @method from_json
-            @method from_webinterface
-
-        PROCESSING
-
-            @method process_colors
-            @method process_vispath
-            @method process_data
-            @method process_scale
-
-        SUB PROCESSING / PARSING
-
-            @method parse_manual
-            @method parse_list
-            @method parse_json
-            @method parse_kvalloc
-
-        CHECKING METHODS
-
-            @method check_title
-            @method check_subtitle
-            @method check_author
-            @method check_source
-            @method check_dec
-            @method check_apiversion
-            @method check_grad
-            @method check_colors
-            @method check_fac
-            @method check_data
-            @method check_value
-
-        SANITIZATION METHODS
-
-            @method sanitize_title
-            @method sanitize_subtitle
-            @method sanitize_author
-            @method sanitize_source
-            @method sanitize_dec
-            @method sanitize_apiversion
-            @method sanitize_grad
-            @method sanitize_colors
-            @method sanitize_fac
-            @method sanitize_data
-            @method sanitize_value
-            @method sanitize_delimiter
-
-        STATIC HELPER METHODS
-
-            @method _remove_trailing_line
-            @method parse_vis_path
-            @method get_basic_attributes
+        @class UserInterface
     */
 
     require_once($root.'lib/lib.php');
@@ -193,17 +137,83 @@
             return '1';
     }
 
+    function override_defaults($defaults)
+    {
+        die('NotImplementedException!'); # TODO
+        return $defaults;
+    }
+
+    /*
+        class UserInterface
+        -------------------
+
+        FROM INTERFACES
+
+            @method from_api
+            @method from_json
+            @method from_webinterface
+
+        PROCESSING
+
+            @method process_colors
+            @method process_vispath
+            @method process_data
+            @method process_scale
+
+        SUB PROCESSING / PARSING
+
+            @method parse_manual
+            @method parse_list
+            @method parse_json
+            @method parse_kvalloc
+
+        CHECKING METHODS
+
+            @method check_title
+            @method check_subtitle
+            @method check_author
+            @method check_source
+            @method check_dec
+            @method check_apiversion
+            @method check_grad
+            @method check_colors
+            @method check_fac
+            @method check_data
+            @method check_value
+
+        SANITIZATION METHODS
+
+            @method sanitize_title
+            @method sanitize_subtitle
+            @method sanitize_author
+            @method sanitize_source
+            @method sanitize_dec
+            @method sanitize_apiversion
+            @method sanitize_grad
+            @method sanitize_colors
+            @method sanitize_fac
+            @method sanitize_data
+            @method sanitize_value
+            @method sanitize_delimiter
+
+        STATIC HELPER METHODS
+
+            @method _remove_trailing_line
+            @method parse_vis_path
+            @method get_basic_attributes
+    */
 
     class UserInterface
     {
         // attributes
-        public $title = '';
-        public $subtitle = '';
-        public $visibility = 0;
-        public $author = '';
-        public $source = '';
-        public $dec = 2;
-        public $apiversion = 1;
+        public $title       = '';
+        public $subtitle    = '';
+        // 0 = private. 1 = CC-licensed. check out file.php.
+        public $visibility  = 0;
+        public $author      = '';
+        public $source      = '';
+        public $dec         = 2;
+        public $apiversion  = 1;
 
         // objects
         public $vispath;
@@ -245,7 +255,7 @@
         }
 
         //
-        // Aggregate data attribute in "json" format
+        // Aggregate `data` attribute in "json" format
         //
         // @param data the JSON string to read
         // @param color_gradients Array of arrays of hexcodes (color palettes)
@@ -254,6 +264,7 @@
         //
         public function from_json(&$data, &$color_gradients, &$color_allocation)
         {
+            // TODO: is copy of from_webinterface?
             if (is_empty($data)) {
                 return $this->error->add('Bitte füllen Sie das Feld '.
                     '"Daten" aus', 3);
@@ -292,11 +303,11 @@
         // @param post a $_POST array
         // @param color_gradients Array of arrays of hexcodes (color palettes)
         // @param color_allocation Array of indizes and palette names
+        // @return true on success. false on failure.
         //
         public function from_webinterface(&$post, &$color_gradients, &$color_allocation)
         {
-            // Note.
-            //   Be aware of changing order of method calls
+            // NOTE: Be aware of changing order of method calls
 
             // simple parameters
             $this->title    = $this->sanitize_title($post['title']);
@@ -312,7 +323,13 @@
                     ($post, $color_gradients, $color_allocation);
             $this->vispath  = $this->process_vispath($post);
             $this->data     = $this->process_data($post);
-            $this->scale    = $this->process_scale($this->data, $this->colors);
+            if (is_array($this->data))
+                $this->scale = $this->process_scale($this->data, $this->colors);
+
+            if (!is_empty($this->error->filter(2)))
+                return false;
+            else
+                return true;
         }
 
 
@@ -321,13 +338,14 @@
         //
         // @param post a $_POST array
         // @param color_gradients An array of possible color scales
-        //        NULL if neither grad/colors nor palette mode is activated
         // @param color_allocation array of indizes and palette names
+        // @return a Colors instance (palette might not be valid!)
+        //         NULL if neither grad/colors nor palette mode is activated
         //
         public function process_colors(&$post, &$color_gradients, &$color_allocation)
         {
-            $this->grad     = $this->sanitize_grad($post['grad']); // TODO: why useful?
-
+            // NOTE: Two stages. Execute stage1 or stage2 or stage1+stage2 if error
+            // occurs during execution of stage1
             $c = new Colors($this->error);
             $stage1 = isset($post['palette']);
             $stage2 = isset($post['grad']);
@@ -344,25 +362,28 @@
                 if (count($palette) >= 2)
                 {
                     $this->error->add('from_palette aufgerufen', 0);
-                    $c->from_palette($palette);
+                    $r = $c->from_palette($palette);
                     $stage2 = false;
                 } else
-                    $stage2 = true;
+                    $stage2 = true; // fallback
             }
 
             if ($stage2)
             {
-                $grad = (int)$post['grad'];
-                $colors = $this->sanitize_colors($post['colors']);
+                $grad     = $this->sanitize_grad($post['grad']);
+                $colors   = $this->sanitize_colors($post['colors']);
 
                 if (!array_key_exists($grad, $color_gradients))
                     $this->error->add('Die angegebene Farbrichtung ist'
                         .' unbekannt', 3);
 
                 $this->error->add('from_grad_colors aufgerufen', 0);
-                $c->from_grad_colors
+                $r = $c->from_grad_colors
                     ($grad, $colors, $color_gradients, $color_allocation);
             }
+
+            if (!$r)
+                $this->error->add('Konnte Farbpalette nicht erstellen');
 
             return $c;
         }
@@ -371,12 +392,16 @@
         // Generate a VisPath object from $_POST data
         //
         // @param post a $_POST array
-        // @return a VisPath instance
+        // @return a VisPath instance. false if vis_path of $post is invalid
         //
         public function process_vispath(&$post)
         {
             $vp = UserInterface::parse_vis_path($post);
-            return new VisPath($vp);
+            $vp = new VisPath($vp);
+            if ($vp->is_valid())
+                return $vp;
+            else
+                return false;
         }
 
         //
@@ -391,7 +416,7 @@
             // aggregate keys
             $keys     = array();
             $array    = $this->geo->get($this->vispath);
-            if (!$array)
+            if ($array === NULL || $array === false)
                 return false;
 
             foreach ($array as $key => $value)
@@ -415,16 +440,14 @@
                         $post['kvalloc_delim1'], $post['kvalloc_delim2'],
                         $keys);
                 default:
-                    $this->error->add('Invalider "format" Parameter.', 3);
+                    return $this->error->add('Falscher format Parameter. '.
+                        'Kann data Attribut nicht verarbeiten', 3);
             }
-
-            return $this->error->add('Falscher format Parameter. '
-                .'Kann data Attribut nicht verarbeiten', 3);
         }
 
         //
         // Create scale (intervals appearing in legend)
-        // Note. You can apply a lot of statistical tricks in this method
+        // NOTE: You can apply a lot of statistical tricks to this method
         //
         // @param data data array
         // @param num the number of elements to be in output (probably $colors)
@@ -463,7 +486,7 @@
         //
         // @param data data to use
         // @param keys the keys to fill
-        // @return true on success. false on failure.
+        // @return valid data values on success. false on failure.
         //
         public function parse_manual(&$data, &$keys)
         {
@@ -496,22 +519,23 @@
         // @param data data to use
         // @param delim the delimiter necessary to read data
         // @param keys the keys to fill
-        // @return true on success. false on failure.
+        // @return valid data values on success. false on failure.
         //
         public function parse_list(&$data, $delim, &$keys)
         {
-            if (is_empty($data)) {
+            if (is_empty($data))
                 return $this->error->add
-                    ('Bitte füllen Sie das Feld "Daten" aus', 3);
-            }
-            if (is_empty($delim)) {
+                    ('Bitte füllen Sie das Feld "Daten" aus.', 3);
+
+            if (is_empty($delim))
                 return $this->error->add
                     ('Leere Trennzeichen sind nicht erlaubt.',3);
-            }
-            $nr = count($this->keys);
 
-            $data = UserInterface::_remove_trailing_line($data, $nr);
+            $nr     = count($this->keys);
+            $delim  = UserInterface::sanitize_delimiter($delim);
+
             $data = str_replace("\r\n", "\n", $data);
+            $data = UserInterface::_remove_trailing_line($data, $nr);
             $data = explode($delim, $data);
 
             if (count($data) < 2 || count($data) != $nr)
@@ -521,8 +545,7 @@
                     'leer (leere Zeile)), falls keine Daten vorliegen', 3);
             }
 
-            $this->data = $data;
-            return true;
+            return $data;
         }
 
         //
@@ -530,7 +553,7 @@
         //
         // @param data data to use
         // @param keys the keys to fill
-        // @return true on success. false on failure.
+        // @return valid data values on success. false on failure.
         //
         public function parse_json(&$data, &$keys)
         {
@@ -540,10 +563,11 @@
             $data = array();
             foreach ($keys as $key)
             {
+                // NOTE: A missing key means invalid value.
                 if (isset($json[$key]))
                     $data[$key] = $json[$key];
             }
-            $this->data = $data;
+            return $data;
         }
 
         //
@@ -553,32 +577,31 @@
         // @param delim1 the first delimiter necessary to read data
         // @param delim2 the second delimiter necessary to read data
         // @param keys the keys to fill
-        // @return true on success. false on failure.
+        // @return data values on success. false on failure.
         //
         public function parse_kvalloc(&$data, $delim1, $delim2, &$keys)
         {
-            if (is_empty($data)) {
+            if (is_empty($data))
                 return $this->error->add
                     ('Bitte füllen Sie das Feld "Daten" aus', 3);
-            }
-            if (is_empty($delim1) || is_empty($delim2)) {
+
+            if (is_empty($delim1) || is_empty($delim2))
                 return $this->error->add
-                    ('Leere Trennzeichen sind nicht erlaubt.',3);
-            }
-            $delim1 = UserInterface::sanitize_delimiter($delim1);
-            $delim2 = UserInterface::sanitize_delimiter($delim2);
-            $keys = $this->keys;
+                    ('Leere Trennzeichen sind nicht erlaubt.', 3);
+
+            $delim1  = UserInterface::sanitize_delimiter($delim1);
+            $delim2  = UserInterface::sanitize_delimiter($delim2);
             $kvalloc = array();
 
             $split1 = explode($delim1, $data);
             if (is_empty($split1[count($split1)-1]))
                 array_pop($split1);
+
             if (count($split1) > 2)
-            {
                 foreach ($split1 as $value)
                 {
                     $split2 = explode($delim2, $value);
-                    if (!count($split2) == 2)
+                    if (count($split2) != 2)
                     {
                         return $this->error->add('Konnte Daten-Eingabe '.
                             'nicht in in 2er Tupel aufspalten', 3);
@@ -586,27 +609,21 @@
 
                     $kvalloc[$split2[0]] = $split2[1];
                 }
-            } else {
-                return $this->error->add('Konnte Daten-Eingabe nicht in '.
-                    'in 2er Tupel auftrennen', 3);
-            }
+            else
+                return $this->error->add('Zu wenig Daten bei Daten-Eingabe', 3);
 
             $diff = array_diff($keys, $kvalloc);
             if (!is_empty($diff))
-            {
                 $this->error->add(sprintf('Die Eingabe unterscheidet sich von'.
                     ' den erwarteten Parametern in (%s)', implode(', ', $diff)),
                     3);
-            }
 
             $data = array();
             foreach ($keys as $key)
-            {
-                $data[$key] = $kvalloc[$key] || true;
-            }
+                $data[$key] = (isset($kvalloc[$key])
+                    ? $kvalloc[$key] : $this->$invalid_value);
 
-            $this->data = $data;
-            return true;
+            return $data;
         }
 
 
@@ -624,10 +641,9 @@
         {
             if (!is_empty($title) && str_length($title) <= 50)
                 return true;
-            else {
-                return $this->error->add('Invalider Titel. Muss zwischen 0 '.
-                    'und 50 Zeichen haben.', 3);
-            }
+            else
+                return $this->error->add('Länge des Titels muss zwischen 0'.
+                    'und 50 Zeichen liegen.', 3);
         }
 
         //
@@ -638,13 +654,10 @@
         //
         public function check_subtitle($subtitle)
         {
-            if (!is_empty($subtitle)
-                    && str_length($subtitle) <= 120)
-                    return true;
-                else {
-                    return $this->error->add('Invalider Untertitel. '.
-                        'Muss zwischen 0 und 120 Zeichen besitzen', 3);
-                }
+            if (str_length($subtitle) <= 120)
+                return true;
+            else
+                return $this->error->add('Untertitel ist zu lang', 3);
         }
 
         //
@@ -655,7 +668,10 @@
         //
         public function check_author($author)
         {
-            return true;
+            if (str_length($author) <= 70)
+                return true;
+            else
+                return $this->error->add('Autorenname ist zu lang', 3);
         }
 
         //
@@ -666,7 +682,10 @@
         //
         public function check_source($source)
         {
-            return true;
+            if (str_length($source) <= 150)
+                return true;
+            else
+                return $this->error->add('Quellenname ist zu lang', 3);
         }
 
         //
@@ -680,10 +699,9 @@
             $dec = (int)$dec;
             if (0 <= $dec && $dec <= 3)
                 return true;
-            else {
+            else
                 return $this->error->add('Anzahl der Nachkommastellen '.
                     'muss zwischen 0 und 3 (inklusive) liegen', 3);
-            }
         }
 
         //
@@ -695,12 +713,11 @@
         public function check_apiversion($apiversion)
         {
             $dec = (int)$dec;
-            if (0 <= $dec && $dec <= 3)
+            if (0 <= $apiversion && $apiversion <= 3)
                 return true;
-            else {
-                return $this->error->add('Anzahl der Nachkommastellen '.
-                    'muss zwischen 0 und 3 (inklusive) liegen', 3);
-            }
+            else
+                return $this->error->add('Invalide API Version. Muss '.
+                    'Ganzzahl in 0-3 sein.', 3);
         }
 
 
@@ -719,9 +736,8 @@
             $grad = (int)$grad;
             if (0 <= $grad && $grad <= 7)
                 return true;
-            else {
+            else
                 return $this->error->add('Farbrichtung nicht verfügbar', 3);
-            }
         }
 
         //
@@ -733,12 +749,11 @@
         public function check_colors($colors)
         {
             $colors = (int)$colors;
-            if (2 <= $colors)
+            if ($colors > 2)
                 return true;
-            else {
-                return $this->error->add('Anzahl der Farben muss zwischen 2 '.
-                    'und 10 (inklusive) liegen', 3);
-            }
+            else
+                return $this->error->add('Farbanzahl ungültig. Muss '.
+                    'mindestens 2 sein.', 3);
         }
 
         //
@@ -749,11 +764,10 @@
         //
         public function check_fac($fac)
         {
-            if ((float)$fac === 0.0) {
+            if ((float)$fac === 0.0)
                 return $this->error->add('Hebefaktor darf nicht 0 sein.', 3);
-            } else {
+            else
                 return true;
-            }
         }
 
         //
@@ -763,14 +777,12 @@
         //
         public function check_data()
         {
-            if (min($this->data) == max($this->data))
+            if (min($this->data) === max($this->data))
                 return false;
 
             foreach ($this->data as $value)
-            {
                 if (!$this->check_value($value))
                     return false;
-            }
 
             return true;
         }
@@ -785,9 +797,8 @@
         {
             // if it is a real zero
             if (preg_match('/^0([.,]0+)?$/', trim($value)))
-            {
                 return true;
-            } else {
+            else {
                 // if it is an invalid value
                 if ($value === '')
                 {
@@ -966,18 +977,15 @@
             $value = str_replace(',', '.', $value);
             // if it is a real zero
             if (preg_match('/^0([.,]0+)?$/', $value))
-            {
                 return 0.0;
-            } else {
+            else {
                 $f = (float)$value;
                 if ($value === '')
-                {
                     return self::$invalid_value;
-                } elseif ($f === 0.0) {
+                elseif ($f === 0.0)
                     return self::$invalid_value;
-                } else {
+                else
                     return $f;
-                }
             }
         }
 
@@ -1048,7 +1056,7 @@
                 else if ($post['base'][1] === 'gm')
                     return 'vis_0_29_2_0_'.((int)$post['base'][0]);
                 else
-                    $this->error->add('base Parameter angegeben. Aber '
+                    $this->error->add('"base" Parameter angegeben. Aber '
                         .'ist nicht valide', 3);
             }
 

@@ -4,18 +4,25 @@
         ====
 
         A simple data class acting as a raw data container.
+        An instance can be used easily to exchange values.
+        Therefore only sanitized values should be inserted.
 
         SETTERS
+
             @method set
             @method set_titles
             @method set_visibility
             @method import_data
             @method import_vispath
             @method import_color
+
         MAIN
+
             @method import_ui
             @method export_json
+
         HELPERS
+
             @method is_invalid_value
     */
 
@@ -92,7 +99,6 @@
 
         //
         // Setter method for visibility
-        // 0 = private. 1 = CC-licensed.
         //
         // @param visibility visibility attribute (integer 0 or 1)
         //
@@ -102,7 +108,7 @@
         }
 
         //
-        // Setter method for vispath attribute / importer VisPath instances
+        // Setter method for vispath attribute / import VisPath instance
         //
         // @param vispath VisPath instance
         //
@@ -181,7 +187,7 @@
         // Checks whether or not given value is an invalid value
         //
         // @param value the value to check
-        // @return bool
+        // @return bool indicating invalidity
         //
         public function is_invalid_value($value)
         {

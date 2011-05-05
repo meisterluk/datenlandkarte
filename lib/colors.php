@@ -6,9 +6,12 @@
         A class handling colors per user input.
 
         MAIN
+
             @method from_grad_colors
             @method from_palette
+
         HELPERS (static)
+
             @method is_valid_hex_color
             @method get_color_short
             @method get_color_long
@@ -18,12 +21,18 @@
             @method get_complementary_color
             @method get_contrast_color
             @method hue_to_rgb
+
         TITLE ATTRIBUTES
+
             @method generate_bgs
+
         PALETTE ATTRIBUTE
+
             @method palette_from_grad
             @method adjust_palette
+
         GRAD ATTRIBUTE
+
             @method is_valid_grad
     */
 
@@ -36,10 +45,11 @@
         private static $color_regex = "/^#([[:xdigit:]]{3}|[[:xdigit:]]{6})$/";
         private static $color_dark = '#000000';
         private static $color_bright = '#AAAAAA';
-        # if the palette is very mixed and does not start/end with s/w
-        # I might consider taking one of these colors as background
-        # colors for [sub]title, if complementary colors cannot be found
-        #   Colors: blue, orange, red, violet, green
+        // if the palette is very mixed and does not start/end with s/w
+        // and complementary colors cannot be found,
+        // I might consider taking one of these colors as background
+        // colors for [sub]title
+        //   Colors: blue, orange, red, violet, green
         private static $bgcolors = array('#000033', '#FFCC00', '#AA0000',
             '#440033', '#002200');
 
@@ -69,6 +79,7 @@
         // @param colors is the number of colors to be displayed
         // @param color_gradients An array of palettes
         // @param color_allocation an array of indizes and palette names
+        // @return true on success. false on error
         //
         public function from_grad_colors
                 ($grad, $colors, &$color_gradients, &$color_allocation)
@@ -149,12 +160,13 @@
         // eg. '#FFC000' => '#FC0', '#000700' => '#010'
         //
         // @param color a hexadecimal color of size 6 with leading # symbol
-        // @return a 3-hex color like '#123'
+        // @return a 3-hex color like '#123'. false on error
         //
         public function get_color_short($color)
         {
             if (!$this->is_valid_hex_color($color) || strlen($color) != 7)
-                return false;
+                return $this->error->add('Gegebene 7-stellige hexadezimale '.
+                    'Farbe ist invalid: '.$color);
 
             $array = $this->get_color_array($color);
             if (!$array)
@@ -179,12 +191,13 @@
         // eg. '#FC0' => '#FFCC00', '#070' => '#007700'
         //
         // @param color a hexadecimal color of size 6 with leading # symbol
-        // @return a 3-hex color like '#123'
+        // @return a 3-hex color like '#123'. false on error.
         //
         public function get_color_long($color)
         {
             if (!$this->is_valid_hex_color($color) || strlen($color) != 4)
-                return false;
+                return $this->error->add('Gegebene 3-stellige hexadezimale '.
+                    'Farbe ist invalid: '.$color);
 
             $long = '#';
             $long .= $color[1].$color[1];
@@ -201,7 +214,7 @@
         //
         // @param color1 hex color
         // @param color2 hex color
-        // @return the difference as integer
+        // @return the difference as integer. false if any color is invalid.
         //
         public function get_color_diff($color1, $color2)
         {
@@ -223,7 +236,8 @@
         // Get a corresponding integer array to hex color
         //
         // @param color a hex color
-        // @return an array of three integers between 0--255
+        // @return an array of three integers between 0--255.
+        //         false if color parameter is invalid hex color
         //
         public function get_color_array($color)
         {
@@ -251,12 +265,15 @@
         // @param color2 a hex color
         // @param distance the maximum distance between color1 and color2
         // @return bool
+        //         NULL if any color is invalid
         //
         public function is_similar_color($color1, $color2, $distance=0x111111)
         {
             $diff = $this->get_color_diff($color1, $color2);
+            if ($diff === false)
+                return NULL;
             $diff = array_map('abs', $diff);
-            return array_sum($diff) <= $distance;
+            return (array_sum($diff) <= $distance);
         }
 
         //
@@ -264,7 +281,7 @@
         // based on http://serennu.com/colour/rgbtohsl.php
         //
         // @param color a hex color
-        // @return a hex color
+        // @return a hex color. false if color parameter is invalid.
         //
         public function get_complementary_color($color)
         {
@@ -341,11 +358,12 @@
         }
 
         //
-        // Get a color in contrast with the given one. Uses YIQ.
+        // Get a contrasting colour for the given one. Uses YIQ.
         // Basically, the algorithm decided between color_dark and color_bright
         //
         // @param color
         // @return either self::$color_dark or self::$color_bright
+        //         false if color parameter is invalid
         //
         public function get_contrast_color($color)
         {
@@ -365,6 +383,7 @@
         // @param a a component of the hue of a color
         // @param b a component of the hue of a color
         // @param c a component of the hue of a color
+        // @return some modified component
         //
         static public function hue_to_rgb($a, $b, $c)
         {
@@ -391,7 +410,8 @@
         // Palette is taken from palette object. Background colors
         // are written to attributes and returned.
         //
-        // @return bool true on success. false on failure.
+        // @return a valid color as background.
+        //         false if $this->palette is invalid.
         //
         public function generate_bgs()
         {
@@ -431,16 +451,16 @@
                     }
                     if (!$is_in_gradient)
                     {
-                        $this->error->add('Found appropriate color '
-                            .'in bgcolors', 0);
+                        $this->error->add('Habe eine passende '.
+                            'Textfarbe in bgcolors gefunden', 0);
                         $this->title_bg = $bg;
                         $this->subtitle_bg = $bg;
 
                         return $bg;
                     }
                 }
-                $this->error->add('Sorry, no color found. Taking first of '
-                    .'bgcolors', 0);
+                $this->error->add('Sorry, keine Farbe gefunden. Were die erste'.
+                    'Farbe von bgcolors als Textfarbe nehmen', 0);
                 $this->title_bg = self::$bgcolors[0];
                 $this->subtitle_bg = self::$bgcolors[0];
                 return self::$bgcolors[0];
@@ -449,7 +469,8 @@
             } else if ((!$is_dark($val_first) && !$is_bright($val_last))
                     && (!$is_bright($val_first) && !$is_dark($val_last))) {
 
-                $this->error->add('Mixed colors. Select dark one.', 0);
+                $this->error->add('Sehr gemischte Palette. Werde dunkle Farbe '.
+                    'als Textfarbe nehmen.', 0);
                 $this->title_bg = self::$color_dark;
                 $this->subtitle_bg = self::$color_dark;
                 return self::$color_dark;
@@ -457,7 +478,9 @@
             // first color is bright or dark
             } else if ($is_bright($val_first) || $is_dark($val_first)) {
 
-                $this->error->add('Select complementary color of last one', 0);
+                $this->error->add('Palette hat dunkle/helle Farbe am Anfang'.
+                    'Werde Komplementärfarbe der letzten Farbe als Textfarbe'.
+                    'wählen', 0);
                 $bg = $this->get_complementary_color($this->palette
                         [count($this->palette)-1]);
                 $this->title_bg = $bg;
@@ -467,12 +490,9 @@
             // last color is bright or dark
             } else if ($is_bright($val_last) || $is_dark($val_last)) {
 
-            /*var_dump("first is bright: ", $is_bright($val_first));
-            var_dump("last is bright: ", $is_bright($val_last));
-            var_dump("first is dark: ", $is_dark($val_first));
-            var_dump("last is dark: ", $is_dark($val_last));*/
-
-                $this->error->add('Select complementary color of first one', 0);
+                $this->error->add('Palette hat dunkle/helle Farbe am Ende'.
+                    'Werde Komplementärfarbe der ersten Farbe als Textfarbe'.
+                    'wählen', 0);
                 $bg = $this->get_complementary_color($this->palette[0]);
                 $this->title_bg = $bg;
                 $this->subtitle_bg = $bg;
@@ -481,7 +501,8 @@
             // other cases
             } else {
 
-                $this->error->add('Strange palette. Select contrast.', 0);
+                $this->error->add('Seltsame Palette. Werde eine '.
+                    'Kontrastfarbe nehmen.', 0);
                 $bg = $this->get_contrast_color($this->palette
                         [count($this->palette) / 2]);
                 $this->title_bg = $bg;
@@ -496,10 +517,13 @@
         // @param grad A grad parameter (string)
         // @param color_gradients An array of color palettes
         // @return an array of hex colors (partition of color_gradients)
+        //         false if grad index is invalid
         //
         static public function palette_from_grad($grad, &$color_gradients)
         {
-            return $color_gradients[$grad];
+            if (array_key_exists($grad, $color_gradients))
+                return $color_gradients[$grad];
+            return false;
         }
 
         //
@@ -507,7 +531,7 @@
         //
         // @param palette the given palette
         // @param length the length
-        // @return the new palette
+        // @return the new palette. false if palette is smaller than length
         //
         static public function adjust_palette(&$palette, $length)
         {
@@ -567,7 +591,7 @@
         //
         // @param grad value to check (index to color palette)
         // @param color_gradients an array of color palettes
-        // @return bool
+        // @return bool indicating validity
         //
         static public function is_valid_grad($grad, &$color_gradients)
         {

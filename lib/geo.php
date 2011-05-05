@@ -9,23 +9,30 @@
 
 
         MAIN
+
             @method is_valid
             @method is_root
             @method from_indizes
             @method to_indizes
-            @method get_error
+            @method get_errors
+
         NAVIGATION
+
             @method up
             @method down
             @method next
             @method previous
+
         GETTERS
+
             @method get
             @method get_top
             @method get_root
             @method get_length
             @method get_basename
+
         SETTERS
+
             @method set
             @method set_default
     */
@@ -68,12 +75,12 @@
         //
         public function __toString()
         {
-            // TODO
             return (string)'<VisPath '.$this->vis_path.'>';
         }
 
         //
-        // Check for validity of stored vis_path and save bool to valid attrib.
+        // Check for validity of stored `vis_path` and
+        // save bool to `valid` attribute
         //
         // @return bool of validity
         //
@@ -126,13 +133,15 @@
 
             $pos = strpos($this->vis_path, '_');
             $vp = substr($this->vis_path, $pos+1);
+            // TODO: probably it's a design fault that
+            // this method does not return integers
             return explode('_', $vp);
         }
 
         //
-        // A getter method for vis_path attribute
+        // A getter method for `vis_path` attribute
         //
-        // @return string of vis_path attribute
+        // @return string of `vis_path` attribute
         //
         public function get()
         {
@@ -167,7 +176,7 @@
         //
         public function get_length()
         {
-            // count($this->to_indizes()) works, but optimized is:
+            // NOTE: count($this->to_indizes()) works, but optimized is:
             return substr_count($this->vis_path, '_');
         }
 
@@ -245,6 +254,7 @@
         // Method to go deeper into vis_path hierarchy
         // (ie. appends last_element parameter)
         //
+        // @param last_element the element to append
         // @return vis_path one level deeper
         //         false if vis_path is invalid
         //
@@ -313,7 +323,7 @@
         //
         // @return a Notifications instance
         //
-        public function get_error()
+        public function get_errors()
         {
             return $this->error;
         }
@@ -325,21 +335,30 @@
 
         A Geo class stores a geo_hierarchy and manages it's access.
         Most of the methods expect a VisPath as parameter and use
-        parameter passing by reference to improve performance.
+        parameter passing by reference to improve storage management.
 
         GETTERS
+
             @method get
             @method get_children
             @method get_filename
             @method get_name
+            @method get_errors
             @method get_full_name
+
         WALK
+
             @method iterate
             @method next
+
         HELPER
+
             @method _exists
+
         REAL FEATURES
+
             @method build_input_html
+            @method build_flat_radio_html
     */
 
     class Geo
@@ -350,12 +369,12 @@
         //
         // Constructor
         //
-        // @param ref a reference to a geo_hierarchy
+        // @param hierarchy a geo_hierarchy
         // @param file a FileManager instance
         //
-        public function __construct(&$ref, &$file)
+        public function __construct(&$hierarchy, &$file)
         {
-            $this->hierarchy = &$ref;
+            $this->hierarchy = &$hierarchy;
             $this->file = &$file;
         }
 
@@ -422,9 +441,9 @@
         // Check number of children at vis_path
         //
         // @param vis_path the vis path to follow
-        // @return integer for number
-        //         false if vis path is invalid
-        //         NULL if vis path is pointing to empty element
+        // @return integer for number of children
+        //         false if vis_path is invalid
+        //         NULL if vis_path is pointing to empty element
         //
         public function get_children(&$vis_path)
         {
@@ -439,7 +458,7 @@
         // Get filename for vis_path
         //
         // @param vis_path the vis_path to follow
-        // @return the filename
+        // @return the filename (_-joined `name` attributes of vis_path)
         //         false if vis_path is invalid or pointing to Nirvana
         //         NULL if vis_path is pointing to root
         //
@@ -448,9 +467,9 @@
             if (!$vis_path->is_valid())
                 return false;
 
-            $indizes = $vis_path->to_indizes();
-            $pos = &$this->hierarchy;
-            $filename = '';
+            $indizes   = $vis_path->to_indizes();
+            $pos       = &$this->hierarchy;
+            $filename  = '';
 
             if (!is_empty($indizes))
             {
@@ -494,6 +513,16 @@
         }
 
         //
+        // Getter method for `error` attribute
+        //
+        // @return a Notification instance used by object
+        //
+        public function get_errors()
+        {
+            return $this->error;
+        }
+
+        //
         // Get full name (eg. array('Länder', 'Österreich', 'Föderale Ebene'))
         //
         // @return array of names
@@ -532,7 +561,7 @@
         // Iteration over name & filename attributes at vis_path
         //
         // @param vis_path vis path to follow
-        // @return an array(array(name, filename), array(name, filename), ...)
+        // @return an array(array(name=>$name, filename=>$filename), ...)
         //         false if vis path is invalid
         //         NULL if vis path is pointing to empty element
         //
@@ -550,6 +579,7 @@
                 foreach ($indizes as $index)
                 {
                     $current = &$current[$index];
+
                     if (!isset($current))
                         return NULL;
                     $iteration[] = array(
