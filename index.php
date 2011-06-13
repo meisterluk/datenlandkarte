@@ -140,24 +140,37 @@
             jQuery('.data_manual, .data_list, .data_json, .data_kvalloc').hide();
             jQuery('.data_' + format).show();
 
-            jQuery.get('api.php', {'method' : format + '_form',
-                'vis_path' : path, 'indent' : 12}, write_form);
+            // do not request, if you have it in cache
+            if (_cache[format + ":" + path])
+            {
+                read_cache();
+                return true;
+            } else {
+                jQuery.get('api.php', {'method' : format + '_form',
+                    'vis_path' : path, 'indent' : 12}, write_form);
+                return true;
+            }
         }
         // write message to form as specified by #format
         function write_form(msg)
         {
-            switch (jQuery('#format option:selected').val())
+            error = (msg == '0' || msg == '1');
+            if (error)
+            {
+                jQuery('#error > ul')
+                    .append($('<li>Konnte Geodaten nicht anfragen</li>'));
+            }
+
+            switch (get_format())
             {
                 case 'manual':
-                    if (msg == '0' || msg == '1')
+                    if (error)
                         jQuery('.data_manual').text('');
                     else
                         jQuery('.data_manual').html(msg);
                     break;
                 case 'list':
-                    if (msg == '0' || msg == '1') {
-                        jQuery('#error > ul').append(
-                            $('<li>Konnte Geodaten nicht anfragen</li>'));
+                    if (error) {
                         jQuery('.data_list').hide();
                     } else {
                         jQuery('.data_list').show();
@@ -165,9 +178,7 @@
                     }
                     break;
                 case 'json':
-                    if (msg == '0' || msg == '1') {
-                        jQuery('#error > ul').append(
-                            $('<li>Konnte Geodaten nicht anfragen</li>'));
+                    if (error) {
                         jQuery('.data_json').hide();
                     } else {
                         jQuery('.data_json').show();
@@ -175,9 +186,7 @@
                     }
                     break;
                 case 'kvalloc':
-                    if (msg == '0' || msg == '1') {
-                        jQuery('#error > ul').append(
-                            $('<li>Konnte Geodaten nicht anfragen</li>'));
+                    if (error) {
                         jQuery('.data_kvalloc').hide();
                     } else {
                         jQuery('.data_kvalloc').show();
@@ -196,7 +205,7 @@
         function read_cache()
         {
             vis = selected2vis();
-            format = jQuery('#format option:selected').val();
+            format = get_format();
             key = (format + ':' + vis);
 
             // cache is empty at key
@@ -232,13 +241,22 @@
             {
                 case 'manual':
                     _cache[key] = [];
+                    var content_exists = false;
                     jQuery('*[name=manual[]]').each(function (index) {
-                        _cache[key].push(jQuery(this).val());
+                        value = jQuery(this).val();
+                        _cache[key].push(value);
+                        if (value != "")
+                            content_exists = true;
                     });
+                    if (!content_exists)
+                        delete _cache[key];
                     break;
                 case 'list': case 'json': case 'kvalloc':
-                    _cache[key] = '';
-                    _cache[key] = jQuery('#' + format).val();
+                    if (jQuery('#' + format).val())
+                    {
+                        _cache[key] = '';
+                        _cache[key] = jQuery('#' + format).val();
+                    }
                     break;
             }
         }
@@ -580,7 +598,12 @@
                   Trennen Sie die Hexfarben mit einem Komma</small>
                 </td>
                 <td>
-                  <input type="text" name="palette" value="<?=_e(implode(',', $defaults['palette']));?>" /></td>
+                  <input type="text" name="palette" value="<?php
+                    if (is_array($defaults['palette']))
+                        echo _e(implode(',', $defaults['palette']));
+                    else
+                        echo _e($defaults['palette']);
+                  ?>" /></td>
                 </td>
               </tr>
               <tr>
@@ -624,7 +647,10 @@
           <div class="big">
             Daten
           </div>
-          <p class="indent"><strong>Notiz.</strong> fehlende Angabe werden weiß dargestellt</p>
+          <p class="indent">
+            <strong>Notiz.</strong>
+            fehlende Angabe werden weiß dargestellt
+          </p>
           <p class="data_list data_kvalloc indent">
             <strong>Notiz.</strong>
             In Trennzeichen darf \n für einen Zeilenumbruch verwendet werden.

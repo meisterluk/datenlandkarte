@@ -70,7 +70,7 @@
                     'konnte nicht evaluiert werden', 3);
 
             $svg = $this->file->get_base_map($filename);
-            if ($svg === false)
+            if ($svg === false || $svg === '')
                 return $this->error->add('Konnte Basiskarte nicht lesen', 3);
 
             $this->svg = $svg;
