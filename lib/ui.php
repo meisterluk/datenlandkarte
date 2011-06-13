@@ -252,6 +252,53 @@
         //
         public function from_api(&$post, &$color_gradients, &$color_allocation)
         {
+            if ($post['apiversion'][0] == '0')
+                return $this->from_api_v0
+                    ($post, $color_gradients, $color_allocation);
+            else
+                return $this->from_api_v1
+                    ($post, $color_gradients, $color_allocation);
+        }
+
+        //
+        // Generate method from API for API version 0
+        //
+        // @param post a $_POST array
+        // @param color_gradients Array of arrays of hexcodes (color palettes)
+        // @param color_allocation an array of indizes and palette names
+        //
+        public function from_api_v0(&$post, &$color_gradients, &$color_allocation)
+        {
+            if ($post['title'])
+                $this->title    = $this->sanitize_title($post['title']);
+            if ($post['subtitle'])
+                $this->subtitle = $this->sanitize_subtitle($post['subtitle']);
+
+            if ($post['dec'])
+                $this->dec      = $this->sanitize_dec($post['dec']);
+
+            $this->colors   = $this->process_colors
+                    ($post, $color_gradients, $color_allocation);
+            $this->vispath  = $this->process_vispath($post);
+            $this->data     = $this->process_data($post);
+            if (is_array($this->data))
+                $this->scale = $this->process_scale($this->data, $this->colors);
+
+            if (!is_empty($this->error->filter(2)))
+                return false;
+            else
+                return true;
+        }
+
+        //
+        // Generate method from API for API version 1
+        //
+        // @param post a $_POST array
+        // @param color_gradients Array of arrays of hexcodes (color palettes)
+        // @param color_allocation an array of indizes and palette names
+        //
+        public function from_api_v1(&$post, &$color_gradients, &$color_allocation)
+        {
             # TODO: implement apiversion
             $this->title    = $this->sanitize_title($post['title']);
             if ($post['subtitle'])
