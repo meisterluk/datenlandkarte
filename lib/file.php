@@ -294,7 +294,6 @@
                 $img->destroy();
             */
 
-            var_dump($svg_file, $filebase.self::$extension_png);
             exec('convert '.$svg_file.' '.$filebase.self::$extension_png);
             exec('convert -scale 300% '.$svg_file.' '.
                 $filebase.self::$extension_big_png);

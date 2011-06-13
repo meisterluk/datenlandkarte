@@ -60,8 +60,7 @@
         public $colors = 5;
         public $grad = 0;
         // default palette
-        public $palette = array('#F4C6C6', '#E78484', '#DE5858',
-            '#D52C2C', '#CC0000');
+        public $palette = '';
 
         //
         // Constructor
