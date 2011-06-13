@@ -1118,18 +1118,19 @@
             // apiversion 0
             if (isset($post['base']))
             {
+                // TODO: hardcoded address
                 if ($post['base'] === array('austria', 'bz'))
-                    return 'vis_0_29_0_1';
+                    return 'vis_2_29_0_1';
                 else if ($post['base'] === array('oe', 'gm'))
-                    return 'vis_0_29_0_2';
+                    return 'vis_2_29_0_2';
                 else if ($post['base'] === array('austria', 'bl'))
-                    return 'vis_0_29_0_0';
+                    return 'vis_2_29_0_0';
                 else if ($post['base'] === array('europe', 'l'))
-                    return 'vis_0';
+                    return 'vis_2';
                 else if ($post['base'][1] === 'bz')
-                    return 'vis_0_29_1_0_'.((int)$post['base'][0]);
+                    return 'vis_2_29_1_0_'.((int)$post['base'][0]);
                 else if ($post['base'][1] === 'gm')
-                    return 'vis_0_29_2_0_'.((int)$post['base'][0]);
+                    return 'vis_2_29_2_0_'.((int)$post['base'][0]);
                 else
                     $this->error->add('"base" Parameter angegeben. Aber '
                         .'ist nicht valide', 3);
