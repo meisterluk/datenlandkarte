@@ -35,7 +35,7 @@
     $f = new FileManager($location_creation, $location_raw_data,
         $location_pattern_svgs, $n);
     $g = new Geo($geo_hierarchy, $f);
-    $u = new UserInterface($g, $n);
+    $ui = new UserInterface($g, $n);
 
     // special feature: show svg filenames
     if ($_GET && $_GET['mode'] == 'show_svg_filenames')
@@ -55,12 +55,11 @@
     }
 
     // Defaultvalues
-    $defaults = $u->get_basic_attributes();
+    $defaults = $ui->get_attributes();
 
     if ($_POST)
     {
-        $_POST = striptease($_POST);
-        $ui = new UserInterface($g, $n);
+        $_POST   = striptease($_POST);
         $success = $ui->from_webinterface
             ($_POST, $color_gradients, $color_allocation);
 
@@ -114,16 +113,37 @@
     <script type="text/javascript" src="http://www.datamaps.eu/wp-content/themes/datamaps/script.js"></script>
     <script type="text/javascript">
     <!--
-    var toggle = true;
-    jQuery(document).ready(function () {
-        function update_format(init, path)
-        {
-            jQuery('.data_manual, .data_list, .data_json, .data_kvalloc').hide();
-            jQuery('.data_' + init).show();
+    /*
+        Javascript App
+        --------------
 
-            jQuery.get('api.php', {'method' : init + '_form',
+        1. Fills up <div class="data_*"> for #format and #vis selection.
+        2. Creates a cache for <div class="data_*"> to not lose the
+           previous (before changing of #vis) data.
+    */
+    var toggle = true; // toggle for advanced options
+    var _cache = { };
+    var old_vis = [];
+
+    jQuery(document).ready(function () {
+        // when format is updated, hide/show elements and write to cache
+        function update_data()
+        {
+            format = get_format();
+            path = selected2vis();
+
+            write_cache();
+
+            if (path === undefined)
+                return false;
+
+            jQuery('.data_manual, .data_list, .data_json, .data_kvalloc').hide();
+            jQuery('.data_' + format).show();
+
+            jQuery.get('api.php', {'method' : format + '_form',
                 'vis_path' : path, 'indent' : 12}, write_form);
         }
+        // write message to form as specified by #format
         function write_form(msg)
         {
             switch (jQuery('#format option:selected').val())
@@ -165,43 +185,93 @@
                     }
                     break;
             }
+            read_cache();
         }
+        // get vis_path from #vis selection
         function selected2vis()
         {
             return jQuery('#vis input:checked').attr('id');
         }
+        // read data from cache
+        function read_cache()
+        {
+            vis = selected2vis();
+            format = jQuery('#format option:selected').val();
+            key = (format + ':' + vis);
 
-        jQuery('input').click(function () {
-            value = jQuery('#format option:selected').val();
-            update_format(value, selected2vis());
+            // cache is empty at key
+            if (_cache[key] == undefined)
+                return;
+
+            switch (format)
+            {
+                case 'manual':
+                    counter = 0;
+                    for (value in _cache[key])
+                    {
+                        $('#manual_' + counter).val(_cache[key][value]);
+                        counter++;
+                    }
+                    break;
+                case 'list': case 'json': case 'kvalloc':
+                    jQuery('#' + format).val(_cache[key]);
+                    break;
+            }
+        }
+        // write data to cache
+        function write_cache()
+        {
+            vis = old_vis[0];
+            format = get_format();
+            key = (format + ':' + vis);
+
+            if (format == undefined || vis == undefined)
+                return;
+
+            switch (format)
+            {
+                case 'manual':
+                    _cache[key] = [];
+                    jQuery('*[name=manual[]]').each(function (index) {
+                        _cache[key].push(jQuery(this).val());
+                    });
+                    break;
+                case 'list': case 'json': case 'kvalloc':
+                    _cache[key] = '';
+                    _cache[key] = jQuery('#' + format).val();
+                    break;
+            }
+        }
+        // push current element to old_vis stack
+        function push_vis() {
+            old_vis.push(jQuery('#vis input:checked').attr('id'));
+            // old_vis always has length 2: old_vis = [previous, current]
+            if (old_vis.length > 2)
+                old_vis = old_vis.slice(1);
+        }
+        // get format selection
+        function get_format()
+        {
+            return jQuery('#format option:selected').val();
+        }
+
+        jQuery('input, #format').click(function () {
+            push_vis();
+            update_data();
         });
 
-        jQuery('#format').change(function () {
-            value = jQuery('#format option:selected').val();
-            update_format(value, selected2vis());
-        });
+        // Initialization
+        update_data();
 
-        /*jQuery('#submit').click(function () {
-            if (jQuery('#svg_check').text() != ''
-                || jQuery('#manual_request').text() != '')
-                return false;
-            else
-                return true;
-        });*/
-
-        value = jQuery('#format option:selected').val();
-        update_format(value, selected2vis());
-
-
-        jQuery('.arrow').text('⇨');
+        jQuery('.arrow').text('[aufklappen]');
         jQuery('#advanced').hide();
 
         jQuery('#advanced_options').click(function () {
             jQuery('#advanced').toggle();
             if (toggle)
-                jQuery('.arrow').text('⇩');
+                jQuery('.arrow').text('[einklappen]');
             else
-                jQuery('.arrow').text('⇨');
+                jQuery('.arrow').text('[aufklappen]');
             toggle = (toggle) ? false : true;
         });
     });
@@ -211,6 +281,9 @@
     <!--
         .subselect {
             margin-left: 10%;
+        }
+        .arrow {
+            font-size: 70%;
         }
         table {
             margin: auto;
@@ -352,11 +425,13 @@
           <div id="error">
             <ul>
 <?php
+    $errors = $n->filter(2);
     if (is_array($errors))
         foreach ($errors as $err)
         {
             echo str_repeat(' ', 14).'<li><span style="color:#F00;'.
-                'font-weight:bold">Error:</span> '._e($err[0]).'</li>'."\n";
+                'font-weight:bold" class="'._e($err[1]).'">Error:</span> '.
+                _e($err[0]).'</li>'."\n";
         }
 ?>
             </ul>
@@ -368,7 +443,7 @@
             </div>
             <div id="cc_header_text">
               <p>
-                <input type="checkbox" name="shareit" id="check_share"<?=$defaults['shareit']; ?> />
+                <input type="checkbox" name="shareit" id="check_share" checked="<?=_e($defaults['visibility']); ?>" />
                 <strong><label for="check_share">
                   Ja, ich möchte meine Daten öffentlich teilen.
                 </label></strong><br /><br />
@@ -398,7 +473,7 @@
                 <small>Überschrift der Graphik</small>
               </td>
               <td>
-                <input type="text" maxlength="50" tabindex="1" name="title" value="<?=$defaults['title']; ?>" />
+                <input type="text" maxlength="50" tabindex="1" name="title" value="<?=_e($defaults['title']); ?>" />
               </td>
             </tr>
             <tr>
@@ -407,7 +482,7 @@
                 <small>Untertext des Titels</small>
               </td>
               <td>
-                <input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=$defaults['subtitle']; ?>" />
+                <input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=_e($defaults['subtitle']); ?>" />
               </td>
             </tr>
             <tr>
@@ -420,12 +495,12 @@
 <?php
     foreach ($color_allocation as $key => $c)
     {
-        if ($key == $defaults['grad'][0])
-            $ch = $defaults['grad'][1];
+        if ($key === $defaults['grad'])
+            $ch = ' selected="selected"';
         else
             $ch = '';
 ?>
-                  <option value="<?=$key; ?>"<?=$ch?>><?=$c; ?></option>
+                  <option value="<?=_e($key); ?>"<?=_e($ch)?>><?=_e($c); ?></option>
 <?php } ?>
                 </select>
               </td>
@@ -444,7 +519,12 @@
                 </label>
               </td>
               <td>
+<?php if ($defaults['visibility']) { ?>
+                <input type="checkbox" name="visibility" id="visibility" checked="checked" />
+<?php } else { ?>
                 <input type="checkbox" name="visibility" id="visibility" />
+<?php } ?>
+
               </td>
             <tr>
               <td>
@@ -456,7 +536,10 @@
               <td>
                 <div id="vis">
 <?php
-    echo $g->build_flat_radio_html(18, $default_vis_path);
+    if ($defaults['vis_path'] === '')
+        echo $g->build_flat_radio_html(18, $default_vis_path);
+    else
+        echo $g->build_flat_radio_html(18, $defaults['vis_path']);
 ?>
                 </div>
               </td>
@@ -464,7 +547,7 @@
           </table>
 
           <div class="big" id="advanced_options">
-            <span class="arrow"></span> Erweiterte Optionen
+            Erweiterte Optionen <span class="arrow"></span>
           </div>
           <div class="indent" id="advanced">
             <table cellpadding="6" id="sub_form">
@@ -473,20 +556,20 @@
                   <strong>Autor:</strong> <br />
                   <small>Ihre Identität oder ihr Nickname</small>
                 </td>
-                <td><input type="text" name="author"<?=$defaults['author']; ?> /></td>
+                <td><input type="text" name="author" value="<?=_e($defaults['author']); ?>" /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Quelle:</strong>
                 </td>
-                <td><input type="text" name="source"<?=$defaults['source']; ?> /></td>
+                <td><input type="text" name="source" value="<?=_e($defaults['source']); ?>" /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Anzahl der Farben:</strong>
                 </td>
                 <td>
-                  <input type="text" name="colors" maxlength="3" /></td>
+                  <input type="text" name="colors" maxlength="3" value="<?=_e($defaults['colors']); ?>" /></td>
                 </td>
               </tr>
               <tr>
@@ -497,7 +580,7 @@
                   Trennen Sie die Hexfarben mit einem Komma</small>
                 </td>
                 <td>
-                  <input type="text" name="palette" /></td>
+                  <input type="text" name="palette" value="<?=_e(implode(',', $defaults['palette']));?>" /></td>
                 </td>
               </tr>
               <tr>
@@ -506,14 +589,14 @@
                   <small>Jeder Wert wirt mit dem Hebefaktor multipliziert.<br />
                   zB mit dem Hebefaktor 0.01 lässt sich in Prozente umrechnen</small>
                 </td>
-                <td><input type="text" name="fac" value="<?=$defaults['fac']; ?>" /></td>
+                <td><input type="text" name="fac" value="<?=_e(sprintf("%.2f", $defaults['fac'])); ?>" /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Anzahl der Nachkommastellen (0-3):</strong> <br />
                   <small>... der Zahlen in der Legende</small>
                 </td>
-                <td><input type="text" name="dec" maxlength="1"<?=$defaults['dec']; ?> /></td>
+                <td><input type="text" name="dec" maxlength="1" value="<?=_e($defaults['dec']); ?>" /></td>
               </tr>
               <tr>
                 <td>
@@ -523,7 +606,14 @@
                   <select name="format" id="format">
 <?php
         foreach ($formats as $key => $f)
-            echo str_repeat(' ', 20).'<option value="'._e($key).'">'._e($f).'</option>'."\n";
+        {
+            if ($_POST['format'] === $key)
+                echo str_repeat(' ', 20).'<option value="'.
+                    _e($key).'" selected="selected">'._e($f).'</option>'."\n";
+            else
+                echo str_repeat(' ', 20).'<option value="'.
+                    _e($key).'">'._e($f).'</option>'."\n";
+        }
 ?>
                   </select>
                 </td>
@@ -554,7 +644,7 @@
 ?>
               <tr>
                 <td><?=_e($value['name']); ?>:</td>
-                <td><input type="text" name="manual[]" value="<?=$_POST['manual'.($i++)]; ?>" /></td>
+                <td><input type="text" name="manual[]" id="manual_<?=$key; ?>" value="<?=$_POST['manual'.($i++)]; ?>" /></td>
               </tr>
 <?php } ?>
             </table>

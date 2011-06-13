@@ -685,8 +685,7 @@
                     else
                         $check = '';
 
-                    // TODO: only if file_exists
-                    if (true || file_exists($filename))
+                    if (file_exists($filename))
                     {
                         if ($in > $old_in)
                             $out .= substr($indentation, 0, -4).'<div class="subselect">'."\n";

@@ -22,9 +22,10 @@
             @method get_contrast_color
             @method hue_to_rgb
 
-        TITLE ATTRIBUTES
+        BACKGROUND ATTRIBUTES
 
             @method generate_bgs
+            @method set_bg_colors
 
         PALETTE ATTRIBUTE
 
@@ -53,11 +54,14 @@
         private static $bgcolors = array('#000033', '#FFCC00', '#AA0000',
             '#440033', '#002200');
 
-        public $title_bg;
-        public $subtitle_bg;
-        public $colors;
-        public $grad;
-        public $palette;
+        // default values
+        public $title_bg = '#FFF';
+        public $subtitle_bg = '#FFF';
+        public $colors = 5;
+        public $grad = 0;
+        // default palette
+        public $palette = array('#F4C6C6', '#E78484', '#DE5858',
+            '#D52C2C', '#CC0000');
 
         //
         // Constructor
@@ -509,6 +513,31 @@
                 $this->subtitle_bg = $bg;
                 return $bg;
             }
+        }
+
+        //
+        // Set background colors
+        //
+        // @param subtitle_bg string hexcolor to set as subtitle bg color
+        // @param title_bg string hexcolor to set as title bg color
+        //
+        public function set_bg_colors($title_bg=NULL, $subtitle_bg=NULL)
+        {
+            $valid1 = ($title_bg !== NULL
+                    && $this->is_valid_hex_color($title_bg));
+            $valid2 = ($subtitle_bg !== NULL
+                    && $this->is_valid_hex_color($subtitle_bg));
+
+            if ($valid1)
+                $this->title_bg = $title_bg;
+            if ($valid2)
+                $this->subtitle_bg = $subtitle_bg;
+
+            if ($title_bg !== NULL && !$valid1)
+                return false;
+            if ($subtitle_bg !== NULL && !$valid2)
+                return false;
+            return true;
         }
 
         //

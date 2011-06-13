@@ -65,13 +65,12 @@
     //
     function capitalize($string)
     {
-        // TODO: testing
         $index = 0;
         while ($index !== false)
         {
             if ($string[$index] === '-')
                 $string[$index+1] = strtoupper($string[$index+1]);
-            $index = strpos($string, '-', $index);
+            $index = strpos($string, '-', $index+1);
         }
         return ucwords($string);
     }

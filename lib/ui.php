@@ -9,7 +9,6 @@
         @function create_list_form
         @function create_json_form
         @function create_kvalloc_form
-        @function override_defaults
 
         @class UserInterface
     */
@@ -40,7 +39,8 @@
                 continue;
             $out .= $i.'  <tr>'."\n";
             $out .= $i.'    <td>'._e($value['name']).':</td>'."\n";
-            $out .= $i.'    <td><input type="text" name="manual[]" /></td>'."\n";
+            $out .= $i.'    <td><input type="text" name="manual[]" '.
+                'id="manual_'.$key.'" /></td>'."\n";
             $out .= $i.'  </tr>'."\n";
             $content = true;
         }
@@ -137,15 +137,13 @@
             return '1';
     }
 
-    function override_defaults($defaults)
-    {
-        die('NotImplementedException!'); # TODO
-        return $defaults;
-    }
-
     /*
         class UserInterface
         -------------------
+
+        Note.  from_* methods use process_* methods. process_* methods
+               use parse_* methods. parse_* methods use check_* and
+               sanitize_* methods.
 
         FROM INTERFACES
 
@@ -200,7 +198,7 @@
 
             @method _remove_trailing_line
             @method parse_vis_path
-            @method get_basic_attributes
+            @method get_attributes
     */
 
     class UserInterface
@@ -214,6 +212,8 @@
         public $source      = '';
         public $dec         = 2;
         public $apiversion  = 1;
+        public $fac         = 1.0;
+        public $format      = 'manual'; // will not be set again, only default
 
         // objects
         public $vispath;
@@ -235,6 +235,7 @@
         public function __construct(&$geo, &$notifications=NULL)
         {
             $this->geo = &$geo;
+            $this->colors = new Colors();
 
             if ($notifications)
                 $this->error = &$notifications;
@@ -251,7 +252,32 @@
         //
         public function from_api(&$post, &$color_gradients, &$color_allocation)
         {
-            die('NotImplementedException!'); # TODO
+            # TODO: implement apiversion
+            $this->title    = $this->sanitize_title($post['title']);
+            if ($post['subtitle'])
+                $this->subtitle = $this->sanitize_subtitle($post['subtitle']);
+            if ($post['author'])
+                $this->author   = $this->sanitize_author($post['author']);
+            if ($post['source'])
+                $this->source   = $this->sanitize_source($post['source']);
+            if ($post['dec'])
+                $this->dec      = $this->sanitize_dec($post['dec']);
+            $this->visibility = ($post['visibility'] === 'on');
+
+            // Objects
+            $post['scale'] = $post['palette'];
+            $this->colors   = $this->process_colors
+                    ($post, $color_gradients, $color_allocation);
+            $this->colors->set_bg_colors($post['title_bg'], $post['subtitle_bg']);
+            $this->vispath  = $this->process_vispath($post);
+            $this->data     = $this->process_data($post);
+            if (is_array($this->data))
+                $this->scale = $this->process_scale($this->data, $this->colors);
+
+            if (!is_empty($this->error->filter(2)))
+                return false;
+            else
+                return true;
         }
 
         //
@@ -264,7 +290,6 @@
         //
         public function from_json(&$data, &$color_gradients, &$color_allocation)
         {
-            // TODO: is copy of from_webinterface?
             if (is_empty($data)) {
                 return $this->error->add('Bitte füllen Sie das Feld '.
                     '"Daten" aus', 3);
@@ -491,12 +516,15 @@
         public function parse_manual(&$data, &$keys)
         {
             $elements = false;
-            foreach ($data as $val)
+            if (is_array($data))
             {
-                if ($val)
+                foreach ($data as $val)
                 {
-                    $elements = true;
-                    break;
+                    if ($val)
+                    {
+                        $elements = true;
+                        break;
+                    }
                 }
             }
 
@@ -1080,8 +1108,13 @@
         //
         // @return an array with attributes
         //
-        public function get_basic_attributes()
+        public function get_attributes()
         {
+            if (is_object($this->vispath))
+                $vp = $this->vispath->get();
+            else
+                $vp = '';
+
             return array(
                 'title' => $this->title,
                 'subtitle' => $this->subtitle,
@@ -1089,7 +1122,14 @@
                 'author' => $this->author,
                 'source' => $this->source,
                 'dec' => $this->dec,
-                'apiversion' => $this->apiversion
+                'apiversion' => $this->apiversion,
+                'fac' => $this->fac,
+                'format' => $this->format,
+
+                'grad' => $this->colors->grad,
+                'colors' => $this->colors->colors,
+                'palette' => $this->colors->palette,
+                'vis_path' => $vp
             );
         }
     }

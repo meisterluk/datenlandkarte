@@ -22,6 +22,8 @@
         4 => 'Türkis', 5 => 'Blau', 6 => 'Pink', 7 => 'Schwarz'
     );
 
+    // ui.php, line 741:
+    //   please keep the number of color_gradients up to date
     $color_gradients = array();
 
     $color_gradients[0] = array(
