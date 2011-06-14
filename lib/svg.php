@@ -108,17 +108,19 @@
 
             for ($i=0; $i<$nr_squares; $i++)
             {
-                if ($i == 0)
-                    continue;
+                if ($i >= count($this->data->scale))
+                    $text = '';
+                else
+                {
+                    $current = $this->data->scale[$i];
 
-                $prev = $this->data->scale[$i-1];
-                $current = $this->data->scale[$i];
+                    $format = '%.'.$this->data->dec.'f';
+                    $text = sprintf($format, $current[0]).' - '.
+                            sprintf($format, $current[1]);
+                }
 
-                $format = '%.'.$this->data->dec.'f';
-                $text = sprintf($format, $current).' - '.
-                        sprintf($format, $prev);
-
-                $this->svg = str_replace('%legende'.$i.'%',
+                // one-based indizes
+                $this->svg = str_replace('%legende'.($i+1).'%',
                         $this->_xml_sanitize($text), $this->svg);
             }
 
@@ -198,6 +200,7 @@
         //
         public function _get_appropriate_color($value)
         {
+            $value = (float)$value; // TODO: design error?
             if ($this->data->is_invalid_value($value))
                 return self::$invalid_value_color;
 
@@ -206,26 +209,16 @@
             //var_dump(get_object_vars($this->data->colors));
 
             $index = 0;
-            if ($scale[0] < $scale[1]) // ascending order
+            foreach ($scale as $val)
             {
-                foreach ($scale as $key => $value)
-                {
-                    if ($scale[$index] > $value)
-                        return $this->_xml_sanitize($palette[$index]);
-                    $index++;
-                }
-                return $this->_xml_sanitize(self::$invalid_value_color);
-
-            } else { // descending order
-
-                foreach ($scale as $key => $value)
-                {
-                    if ($scale[$index] < $value)
-                        return $this->_xml_sanitize($palette[$index]);
-                    $index++;
-                }
-                return $this->_xml_sanitize(self::$invalid_value_color);
+                // TODO
+                if ($val[0] <= $value && $value < $val[1])
+                    return $this->_xml_sanitize($palette[$index]);
+                $index++;
             }
+            if ($value == $value[1])
+                return $this->_xml_sanitize($palette[$index]);
+            return $this->_xml_sanitize(self::$invalid_value_color);
         }
 
         public function _xml_sanitize($string)

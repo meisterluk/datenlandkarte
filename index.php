@@ -427,7 +427,7 @@
               Sie Javascript in ihrem Browser, wenn möglich.
             </p>
           </noscript>
-<?php if (time() < 1309392000) { ?>
+<?php if (time() < 1309784400 ) { ?>
           <p id="beta">
             <strong>Hinweis:</strong> <br />
             Dieses Werkzeug wurde neu entwickelt und befindet sich nun in der Testphase.<br/>

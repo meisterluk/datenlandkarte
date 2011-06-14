@@ -196,39 +196,49 @@
             chdir($this->folder_creation);
 
             $files = glob($format.'{'.self::$extension_svg.','.
-                $this->extension_png.','.self::$extension_big_png.'}',
+                self::$extension_png.','.self::$extension_big_png.'}',
                 GLOB_BRACE);
-            if ($files !== false)
+            if (is_array($files))
             {
                 foreach ($files as $key => $file)
                     $files[$key] = $this->folder_creation.$file;
                 chdir($base);
             } else {
                 chdir($base);
-                return $this->error->add('Systemfehler: Erster glob '.
-                    'schlug fehl.', 3);
+                /*
+                // Don't do this, since files===false can mean anything
+                return $this->error->add('Systemfehler: Erste '.
+                    'Dateiauflistung schlug fehl.', 3);
+                */
             }
 
             // search in directory 2
             chdir($this->folder_raw_data);
             $files2 = glob($format.$this->extension_json);
-            if ($files2 !== false)
+            if (is_array($files2))
             {
                 foreach ($files2 as $key => $file)
                     $files2[$key] = $this->folder_raw_data.$file;
                 chdir($base);
             } else {
                 chdir($base);
-                return $this->error->add('Systemfehler: Zweiter glob '.
-                    'schlug fehl.', 3);
+                /*
+                // Don't do this, since files===false can mean anything
+                return $this->error->add('Systemfehler: Zweite '.
+                    'Dateiauflistung schlug fehl.', 3);
+                */
             }
 
-            if (!is_empty($files2) && !is_empty($files))
+            if (is_array($files) && is_array($files2)
+                && !is_empty($files2) && !is_empty($files))
                 $files = array_merge($files, $files2);
-            else if (is_empty($files))
+            else if (is_array($files) && is_empty($files))
                 $files = $files2;
 
-            return $files;
+            if (is_array($files))
+                return $files;
+            else
+                return array();
         }
 
         //

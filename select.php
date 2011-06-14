@@ -179,7 +179,7 @@
     if ($errors) {
 ?>
           <div class="error">
-            <p>Es traten mindestens 1 Fehler auf:<p>
+            <p>Es traten <?=count($errors); ?> Fehler auf:<p>
             <ul>
 <?php
         foreach ($errors as $e)
@@ -191,8 +191,10 @@
     } else {
 ?>
 
-<h3 style="margin-top:15px;">Vorschau</h3>
- <img src="<?=$files[1]; ?>" alt="Preview" style="float:center;" width="900"/>
+          <h3 style="margin-top:15px;">Vorschau</h3>
+          <p style="text-align:center">
+            <img src="<?=$files[1]; ?>" alt="Preview" style="max-width:80%" />
+          </p>
 
           <div class="download" style="min-height:40px;">
            <a href="javascript:back();">
