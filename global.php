@@ -78,15 +78,15 @@
 
             0 => array(
                 'name' => 'Ägypten',
-                'filename' => 'gypten'
+                'filename' => 'aegypten'
             ),
             1 => array(
                 'name' => 'Äquatorialguinea',
-                'filename' => 'quatorialguinea'
+                'filename' => 'aequatorialguinea'
             ),
             2 => array(
                 'name' => 'Äthopien',
-                'filename' => 'thopien'
+                'filename' => 'aethopien'
             ),
             3 => array(
                 'name' => 'Algerien',
@@ -311,7 +311,7 @@
 
                 0 => array(
                     'name' => 'Föderale Ebene',
-                    'filename' => 'at_federal',
+                    'filename' => 'federal',
 
                     0 => array(
                         'name' => 'Baden-Württemberg',
@@ -864,11 +864,11 @@
                 ),
                 8 => array(
                     'name' => 'Franche-Comté',
-                    'filename' => 'franche-comt'
+                    'filename' => 'franche-comte'
                 ),
                 9 => array(
                     'name' => 'Île-de-France',
-                    'filename' => 'le-de-france',
+                    'filename' => 'ile-de-france',
 
                     0 => array(
                         'name' => 'Louvre',
@@ -884,11 +884,11 @@
                     ),
                     3 => array(
                         'name' => 'Hôtel de Ville',
-                        'filename' => 'htel_de_ville'
+                        'filename' => 'hotel_de_ville'
                     ),
                     4 => array(
                         'name' => 'Panthéon',
-                        'filename' => 'panthon'
+                        'filename' => 'pantheon'
                     ),
                     5 => array(
                         'name' => 'Luxembourg',
@@ -900,15 +900,15 @@
                     ),
                     7 => array(
                         'name' => 'Élysée',
-                        'filename' => 'lyse'
+                        'filename' => 'elysee'
                     ),
                     8 => array(
                         'name' => 'Opéra',
-                        'filename' => 'opra'
+                        'filename' => 'opera'
                     ),
                     9 => array(
                         'name' => 'Entrepôt',
-                        'filename' => 'entrept'
+                        'filename' => 'entrepot'
                     ),
                     10 => array(
                         'name' => 'Popincourt',
@@ -948,7 +948,7 @@
                     ),
                     19 => array(
                         'name' => 'Ménilmontant',
-                        'filename' => 'mnilmontant'
+                        'filename' => 'menilmontant'
                     )
                 ),
                 10 => array(
@@ -1078,7 +1078,7 @@
 
                 0 => array(
                     'name' => 'Föderale Ebene',
-                    'filename' => 'at_federal',
+                    'filename' => 'federal',
 
                     0 => array(
                         'name' => 'Bundesländer Österreichs',
@@ -1136,7 +1136,7 @@
                 ),
                 1 => array(
                     'name' => 'Provinzen Ebene',
-                    'filename' => 'at_provinces',
+                    'filename' => 'provinces',
 
                     0 => array(
                         'name' => 'Bezirke eines Bundeslands',
@@ -1435,7 +1435,7 @@
                                 ),
                                 16 => array(
                                     'name' => 'St. Peter',
-                                    'filename' => 'st._peter'
+                                    'filename' => 'st_peter'
                                 ),
                                 17 => array(
                                     'name' => 'Neue Welt',
@@ -1503,7 +1503,7 @@
                                 ),
                                 33 => array(
                                     'name' => 'St. Magdalena',
-                                    'filename' => 'st._magdalena'
+                                    'filename' => 'st_magdalena'
                                 ),
                                 34 => array(
                                     'name' => 'Katzberg',
@@ -1820,7 +1820,7 @@
                 ),
                 2 => array(
                     'name' => 'Lokale Ebene',
-                    'filename' => 'at_local',
+                    'filename' => 'local',
 
                     0 => array(
                         'name' => 'Gemeinden eines Bundeslands',
@@ -2839,11 +2839,11 @@
                 ),
                 6 => array(
                     'name' => 'Freiburg / Fribourg',
-                    'filename' => 'freiburg_/_fribourg'
+                    'filename' => 'freiburg_fribourg'
                 ),
                 7 => array(
                     'name' => 'Genf / Genève',
-                    'filename' => 'genf_/_genve'
+                    'filename' => 'genf_genve'
                 ),
                 8 => array(
                     'name' => 'Glarus',
@@ -2851,7 +2851,7 @@
                 ),
                 9 => array(
                     'name' => 'Graubünden / Grigioni',
-                    'filename' => 'graubuenden_/_grigioni'
+                    'filename' => 'graubuenden_grigioni'
                 ),
                 10 => array(
                     'name' => 'Jura',
@@ -2863,7 +2863,7 @@
                 ),
                 12 => array(
                     'name' => 'Neuenburg / Neuchatel',
-                    'filename' => 'neuenburg_/_neuchatel'
+                    'filename' => 'neuenburg_neuchatel'
                 ),
                 13 => array(
                     'name' => 'Nidwalden',
@@ -2887,11 +2887,11 @@
                 ),
                 18 => array(
                     'name' => 'St. Gallen',
-                    'filename' => 'st._gallen'
+                    'filename' => 'st_gallen'
                 ),
                 19 => array(
                     'name' => 'Tessin / Ticino',
-                    'filename' => 'tessin_/_ticino'
+                    'filename' => 'tessin_ticino'
                 ),
                 20 => array(
                     'name' => 'Thurgau',
@@ -2903,11 +2903,11 @@
                 ),
                 22 => array(
                     'name' => 'Wadt / Vaud',
-                    'filename' => 'wadt_/_vaud'
+                    'filename' => 'wadt_vaud'
                 ),
                 23 => array(
                     'name' => 'Wallis / Valais',
-                    'filename' => 'wallis_/_valais'
+                    'filename' => 'wallis_valais'
                 ),
                 24 => array(
                     'name' => 'Zug',
@@ -3290,6 +3290,939 @@
             'filename' => 'int_organ'
         ),
         4 => array(
+            'name' => 'Länder der Welt',
+            'filename' => 'countries',
+            
+            0 => array(
+                'name' => 'Afghanistan (AF)',
+                'filename' => 'afghanistan'
+            ),
+            1 => array(
+                'name' => 'Ägypten (EG)',
+                'filename' => 'aegypten'
+            ),
+            2 => array(
+                'name' => 'Albanien (AL)',
+                'filename' => 'albanien'
+            ),
+            3 => array(
+                'name' => 'Algerien (DZ)',
+                'filename' => 'algerien'
+            ),
+            4 => array(
+                'name' => 'Andorra (AD)',
+                'filename' => 'andorra'
+            ),
+            5 => array(
+                'name' => 'Angola (AO)',
+                'filename' => 'angola'
+            ),
+            6 => array(
+                'name' => 'Anguilla (AI)',
+                'filename' => 'anguilla'
+            ),
+            7 => array(
+                'name' => 'Antigua und Barbuda (AG)',
+                'filename' => 'antigua_und_barbuda'
+            ),
+            8 => array(
+                'name' => 'Äquatorial Guinea (GQ)',
+                'filename' => 'quatorial_guinea'
+            ),
+            9 => array(
+                'name' => 'Argentinien (AR)',
+                'filename' => 'argentinien'
+            ),
+            10 => array(
+                'name' => 'Armenien (AM)',
+                'filename' => 'armenien'
+            ),
+            11 => array(
+                'name' => 'Aruba (AW)',
+                'filename' => 'aruba'
+            ),
+            12 => array(
+                'name' => 'Aserbaidschan (AZ)',
+                'filename' => 'aserbaidschan'
+            ),
+            13 => array(
+                'name' => 'Äthiopien (ET)',
+                'filename' => 'aethiopien'
+            ),
+            14 => array(
+                'name' => 'Australien (AU)',
+                'filename' => 'australien'
+            ),
+            15 => array(
+                'name' => 'Bahamas (BS)',
+                'filename' => 'bahamas'
+            ),
+            16 => array(
+                'name' => 'Bahrain (BH)',
+                'filename' => 'bahrain'
+            ),
+            17 => array(
+                'name' => 'Bangladesh (BD)',
+                'filename' => 'bangladesh'
+            ),
+            18 => array(
+                'name' => 'Barbados (BB)',
+                'filename' => 'barbados'
+            ),
+            19 => array(
+                'name' => 'Belgien (BE)',
+                'filename' => 'belgien'
+            ),
+            20 => array(
+                'name' => 'Belize (BZ)',
+                'filename' => 'belize'
+            ),
+            21 => array(
+                'name' => 'Benin (BJ)',
+                'filename' => 'benin'
+            ),
+            22 => array(
+                'name' => 'Bermudas (BM)',
+                'filename' => 'bermudas'
+            ),
+            23 => array(
+                'name' => 'Bhutan (BT)',
+                'filename' => 'bhutan'
+            ),
+            24 => array(
+                'name' => 'Birma (MM)',
+                'filename' => 'birma'
+            ),
+            25 => array(
+                'name' => 'Bolivien (BO)',
+                'filename' => 'bolivien'
+            ),
+            26 => array(
+                'name' => 'Bosnien-Herzegowina (BA)',
+                'filename' => 'bosnien-herzegowina'
+            ),
+            27 => array(
+                'name' => 'Botswana (BW)',
+                'filename' => 'botswana'
+            ),
+            28 => array(
+                'name' => 'Brasilien (BR)',
+                'filename' => 'brasilien'
+            ),
+            29 => array(
+                'name' => 'Brunei (BN)',
+                'filename' => 'brunei'
+            ),
+            30 => array(
+                'name' => 'Bulgarien (BG)',
+                'filename' => 'bulgarien'
+            ),
+            31 => array(
+                'name' => 'Burkina Faso (BF)',
+                'filename' => 'burkina_faso'
+            ),
+            32 => array(
+                'name' => 'Burundi (BI)',
+                'filename' => 'burundi'
+            ),
+            33 => array(
+                'name' => 'Chile (CL)',
+                'filename' => 'chile'
+            ),
+            34 => array(
+                'name' => 'China (CN)',
+                'filename' => 'china'
+            ),
+            35 => array(
+                'name' => 'Cook Inseln (CK)',
+                'filename' => 'cook_inseln'
+            ),
+            36 => array(
+                'name' => 'Costa Rica (CR)',
+                'filename' => 'costa_rica'
+            ),
+            37 => array(
+                'name' => 'Dänemark (DK)',
+                'filename' => 'daenemark'
+            ),
+            38 => array(
+                'name' => 'Deutschland (DE)',
+                'filename' => 'deutschland'
+            ),
+            39 => array(
+                'name' => 'Djibuti (DJ)',
+                'filename' => 'djibuti'
+            ),
+            40 => array(
+                'name' => 'Dominika (DM)',
+                'filename' => 'dominika'
+            ),
+            41 => array(
+                'name' => 'Dominikanische Republik (DO)',
+                'filename' => 'dominikanische_republik'
+            ),
+            42 => array(
+                'name' => 'Ecuador (EC)',
+                'filename' => 'ecuador'
+            ),
+            43 => array(
+                'name' => 'El Salvador (SV)',
+                'filename' => 'el_salvador'
+            ),
+            44 => array(
+                'name' => 'Elfenbeinküste (CI)',
+                'filename' => 'elfenbeinkueste'
+            ),
+            45 => array(
+                'name' => 'Eritrea (ER)',
+                'filename' => 'eritrea'
+            ),
+            46 => array(
+                'name' => 'Estland (EE)',
+                'filename' => 'estland'
+            ),
+            47 => array(
+                'name' => 'Falkland Inseln (FK)',
+                'filename' => 'falkland_inseln'
+            ),
+            48 => array(
+                'name' => 'Färöer Inseln (FO)',
+                'filename' => 'faeroeer_inseln'
+            ),
+            49 => array(
+                'name' => 'Fidschi (FJ)',
+                'filename' => 'fidschi'
+            ),
+            50 => array(
+                'name' => 'Finnland (FI)',
+                'filename' => 'finnland'
+            ),
+            51 => array(
+                'name' => 'Frankreich (FR)',
+                'filename' => 'frankreich'
+            ),
+            52 => array(
+                'name' => 'Französisch Polynesien (PF)',
+                'filename' => 'franzoesisch_polynesien'
+            ),
+            53 => array(
+                'name' => 'Französisch-Guyana (GF)',
+                'filename' => 'franzoesisch-guyana'
+            ),
+            54 => array(
+                'name' => 'Gabun (GA)',
+                'filename' => 'gabun'
+            ),
+            55 => array(
+                'name' => 'Gambia (GM)',
+                'filename' => 'gambia'
+            ),
+            56 => array(
+                'name' => 'Georgien (GE)',
+                'filename' => 'georgien'
+            ),
+            57 => array(
+                'name' => 'Ghana (GH)',
+                'filename' => 'ghana'
+            ),
+            58 => array(
+                'name' => 'Gibraltar (GI)',
+                'filename' => 'gibraltar'
+            ),
+            59 => array(
+                'name' => 'Grenada (GD)',
+                'filename' => 'grenada'
+            ),
+            60 => array(
+                'name' => 'Griechenland (GR)',
+                'filename' => 'griechenland'
+            ),
+            61 => array(
+                'name' => 'Grönland (GL)',
+                'filename' => 'groenland'
+            ),
+            62 => array(
+                'name' => 'Großbritannien (GB)',
+                'filename' => 'grossbritannien'
+            ),
+            63 => array(
+                'name' => 'Guadeloupe (GP)',
+                'filename' => 'guadeloupe'
+            ),
+            64 => array(
+                'name' => 'Guam (GU)',
+                'filename' => 'guam'
+            ),
+            65 => array(
+                'name' => 'Guatemala (GT)',
+                'filename' => 'guatemala'
+            ),
+            66 => array(
+                'name' => 'Guernsey (GG)',
+                'filename' => 'guernsey'
+            ),
+            67 => array(
+                'name' => 'Guinea (GN)',
+                'filename' => 'guinea'
+            ),
+            68 => array(
+                'name' => 'Guinea Bissau (GW)',
+                'filename' => 'guinea_bissau'
+            ),
+            69 => array(
+                'name' => 'Guyana (GY)',
+                'filename' => 'guyana'
+            ),
+            70 => array(
+                'name' => 'Haiti (HT)',
+                'filename' => 'haiti'
+            ),
+            71 => array(
+                'name' => 'Honduras (HN)',
+                'filename' => 'honduras'
+            ),
+            72 => array(
+                'name' => 'Indien (IN)',
+                'filename' => 'indien'
+            ),
+            73 => array(
+                'name' => 'Indonesien (ID)',
+                'filename' => 'indonesien'
+            ),
+            74 => array(
+                'name' => 'Irak (IQ)',
+                'filename' => 'irak'
+            ),
+            75 => array(
+                'name' => 'Iran (IR)',
+                'filename' => 'iran'
+            ),
+            76 => array(
+                'name' => 'Irland (IE)',
+                'filename' => 'irland'
+            ),
+            77 => array(
+                'name' => 'Island (IS)',
+                'filename' => 'island'
+            ),
+            78 => array(
+                'name' => 'Isle of Men (IM)',
+                'filename' => 'isle_of_men'
+            ),
+            79 => array(
+                'name' => 'Israel (IL)',
+                'filename' => 'israel'
+            ),
+            80 => array(
+                'name' => 'Italien (IT)',
+                'filename' => 'italien'
+            ),
+            81 => array(
+                'name' => 'Jamaika (JM)',
+                'filename' => 'jamaika'
+            ),
+            82 => array(
+                'name' => 'Japan (JP)',
+                'filename' => 'japan'
+            ),
+            83 => array(
+                'name' => 'Jemen (YE)',
+                'filename' => 'jemen'
+            ),
+            84 => array(
+                'name' => 'Jersey (JE)',
+                'filename' => 'jersey'
+            ),
+            85 => array(
+                'name' => 'Jordanien (JO)',
+                'filename' => 'jordanien'
+            ),
+            86 => array(
+                'name' => 'Jungferninseln (Brit.) (VG)',
+                'filename' => 'jungferninseln'
+            ),
+            87 => array(
+                'name' => 'Jungferninseln (USA) (VI)',
+                'filename' => 'jungferninseln'
+            ),
+            88 => array(
+                'name' => 'Kaiman Inseln (KY)',
+                'filename' => 'kaiman_inseln'
+            ),
+            89 => array(
+                'name' => 'Kambodscha (KH)',
+                'filename' => 'kambodscha'
+            ),
+            90 => array(
+                'name' => 'Kamerun (CM)',
+                'filename' => 'kamerun'
+            ),
+            91 => array(
+                'name' => 'Kanada (CA)',
+                'filename' => 'kanada'
+            ),
+            92 => array(
+                'name' => 'Kap Verde (CV)',
+                'filename' => 'kap_verde'
+            ),
+            93 => array(
+                'name' => 'Kasachstan (KZ)',
+                'filename' => 'kasachstan'
+            ),
+            94 => array(
+                'name' => 'Kenia (KE)',
+                'filename' => 'kenia'
+            ),
+            95 => array(
+                'name' => 'Kirgisistan (KG)',
+                'filename' => 'kirgisistan'
+            ),
+            96 => array(
+                'name' => 'Kiribati (KI)',
+                'filename' => 'kiribati'
+            ),
+            97 => array(
+                'name' => 'Kolumbien (CO)',
+                'filename' => 'kolumbien'
+            ),
+            98 => array(
+                'name' => 'Komoren (KM)',
+                'filename' => 'komoren'
+            ),
+            99 => array(
+                'name' => 'Kongo (CG)',
+                'filename' => 'kongo'
+            ),
+            100 => array(
+                'name' => 'Kongo, Demokratische Republik (CD)',
+                'filename' => 'kongo,_demokratische_republik'
+            ),
+            101 => array(
+                'name' => 'Kosovo (n.a.)',
+                'filename' => 'kosovo'
+            ),
+            102 => array(
+                'name' => 'Kroatien (HR)',
+                'filename' => 'kroatien'
+            ),
+            103 => array(
+                'name' => 'Kuba (CU)',
+                'filename' => 'kuba'
+            ),
+            104 => array(
+                'name' => 'Kuwait (KW)',
+                'filename' => 'kuwait'
+            ),
+            105 => array(
+                'name' => 'Laos (LA)',
+                'filename' => 'laos'
+            ),
+            106 => array(
+                'name' => 'Lesotho (LS)',
+                'filename' => 'lesotho'
+            ),
+            107 => array(
+                'name' => 'Lettland (LV)',
+                'filename' => 'lettland'
+            ),
+            108 => array(
+                'name' => 'Libanon (LB)',
+                'filename' => 'libanon'
+            ),
+            109 => array(
+                'name' => 'Liberia (LR)',
+                'filename' => 'liberia'
+            ),
+            110 => array(
+                'name' => 'Libyen (LY)',
+                'filename' => 'libyen'
+            ),
+            111 => array(
+                'name' => 'Liechtenstein (LI)',
+                'filename' => 'liechtenstein'
+            ),
+            112 => array(
+                'name' => 'Litauen (LT)',
+                'filename' => 'litauen'
+            ),
+            113 => array(
+                'name' => 'Luxemburg (LU)',
+                'filename' => 'luxemburg'
+            ),
+            114 => array(
+                'name' => 'Madagaskar (MG)',
+                'filename' => 'madagaskar'
+            ),
+            115 => array(
+                'name' => 'Malawi (MW)',
+                'filename' => 'malawi'
+            ),
+            116 => array(
+                'name' => 'Malaysia (MY)',
+                'filename' => 'malaysia'
+            ),
+            117 => array(
+                'name' => 'Malediven (MV)',
+                'filename' => 'malediven'
+            ),
+            118 => array(
+                'name' => 'Mali (ML)',
+                'filename' => 'mali'
+            ),
+            119 => array(
+                'name' => 'Malta (MT)',
+                'filename' => 'malta'
+            ),
+            120 => array(
+                'name' => 'Marianen (MP)',
+                'filename' => 'marianen'
+            ),
+            121 => array(
+                'name' => 'Marokko (MA)',
+                'filename' => 'marokko'
+            ),
+            122 => array(
+                'name' => 'Marshall Inseln (MH)',
+                'filename' => 'marshall_inseln'
+            ),
+            123 => array(
+                'name' => 'Martinique (MQ)',
+                'filename' => 'martinique'
+            ),
+            124 => array(
+                'name' => 'Mauretanien (MR)',
+                'filename' => 'mauretanien'
+            ),
+            125 => array(
+                'name' => 'Mauritius (MU)',
+                'filename' => 'mauritius'
+            ),
+            126 => array(
+                'name' => 'Mayotte (YT)',
+                'filename' => 'mayotte'
+            ),
+            127 => array(
+                'name' => 'Mazedonien (MK)',
+                'filename' => 'mazedonien'
+            ),
+            128 => array(
+                'name' => 'Mexiko (MX)',
+                'filename' => 'mexiko'
+            ),
+            129 => array(
+                'name' => 'Mikronesien (FM)',
+                'filename' => 'mikronesien'
+            ),
+            130 => array(
+                'name' => 'Moldavien (MD)',
+                'filename' => 'moldavien'
+            ),
+            131 => array(
+                'name' => 'Monaco (MC)',
+                'filename' => 'monaco'
+            ),
+            132 => array(
+                'name' => 'Mongolei (MN)',
+                'filename' => 'mongolei'
+            ),
+            133 => array(
+                'name' => 'Montenegro (ME)',
+                'filename' => 'montenegro'
+            ),
+            134 => array(
+                'name' => 'Montserrat (MS)',
+                'filename' => 'montserrat'
+            ),
+            135 => array(
+                'name' => 'Mosambik (MZ)',
+                'filename' => 'mosambik'
+            ),
+            136 => array(
+                'name' => 'Namibia (NA)',
+                'filename' => 'namibia'
+            ),
+            137 => array(
+                'name' => 'Nauru (NR)',
+                'filename' => 'nauru'
+            ),
+            138 => array(
+                'name' => 'Nepal (NP)',
+                'filename' => 'nepal'
+            ),
+            139 => array(
+                'name' => 'Neukaledonien (NC)',
+                'filename' => 'neukaledonien'
+            ),
+            140 => array(
+                'name' => 'Neuseeland (NZ)',
+                'filename' => 'neuseeland'
+            ),
+            141 => array(
+                'name' => 'Nicaragua (NI)',
+                'filename' => 'nicaragua'
+            ),
+            142 => array(
+                'name' => 'Niederlande (NL)',
+                'filename' => 'niederlande'
+            ),
+            143 => array(
+                'name' => 'Niederländische Antillen (AN)',
+                'filename' => 'niederlaendische_antillen'
+            ),
+            144 => array(
+                'name' => 'Niger (NE)',
+                'filename' => 'niger'
+            ),
+            145 => array(
+                'name' => 'Nigeria (NG)',
+                'filename' => 'nigeria'
+            ),
+            146 => array(
+                'name' => 'Niue (NU)',
+                'filename' => 'niue'
+            ),
+            147 => array(
+                'name' => 'Nord Korea (KP)',
+                'filename' => 'nord_korea'
+            ),
+            148 => array(
+                'name' => 'Norwegen (NO)',
+                'filename' => 'norwegen'
+            ),
+            149 => array(
+                'name' => 'Oman (OM)',
+                'filename' => 'oman'
+            ),
+            150 => array(
+                'name' => 'Österreich (AT)',
+                'filename' => 'austria'
+            ),
+            151 => array(
+                'name' => 'Pakistan (PK)',
+                'filename' => 'pakistan'
+            ),
+            152 => array(
+                'name' => 'Palästina (PS)',
+                'filename' => 'palaestina'
+            ),
+            153 => array(
+                'name' => 'Palau (PW)',
+                'filename' => 'palau'
+            ),
+            154 => array(
+                'name' => 'Panama (PA)',
+                'filename' => 'panama'
+            ),
+            155 => array(
+                'name' => 'Papua Neuguinea (PG)',
+                'filename' => 'papua_neuguinea'
+            ),
+            156 => array(
+                'name' => 'Paraguay (PY)',
+                'filename' => 'paraguay'
+            ),
+            157 => array(
+                'name' => 'Peru (PE)',
+                'filename' => 'peru'
+            ),
+            158 => array(
+                'name' => 'Philippinen (PH)',
+                'filename' => 'philippinen'
+            ),
+            159 => array(
+                'name' => 'Pitcairn (PN)',
+                'filename' => 'pitcairn'
+            ),
+            160 => array(
+                'name' => 'Polen (PL)',
+                'filename' => 'polen'
+            ),
+            161 => array(
+                'name' => 'Portugal (PT)',
+                'filename' => 'portugal'
+            ),
+            162 => array(
+                'name' => 'Puerto Rico (PR)',
+                'filename' => 'puerto_rico'
+            ),
+            163 => array(
+                'name' => 'Qatar (QA)',
+                'filename' => 'qatar'
+            ),
+            164 => array(
+                'name' => 'Reunion (RE)',
+                'filename' => 'reunion'
+            ),
+            165 => array(
+                'name' => 'Ruanda (RW)',
+                'filename' => 'ruanda'
+            ),
+            166 => array(
+                'name' => 'Rumänien (RO)',
+                'filename' => 'rumaenien'
+            ),
+            167 => array(
+                'name' => 'Russland (RU)',
+                'filename' => 'russland'
+            ),
+            168 => array(
+                'name' => 'Saint Lucia (LC)',
+                'filename' => 'saint_lucia'
+            ),
+            169 => array(
+                'name' => 'Saint-Barthélemy (BL)',
+                'filename' => 'saint-barthlemy'
+            ),
+            170 => array(
+                'name' => 'Sambia (ZM)',
+                'filename' => 'sambia'
+            ),
+            171 => array(
+                'name' => 'Samoa (WS)',
+                'filename' => 'samoa'
+            ),
+            172 => array(
+                'name' => 'San Marino (SM)',
+                'filename' => 'san_marino'
+            ),
+            173 => array(
+                'name' => 'Sao Tome (ST)',
+                'filename' => 'sao_tome'
+            ),
+            174 => array(
+                'name' => 'Saudi Arabien (SA)',
+                'filename' => 'saudi_arabien'
+            ),
+            175 => array(
+                'name' => 'Schweden (SE)',
+                'filename' => 'schweden'
+            ),
+            176 => array(
+                'name' => 'Schweiz (CH)',
+                'filename' => 'schweiz'
+            ),
+            177 => array(
+                'name' => 'Senegal (SN)',
+                'filename' => 'senegal'
+            ),
+            178 => array(
+                'name' => 'Serbien (RS)',
+                'filename' => 'serbien'
+            ),
+            179 => array(
+                'name' => 'Seychellen (SC)',
+                'filename' => 'seychellen'
+            ),
+            180 => array(
+                'name' => 'Sierra Leone (SL)',
+                'filename' => 'sierra_leone'
+            ),
+            181 => array(
+                'name' => 'Singapur (SG)',
+                'filename' => 'singapur'
+            ),
+            182 => array(
+                'name' => 'Slowakei (SK)',
+                'filename' => 'slowakei'
+            ),
+            183 => array(
+                'name' => 'Slowenien (SI)',
+                'filename' => 'slowenien'
+            ),
+            184 => array(
+                'name' => 'Solomon Inseln (SB)',
+                'filename' => 'solomon_inseln'
+            ),
+            185 => array(
+                'name' => 'Somalia (SO)',
+                'filename' => 'somalia'
+            ),
+            186 => array(
+                'name' => 'Spanien (ES)',
+                'filename' => 'spanien'
+            ),
+            187 => array(
+                'name' => 'Sri Lanka (LK)',
+                'filename' => 'sri_lanka'
+            ),
+            188 => array(
+                'name' => 'St. Helena (SH)',
+                'filename' => 'st_helena'
+            ),
+            189 => array(
+                'name' => 'St. Kitts Nevis Anguilla (KN)',
+                'filename' => 'st_kitts_nevis_anguilla'
+            ),
+            190 => array(
+                'name' => 'St. Martin (MF)',
+                'filename' => 'st_martin'
+            ),
+            191 => array(
+                'name' => 'St. Pierre und Miquelon (PM)',
+                'filename' => 'st_pierre_und_miquelon'
+            ),
+            192 => array(
+                'name' => 'St. Vincent (VC)',
+                'filename' => 'st_vincent'
+            ),
+            193 => array(
+                'name' => 'Süd Korea (KR)',
+                'filename' => 'sued_korea'
+            ),
+            194 => array(
+                'name' => 'Südafrika (ZA)',
+                'filename' => 'suedafrika'
+            ),
+            195 => array(
+                'name' => 'Sudan (SD)',
+                'filename' => 'sudan'
+            ),
+            196 => array(
+                'name' => 'Südgeorgien und die Südlichen Sandwichinseln (GS)',
+                'filename' => 'suedgeorgien_und_die_suedlichen_sandwichinseln'
+            ),
+            197 => array(
+                'name' => 'Surinam (SR)',
+                'filename' => 'surinam'
+            ),
+            198 => array(
+                'name' => 'Swasiland (SZ)',
+                'filename' => 'swasiland'
+            ),
+            199 => array(
+                'name' => 'Syrien (SY)',
+                'filename' => 'syrien'
+            ),
+            200 => array(
+                'name' => 'Tadschikistan (TJ)',
+                'filename' => 'tadschikistan'
+            ),
+            201 => array(
+                'name' => 'Taiwan (TW)',
+                'filename' => 'taiwan'
+            ),
+            202 => array(
+                'name' => 'Tansania (TZ)',
+                'filename' => 'tansania'
+            ),
+            203 => array(
+                'name' => 'Thailand (TH)',
+                'filename' => 'thailand'
+            ),
+            204 => array(
+                'name' => 'Timor-Leste (TL)',
+                'filename' => 'timor-leste'
+            ),
+            205 => array(
+                'name' => 'Togo (TG)',
+                'filename' => 'togo'
+            ),
+            206 => array(
+                'name' => 'Tonga (TO)',
+                'filename' => 'tonga'
+            ),
+            207 => array(
+                'name' => 'Trinidad Tobago (TT)',
+                'filename' => 'trinidad_tobago'
+            ),
+            208 => array(
+                'name' => 'Tschad (TD)',
+                'filename' => 'tschad'
+            ),
+            209 => array(
+                'name' => 'Tschechische Republik (CZ)',
+                'filename' => 'tschechische_republik'
+            ),
+            210 => array(
+                'name' => 'Tunesien (TN)',
+                'filename' => 'tunesien'
+            ),
+            211 => array(
+                'name' => 'Türkei (TR)',
+                'filename' => 'tuerkei'
+            ),
+            212 => array(
+                'name' => 'Turkmenistan (TM)',
+                'filename' => 'turkmenistan'
+            ),
+            213 => array(
+                'name' => 'Turks und Kaikos Inseln (TC)',
+                'filename' => 'turks_und_kaikos_inseln'
+            ),
+            214 => array(
+                'name' => 'Tuvalu (TV)',
+                'filename' => 'tuvalu'
+            ),
+            215 => array(
+                'name' => 'Uganda (UG)',
+                'filename' => 'uganda'
+            ),
+            216 => array(
+                'name' => 'Ukraine (UA)',
+                'filename' => 'ukraine'
+            ),
+            217 => array(
+                'name' => 'Ungarn (HU)',
+                'filename' => 'ungarn'
+            ),
+            218 => array(
+                'name' => 'Uruguay (UY)',
+                'filename' => 'uruguay'
+            ),
+            219 => array(
+                'name' => 'Usbekistan (UZ)',
+                'filename' => 'usbekistan'
+            ),
+            220 => array(
+                'name' => 'Vanuatu (VU)',
+                'filename' => 'vanuatu'
+            ),
+            221 => array(
+                'name' => 'Vatikan (VA)',
+                'filename' => 'vatikan'
+            ),
+            222 => array(
+                'name' => 'Venezuela (VE)',
+                'filename' => 'venezuela'
+            ),
+            223 => array(
+                'name' => 'Vereinigte Arabische Emirate (AE)',
+                'filename' => 'vereinigte_arabische_emirate'
+            ),
+            224 => array(
+                'name' => 'Vereinigte Staaten von Amerika (US)',
+                'filename' => 'vereinigte_staaten_von_amerika'
+            ),
+            225 => array(
+                'name' => 'Vietnam (VN)',
+                'filename' => 'vietnam'
+            ),
+            226 => array(
+                'name' => 'Wallis et Futuna (WF)',
+                'filename' => 'wallis_et_futuna'
+            ),
+            227 => array(
+                'name' => 'Weißrussland (BY)',
+                'filename' => 'weissrussland'
+            ),
+            228 => array(
+                'name' => 'Westsahara (EH)',
+                'filename' => 'westsahara'
+            ),
+            229 => array(
+                'name' => 'Zentralafrikanische Republik (CF)',
+                'filename' => 'zentralafrikanische_republik'
+            ),
+            230 => array(
+                'name' => 'Zimbabwe (ZW)',
+                'filename' => 'zimbabwe'
+            ),
+            231 => array(
+                'name' => 'Zypern (CY)',
+                'filename' => 'zypern'
+            )
+        ),
+        5 => array(
             'name' => 'Nordamerika',
             'filename' => 'northamerica',
 
@@ -3499,12 +4432,12 @@
                 )
             )
         ),
-        5 => array(
+        6 => array(
             'name' => 'Südamerika',
             'filename' => 'southamerica'
         ),
         /*, // TODO: currentl unused
-        6 => array(
+        7 => array(
             'name' => 'Sonstige',
             'filename' => 'others'
         )*/
