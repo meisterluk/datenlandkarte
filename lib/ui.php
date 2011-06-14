@@ -282,7 +282,7 @@
             $this->vispath  = $this->process_vispath($post);
             $this->data     = $this->process_data($post);
             if (is_array($this->data))
-                $this->scale = $this->process_scale($this->data, $this->colors);
+                $this->scale = $this->process_scale($this->data, $this->colors->colors);
 
             if (!is_empty($this->error->filter(2)))
                 return false;
@@ -319,7 +319,7 @@
             $this->vispath  = $this->process_vispath($post);
             $this->data     = $this->process_data($post);
             if (is_array($this->data))
-                $this->scale = $this->process_scale($this->data, $this->colors);
+                $this->scale = $this->process_scale($this->data, $this->colors->colors);
 
             if (!is_empty($this->error->filter(2)))
                 return false;
@@ -396,7 +396,7 @@
             $this->vispath  = $this->process_vispath($post);
             $this->data     = $this->process_data($post);
             if (is_array($this->data))
-                $this->scale = $this->process_scale($this->data, $this->colors);
+                $this->scale = $this->process_scale($this->data, $this->colors->colors);
 
             if (!is_empty($this->error->filter(2)))
                 return false;
