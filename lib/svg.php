@@ -216,8 +216,8 @@
                     return $this->_xml_sanitize($palette[$index]);
                 $index++;
             }
-            if ($value == $value[1])
-                return $this->_xml_sanitize($palette[$index]);
+            if ($value == $val[1])
+                return $this->_xml_sanitize($palette[$index--]);
             return $this->_xml_sanitize(self::$invalid_value_color);
         }
 
