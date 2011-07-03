@@ -74,7 +74,7 @@
             $content = true;
         }
         if ($content)
-            return $out;
+            return substr($out, 0, -1);
         else
             return '1';
     }
@@ -132,7 +132,7 @@
             $content = true;
         }
         if ($content)
-            return $out;
+            return substr($out, 0, -1);
         else
             return '1';
     }
