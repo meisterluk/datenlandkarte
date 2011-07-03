@@ -220,6 +220,11 @@
         public $colors;
         public $data;
 
+        // delimiters
+        public $list_delim  = '\n';
+        public $kvalloc_delim1 = '\n';
+        public $kvalloc_delim2 = ',';
+
         // side objects
         public $geo;
         public $error;
@@ -389,6 +394,11 @@
             $this->dec      = $this->sanitize_dec($post['dec']);
             $this->visibility = ($post['visibility'] === 'on');
             $this->fac      = $this->sanitize_fac($post['fac']);
+
+            // delimiters
+            $this->list_delim       = $this->sanitize_delimiter($post['list_delim']);
+            $this->kvalloc_delim1   = $this->sanitize_delimiter($post['kvalloc_delim1']);
+            $this->kvalloc_delim2   = $this->sanitize_delimiter($post['kvalloc_delim2']);
 
             // Objects
             $this->colors   = $this->process_colors
@@ -1173,6 +1183,9 @@
                 'apiversion' => $this->apiversion,
                 'fac' => $this->fac,
                 'format' => $this->format,
+                'list_delim' => $this->list_delim,
+                'kvalloc_delim1' => $this->kvalloc_delim1,
+                'kvalloc_delim2' => $this->kvalloc_delim2,
 
                 'grad' => $this->colors->grad,
                 'colors' => $this->colors->colors,
