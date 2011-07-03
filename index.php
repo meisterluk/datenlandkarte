@@ -54,9 +54,6 @@
         exit;
     }
 
-    // Defaultvalues
-    $defaults = $ui->get_attributes();
-
     if ($_POST)
     {
         $_POST   = striptease($_POST);
@@ -75,6 +72,9 @@
             exit;
         }
     }
+
+    // Defaultvalues
+    $defaults = $ui->get_attributes();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="de-DE"
  xmlns:og='http://opengraphprotocol.org/schema/'>
@@ -679,7 +679,7 @@
             <textarea name="list" id="list" rows="5" cols="50"></textarea>
             <p>
               Trennzeichen:
-              <input type="text" class="two_symbols" name="list_delim" value="<?=_e($_POST['list_delim']); ?>" size="3" class="delimiter" />
+              <input type="text" class="two_symbols" name="list_delim" value="<?=_e($defaults['list_delim']); ?>" size="3" class="delimiter" />
             </p>
           </div>
           <div class="data_json indent">
@@ -688,9 +688,9 @@
           <div class="data_kvalloc indent">
             <textarea name="kvalloc" id="kvalloc" rows="5" cols="50"></textarea> <br />
             1. Trennzeichen (zw. Schlüssel-Wert-Paar)
-            <input type="text" class="two_symbols delimiter" name="kvalloc_delim1" value="<?=_e($_POST['kvalloc_delim1']); ?>" size="3" /> <br />
+            <input type="text" class="two_symbols delimiter" name="kvalloc_delim1" value="<?=_e($defaults['kvalloc_delim1']); ?>" size="3" /> <br />
             2. Trennzeichen (zw. Schlüssel und Wert)
-            <input type="text" class="two_symbols delimiter" name="kvalloc_delim2" value="<?=_e($_POST['kvalloc_delim2']); ?>" size="3" />
+            <input type="text" class="two_symbols delimiter" name="kvalloc_delim2" value="<?=_e($defaults['kvalloc_delim2']); ?>" size="3" />
           </div>
           <p>
             <input type="submit" id="submit" value="Erstellen" />
