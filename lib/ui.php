@@ -550,8 +550,8 @@
             }
 
             if ($min === $max)
-                return $this->error->add('Minimum in data ist auch Maximum. '.
-                    'Invalide data Eingabe');
+                return $this->error->add('Minimum in Daten ist auch Maximum. '.
+                    'Daten sind invalid.');
 
             // distance of each interval
             $dist = ((float)$max - $min) / $num;
