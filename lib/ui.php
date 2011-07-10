@@ -221,7 +221,7 @@
         public $data;
 
         // delimiters
-        public $list_delim  = '\n';
+        public $list_delim     = '\n';
         public $kvalloc_delim1 = '\n';
         public $kvalloc_delim2 = ',';
 
@@ -1080,19 +1080,88 @@
         */
 
         //
+        // Convert original delimiter to HTML representation.
+        // Counterpart of sanitize_delimiter() with HTML postprocessing.
+        // eg. newline becomes \n.
+        //
+        // @param delim a delimiter to convert
+        // @return a delimiter in HTML
+        //
+        static public function delimiter_to_html($delim)
+        {
+            $delim = preg_replace('/([\\\\]+)/', '\\\\$1', $delim);
+            $delim = str_replace("\r\n", '\n', $delim);
+            $delim = str_replace("\n", '\n', $delim);
+            $delim = str_replace("\r", '\n', $delim);
+            $delim = str_replace("\t", '\t', $delim);
+
+            return _e($delim);
+        }
+
+        //
         // Sanitize user entered delimiter
         // eg. \n becomes newline.
+        // Note. Sorry, for the complexity. It just cannot be written in RegEx.
         //
         // @param delim a delimiter to sanitize
         // @return a sanitized delimiter
         //
         static public function sanitize_delimiter($delim)
         {
-            $delim = str_replace('\r\n', "\n", $delim);
-            $delim = str_replace('\n', "\n", $delim);
-            $delim = str_replace('\r', "\n", $delim);
-            $delim = str_replace('\t', "\t", $delim);
-            $delim = preg_replace('/\\\\([\\\\]+)/', '$1', $delim);
+            // [0-9]+: There have been k backslashes before
+            // false: There has not been any backslash before
+            $inside = false;
+            $iter = 0;
+
+            while (true)
+            {
+                $is_backslash = ($delim[$iter] === '\\');
+
+                if ($iter >= mb_strlen($delim))
+                    break;
+
+                if ($inside === 1 && !$is_backslash)
+                {
+                    switch ($delim[$iter])
+                    {
+                        case 't':
+                            $seq = "\t";
+                            break;
+                        case 'n':
+                            $seq = "\n";
+                            break;
+                        case 'r':
+                            $seq = "\n";
+                            if (substr($delim, $iter+1, 2) === '\n')
+                                $delim = substr($delim, 0, $iter+1)
+                                    .substr($delim, $iter+3);
+                            break;
+                        default:
+                            $seq = false;
+                    }
+                    if ($seq)
+                        $delim = substr($delim, 0, $iter-1).$seq
+                            .substr($delim, $iter+1);
+                    $inside = false;
+                    $iter--;
+                }
+                elseif ($inside >= 1 && !$is_backslash)
+                {
+                    $delim = substr($delim, 0, $iter-1).
+                        substr($delim, $iter);
+                    $inside = false;
+                }
+                else
+                {
+                    if ($is_backslash)
+                        if ($inside === false)
+                            $inside = 1;
+                        else
+                            $inside++;
+                }
+
+                $iter++;
+            }
 
             return $delim;
         }
