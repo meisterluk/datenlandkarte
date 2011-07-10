@@ -35,6 +35,15 @@
     }
 
     //
+    // Escape for HTML inside a tag
+    //
+    function _et($string)
+    {
+        $string = _e($string);
+        return str_replace('"', '&quot;', $string);
+    }
+
+    //
     // A stupid strlen reimplementation
     // because PHP is not capable of Unicode
     //

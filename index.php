@@ -448,8 +448,8 @@
         foreach ($errors as $err)
         {
             echo str_repeat(' ', 14).'<li><span style="color:#F00;'.
-                'font-weight:bold" class="'._e($err[1]).'">Error:</span> '.
-                _e($err[0]).'</li>'."\n";
+                'font-weight:bold" class="'._et($err[1]).'">Error:</span> '.
+                _et($err[0]).'</li>'."\n";
         }
 ?>
             </ul>
@@ -461,7 +461,7 @@
             </div>
             <div id="cc_header_text">
               <p>
-                <input type="checkbox" name="shareit" id="check_share" checked="<?=_e($defaults['visibility']); ?>" />
+                <input type="checkbox" name="shareit" id="check_share" checked="<?=_et($defaults['visibility']); ?>" />
                 <strong><label for="check_share">
                   Ja, ich möchte meine Daten öffentlich teilen.
                 </label></strong><br /><br />
@@ -491,7 +491,7 @@
                 <small>Überschrift der Graphik</small>
               </td>
               <td>
-                <input type="text" maxlength="50" tabindex="1" name="title" value="<?=_e($defaults['title']); ?>" />
+                <input type="text" maxlength="50" tabindex="1" name="title" value="<?=_et($defaults['title']); ?>" />
               </td>
             </tr>
             <tr>
@@ -500,7 +500,7 @@
                 <small>Untertext des Titels</small>
               </td>
               <td>
-                <input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=_e($defaults['subtitle']); ?>" />
+                <input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=_et($defaults['subtitle']); ?>" />
               </td>
             </tr>
             <tr>
@@ -518,7 +518,7 @@
         else
             $ch = '';
 ?>
-                  <option value="<?=_e($key); ?>"<?=_e($ch)?>><?=_e($c); ?></option>
+                  <option value="<?=_et($key); ?>"<?=_et($ch)?>><?=_et($c); ?></option>
 <?php } ?>
                 </select>
               </td>
@@ -574,20 +574,20 @@
                   <strong>Autor:</strong> <br />
                   <small>Ihre Identität oder ihr Nickname</small>
                 </td>
-                <td><input type="text" name="author" value="<?=_e($defaults['author']); ?>" /></td>
+                <td><input type="text" name="author" value="<?=_et($defaults['author']); ?>" /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Quelle:</strong>
                 </td>
-                <td><input type="text" name="source" value="<?=_e($defaults['source']); ?>" /></td>
+                <td><input type="text" name="source" value="<?=_et($defaults['source']); ?>" /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Anzahl der Farben:</strong>
                 </td>
                 <td>
-                  <input type="text" name="colors" maxlength="3" value="<?=_e($defaults['colors']); ?>" /></td>
+                  <input type="text" name="colors" maxlength="3" value="<?=_et($defaults['colors']); ?>" /></td>
                 </td>
               </tr>
               <tr>
@@ -600,9 +600,9 @@
                 <td>
                   <input type="text" name="palette" value="<?php
                     if (is_array($defaults['palette']))
-                        echo _e(implode(',', $defaults['palette']));
+                        echo _et(implode(',', $defaults['palette']));
                     else
-                        echo _e($defaults['palette']);
+                        echo _et($defaults['palette']);
                   ?>" /></td>
                 </td>
               </tr>
@@ -612,14 +612,14 @@
                   <small>Jeder Wert wirt mit dem Hebefaktor multipliziert.<br />
                   zB mit dem Hebefaktor 0.01 lässt sich in Prozente umrechnen</small>
                 </td>
-                <td><input type="text" name="fac" value="<?=_e(sprintf("%.2f", $defaults['fac'])); ?>" /></td>
+                <td><input type="text" name="fac" value="<?=_et(sprintf("%.2f", $defaults['fac'])); ?>" /></td>
               </tr>
               <tr>
                 <td>
                   <strong>Anzahl der Nachkommastellen (0-3):</strong> <br />
                   <small>... der Zahlen in der Legende</small>
                 </td>
-                <td><input type="text" name="dec" maxlength="1" value="<?=_e($defaults['dec']); ?>" /></td>
+                <td><input type="text" name="dec" maxlength="1" value="<?=_et($defaults['dec']); ?>" /></td>
               </tr>
               <tr>
                 <td>
@@ -632,10 +632,10 @@
         {
             if ($_POST['format'] === $key)
                 echo str_repeat(' ', 20).'<option value="'.
-                    _e($key).'" selected="selected">'._e($f).'</option>'."\n";
+                    _et($key).'" selected="selected">'._e($f).'</option>'."\n";
             else
                 echo str_repeat(' ', 20).'<option value="'.
-                    _e($key).'">'._e($f).'</option>'."\n";
+                    _et($key).'">'._e($f).'</option>'."\n";
         }
 ?>
                   </select>
@@ -679,7 +679,7 @@
             <textarea name="list" id="list" rows="5" cols="50"></textarea>
             <p>
               Trennzeichen:
-              <input type="text" class="two_symbols" name="list_delim" value="<?=_e($defaults['list_delim']); ?>" size="3" class="delimiter" />
+              <input type="text" class="two_symbols" name="list_delim" value="<?=UserInterface::delimiter_to_html($defaults['list_delim']); ?>" size="3" class="delimiter" />
             </p>
           </div>
           <div class="data_json indent">
@@ -688,9 +688,9 @@
           <div class="data_kvalloc indent">
             <textarea name="kvalloc" id="kvalloc" rows="5" cols="50"></textarea> <br />
             1. Trennzeichen (zw. Schlüssel-Wert-Paar)
-            <input type="text" class="two_symbols delimiter" name="kvalloc_delim1" value="<?=_e($defaults['kvalloc_delim1']); ?>" size="3" /> <br />
+            <input type="text" class="two_symbols delimiter" name="kvalloc_delim1" value="<?=UserInterface::delimiter_to_html($defaults['kvalloc_delim1']); ?>" size="3" /> <br />
             2. Trennzeichen (zw. Schlüssel und Wert)
-            <input type="text" class="two_symbols delimiter" name="kvalloc_delim2" value="<?=_e($defaults['kvalloc_delim2']); ?>" size="3" />
+            <input type="text" class="two_symbols delimiter" name="kvalloc_delim2" value="<?=UserInterface::delimiter_to_html($defaults['kvalloc_delim2']); ?>" size="3" />
           </div>
           <p>
             <input type="submit" id="submit" value="Erstellen" />
