@@ -46,11 +46,13 @@
     //
     // A stupid strlen reimplementation
     // because PHP is not capable of Unicode
+    // ... or use mb_strlen if module is available
     //
     function str_length($str)
     {
-        $str = preg_replace('/[[^:alnum:]]/', '_', $str);
-        return strlen($str);
+        //$str = preg_replace('/[[^:alnum:]]/', '_', $str);
+        //return strlen($str);
+        return mb_strlen($str);
     }
 
     //

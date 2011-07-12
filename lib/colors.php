@@ -132,7 +132,7 @@
             }
 
             foreach ($palette as $key => $color)
-                if (strlen($color) == 7)
+                if (str_length($color) == 7)
                     $palette[$key] = $color;
                 else
                     $palette[$key] = $this->get_color_long($color);
@@ -167,7 +167,7 @@
         //
         public function get_color_short($color)
         {
-            if (!$this->is_valid_hex_color($color) || strlen($color) != 7)
+            if (!$this->is_valid_hex_color($color) || str_length($color) != 7)
                 return $this->error->add('Gegebene 7-stellige hexadezimale '.
                     'Farbe ist invalid: '.$color);
 
@@ -198,7 +198,7 @@
         //
         public function get_color_long($color)
         {
-            if (!$this->is_valid_hex_color($color) || strlen($color) != 4)
+            if (!$this->is_valid_hex_color($color) || str_length($color) != 4)
                 return $this->error->add('Gegebene 3-stellige hexadezimale '.
                     'Farbe ist invalid: '.$color);
 
@@ -247,7 +247,7 @@
             if (!$this->is_valid_hex_color($color))
                 return false;
 
-            if (strlen($color) == 7)
+            if (str_length($color) == 7)
             {
                 $hex = array(substr($color, 1, 2), substr($color, 3, 2),
                     substr($color, 5, 2));

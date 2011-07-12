@@ -1117,7 +1117,7 @@
             {
                 $is_backslash = ($delim[$iter] === '\\');
 
-                if ($iter >= mb_strlen($delim))
+                if ($iter >= str_length($delim))
                     break;
 
                 if ($inside === 1 && !$is_backslash)
