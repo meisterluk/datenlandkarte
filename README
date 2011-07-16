@@ -4,7 +4,7 @@ README
 :project:       datenlandkarten
 :author:        meisterluk
 :date:          11.02.06
-:version:       2.1-design
+:version:       2.3-ui
 :license:       LGPL v3.0
 
 Setup
@@ -34,7 +34,6 @@ Bugs
 
 * The geo hierarchy might be more efficiently stored using an appropriate
   data structure ([unknown kind]Tree?)
-* Introduce static methods where possible
 
 Please report bugs to ...
 
