@@ -4436,7 +4436,7 @@
             'name' => 'Südamerika',
             'filename' => 'southamerica'
         ),
-        /*, // TODO: currentl unused
+        /*, // TODO: currently unused
         7 => array(
             'name' => 'Sonstige',
             'filename' => 'others'

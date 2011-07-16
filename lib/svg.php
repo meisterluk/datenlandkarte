@@ -200,24 +200,22 @@
         //
         public function _get_appropriate_color($value)
         {
-            $value = (float)$value; // TODO: design error?
             if ($this->data->is_invalid_value($value))
                 return self::$invalid_value_color;
+            $value = (float)$value; // TODO: design error?
 
             $palette =& $this->data->colors->palette;
             $scale =& $this->data->scale;
-            //var_dump(get_object_vars($this->data->colors));
 
             $index = 0;
             foreach ($scale as $val)
             {
-                // TODO
                 if ($val[0] <= $value && $value < $val[1])
                     return $this->_xml_sanitize($palette[$index]);
                 $index++;
             }
-            if ($value == $val[1])
-                return $this->_xml_sanitize($palette[$index--]);
+            if ($value === $val[1])
+                return $this->_xml_sanitize($palette[--$index]);
             return $this->_xml_sanitize(self::$invalid_value_color);
         }
 
