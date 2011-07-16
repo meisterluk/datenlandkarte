@@ -623,11 +623,11 @@
                 return $this->error->add
                     ('Leere Trennzeichen sind nicht erlaubt.',3);
 
-            $nr     = count($this->keys);
+            $nr     = count($keys);
             $delim  = UserInterface::sanitize_delimiter($delim);
 
             $data = str_replace("\r\n", "\n", $data);
-            $data = UserInterface::_remove_trailing_line($data, $nr);
+            $data = UserInterface::_remove_trailing_line($data, $delim, $nr);
             $data = explode($delim, $data);
 
             if (count($data) < 2 || count($data) != $nr)
@@ -1190,7 +1190,7 @@
         //
         // @param input the text list-style input (one entry per line)
         // @param delim the delimiter to split up the input
-        // @param count_lines the number of lines, input should be
+        // @param count_lines the number of lines, input should have
         // @return the updated list-style text (string)
         //
         static public function _remove_trailing_line($input, $delim, $count_lines)
