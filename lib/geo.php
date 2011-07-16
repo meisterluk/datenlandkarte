@@ -4,9 +4,12 @@
         =======
 
         A vis_path object identifying a position in the geo hierarchy.
-        This is implemented in a class to make operations on vis_paths
-        more easily.
+        A geo hierarchy can be considered as a tree (undirected graph).
+        Each node contains a tuple (name, filename). This is implemented
+        in a class to make operations on vis_paths more easily.
 
+        Note.  Because the geo hierarchy is very memory consuming (in our
+               case), this class makes heavy use of references.
 
         MAIN
 
@@ -50,7 +53,7 @@
         private $error;
 
         //
-        // Set vis_path to an initial value
+        // Set `vis_path` to an initial value
         //
         // @param vis_path initial vis_path
         // @param notifications a Notifications object to use
@@ -71,7 +74,7 @@
         //
         // String representation of vis_path
         //
-        // @return a string repr
+        // @return a string repr of the object
         //
         public function __toString()
         {
@@ -136,6 +139,16 @@
             // TODO: probably it's a design fault that
             // this method does not return integers
             return explode('_', $vp);
+        }
+
+        //
+        // Getter method for Notifications instance
+        //
+        // @return a Notifications instance
+        //
+        public function get_errors()
+        {
+            return $this->error;
         }
 
         //
@@ -316,16 +329,6 @@
 
             $this->from_indizes($indizes);
             return $this->vis_path;
-        }
-
-        //
-        // Getter method for Notifications instance
-        //
-        // @return a Notifications instance
-        //
-        public function get_errors()
-        {
-            return $this->error;
         }
     }
 

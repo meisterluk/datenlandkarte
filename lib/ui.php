@@ -221,8 +221,8 @@
         public $data;
 
         // delimiters
-        public $list_delim     = '\n';
-        public $kvalloc_delim1 = '\n';
+        public $list_delim     = "\n";
+        public $kvalloc_delim1 = "\n";
         public $kvalloc_delim2 = ',';
 
         // side objects
@@ -595,6 +595,13 @@
                     .'eingegebenen Werte ist invalid (%+.0f vom '
                     .'Erwarteten).', $diff), 3);
 
+            foreach ($data as $key => $value)
+            {
+                $data[$key] = $this->sanitize_value($value);
+                if (is_float($data[$key]))
+                    $data[$key] = $data[$key] * $this->fac;
+            }
+
             return $data;
         }
 
@@ -627,7 +634,14 @@
             {
                 return $this->error->add('Die Anzahl der eingegebenen '.
                     'Werte ist invalid. Notiz: Bitte lassen Sie ein Feld '.
-                    'leer (leere Zeile)), falls keine Daten vorliegen', 3);
+                    'leer (leere Zeile), falls keine Daten vorliegen', 3);
+            }
+
+            foreach ($data as $key => $value)
+            {
+                $data[$key] = $this->sanitize_value($value);
+                if (is_float($data[$key]))
+                    $data[$key] = $data[$key] * $this->fac;
             }
 
             return $data;
@@ -706,7 +720,8 @@
             $data = array();
             foreach ($keys as $key)
                 $data[$key] = (isset($kvalloc[$key])
-                    ? $kvalloc[$key] : $this->$invalid_value);
+                    ? ($this->sanitize_value($kvalloc[$key]) * $this->fac)
+                    : $this->$invalid_value);
 
             return $data;
         }
@@ -1025,6 +1040,8 @@
         //
         public function sanitize_fac($fac)
         {
+            if (is_string($fac))
+                $fac = str_replace(',', '.', $fac);
             if (is_empty($fac) || !$this->check_fac($fac))
                 return 1.0;
             else
@@ -1172,18 +1189,27 @@
         // Therefore, remove last (empty) line, if it looks like this.
         //
         // @param input the text list-style input (one entry per line)
+        // @param delim the delimiter to split up the input
         // @param count_lines the number of lines, input should be
         // @return the updated list-style text (string)
         //
-        static public function _remove_trailing_line($input, $count_lines)
+        static public function _remove_trailing_line($input, $delim, $count_lines)
         {
-            $input = explode("\n", $input);
-            if (count($input) == ($count_lines+1)
-                && $input[count($input)-1] == '')
+            while (true)
             {
-                array_pop($input);
+                $last = strrpos($input, $delim);
+                if ($last === false)
+                    break;
+                $tail = substr($input, $last+1);
+                if (preg_match('/^(\s)*$/', $tail)
+                    && (substr_count($input, $delim) + 1) >= $count_lines)
+                    // remove 1 line
+                    $input = substr($input, 0, $last);
+                else
+                    break;
             }
-            return implode("\n", $input);
+
+            return $input;
         }
 
         //
