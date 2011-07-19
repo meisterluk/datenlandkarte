@@ -315,6 +315,11 @@
             min-width: 50px;
             width: 50%;
         }
+        #vis input, select {
+            width: 50px;
+			margin: 0px;
+        }
+
         textarea {
             min-width: 300px;
             width: 60%;
@@ -486,7 +491,7 @@
 
           <table cellpadding="6" id="main_form">
             <tr>
-              <td>
+              <td style="width:45%;">
                 <strong>Titel:</strong> <br />
                 <small>Überschrift der Graphik</small>
               </td>
@@ -499,17 +504,17 @@
                 <strong>Untertitel:</strong> <br />
                 <small>Untertext des Titels</small>
               </td>
-              <td>
-                <input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=_et($defaults['subtitle']); ?>" />
+              <td style="width:45%;">
+                <input type="text" maxlength="120" tabindex="2" name="subtitle" value="<?=_et($defaults['subtitle']); ?>"/>
               </td>
             </tr>
             <tr>
               <td>
                 <strong>Farbrichtung:</strong> <br />
-                <a href="./img/farbpalette.png" target="_blank"><small>Beispiele anzeigen</small></a>
+                <a href="./theme/farbpalette.png" target="_blank"><small>Beispiele anzeigen</small></a>
               </td>
               <td>
-                <select name="grad">
+                <select name="grad"  style="width:150px">
 <?php
     foreach ($color_allocation as $key => $c)
     {
@@ -532,26 +537,27 @@
                   <small>
                     Ich lizensiere die Daten unter
                     <a href="http://creativecommons.org/licenses/by-sa/3.0/at/">CC By-SA</a>
-                    und stelle sie öffentlich zur Verfügung
+                    und stelle sie öffentlich im <a href="http://www.datamaps.eu/rohdaten/" target="_blank">Rohdatenverzeichnis</a> zur Verfügung
                   </small>
                 </label>
               </td>
               <td>
 <?php if ($defaults['visibility']) { ?>
-                <input type="checkbox" name="visibility" id="visibility" checked="checked" />
+                <input style="min-width:0px;width:0px;" type="checkbox" name="visibility" id="visibility" checked="checked" />
 <?php } else { ?>
-                <input type="checkbox" name="visibility" id="visibility" />
+                <input style="min-width:0px;width:0px;" type="checkbox" name="visibility" id="visibility" />
 <?php } ?>
 
               </td>
             <tr>
-              <td>
+              <td colspan="2">
                 <strong>Welche Vorlage soll verwendet werden?</strong><br/>
                 <small>
                   <a href="./vorlagen">Vorlagen, an denen wir arbeiten</a>
                 </small>
               </td>
-              <td>
+             <tr>
+              <td colspan="2">
                 <div id="vis">
 <?php
     if ($defaults['vis_path'] === '')
@@ -570,7 +576,7 @@
           <div class="indent" id="advanced">
             <table cellpadding="6" id="sub_form">
               <tr>
-                <td>
+                <td style="width:45%;">
                   <strong>Autor:</strong> <br />
                   <small>Ihre Identität oder ihr Nickname</small>
                 </td>
@@ -626,7 +632,7 @@
                   <strong>Eingabeformat:</strong>
                 </td>
                 <td>
-                  <select name="format" id="format">
+                  <select style="width:100px;" name="format" id="format">
 <?php
         foreach ($formats as $key => $f)
         {
