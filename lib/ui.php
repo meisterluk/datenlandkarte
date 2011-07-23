@@ -336,7 +336,7 @@
         // Aggregate `data` attribute in "json" format
         //
         // @param data the JSON string to read
-        // @param color_gradients Array of arrays of hexcodes (color palettes)
+        // @param color_gradients Array with arrays of hexcodes (color palettes)
         // @param color_allocation a map of indizes and palette names
         // @return true on success. false on failure.
         //
@@ -664,7 +664,7 @@
             {
                 // NOTE: A missing key means invalid value.
                 if (isset($json[$key]))
-                    $data[$key] = $json[$key];
+                    $data[] = $json[$key];
             }
             return $data;
         }
