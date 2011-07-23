@@ -141,7 +141,10 @@
             <td style="border:1px solid #ccc;"><strong>Download</strong></td>
           </tr>
 <?php
-        $files = list_public_data($location_raw_data);
+        $log = new Notifications();
+        $fm = new FileManager($location_creation, $location_raw_data,
+            $location_pattern_svgs, $log);
+        $files = $fm->list_files('%timestamp-%title-%subtitle-1');
         if ($files)
         {
             foreach ($files as $key => $f) {

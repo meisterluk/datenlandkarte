@@ -690,11 +690,10 @@
 
             $delim1  = UserInterface::sanitize_delimiter($delim1);
             $delim2  = UserInterface::sanitize_delimiter($delim2);
+            $data = UserInterface::_remove_trailing_line($data, $delim1, $nr);
             $kvalloc = array();
 
             $split1 = explode($delim1, $data);
-            if (is_empty($split1[count($split1)-1]))
-                array_pop($split1);
 
             if (count($split1) > 2)
                 foreach ($split1 as $value)
@@ -711,7 +710,7 @@
             else
                 return $this->error->add('Zu wenig Daten bei Daten-Eingabe', 3);
 
-            $diff = array_diff($keys, $kvalloc);
+            $diff = array_diff($keys, array_keys($kvalloc));
             if (!is_empty($diff))
                 $this->error->add(sprintf('Die Eingabe unterscheidet sich von'.
                     ' den erwarteten Parametern in (%s)', implode(', ', $diff)),
@@ -719,7 +718,7 @@
 
             $data = array();
             foreach ($keys as $key)
-                $data[$key] = (isset($kvalloc[$key])
+                $data[] = (isset($kvalloc[$key])
                     ? ($this->sanitize_value($kvalloc[$key]) * $this->fac)
                     : $this->$invalid_value);
 
@@ -1268,19 +1267,27 @@
             else
                 $vp = '';
 
+            $R = &$_REQUEST;
+            foreach (array('title', 'subtitle', 'visibility', 'author',
+                'source', 'dec', 'apiversion', 'fac', 'format', 'list_delim',
+                'kvalloc_delim1', 'kvalloc_delim2') as $var)
+            {
+                $$var = (isset($R[$var])) ? $R[$var] : $this->$var;
+            }
+
             return array(
-                'title' => $this->title,
-                'subtitle' => $this->subtitle,
-                'visibility' => $this->visibility,
-                'author' => $this->author,
-                'source' => $this->source,
-                'dec' => $this->dec,
-                'apiversion' => $this->apiversion,
-                'fac' => $this->fac,
-                'format' => $this->format,
-                'list_delim' => $this->list_delim,
-                'kvalloc_delim1' => $this->kvalloc_delim1,
-                'kvalloc_delim2' => $this->kvalloc_delim2,
+                'title' => $title,
+                'subtitle' => $subtitle,
+                'visibility' => $visibility,
+                'author' => $author,
+                'source' => $source,
+                'dec' => $dec,
+                'apiversion' => $apiversion,
+                'fac' => $fac,
+                'format' => $format,
+                'list_delim' => $list_delim,
+                'kvalloc_delim1' => $kvalloc_delim1,
+                'kvalloc_delim2' => $kvalloc_delim2,
 
                 'grad' => $this->colors->grad,
                 'colors' => $this->colors->colors,
