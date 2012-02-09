@@ -666,7 +666,7 @@
           </p>
 
           <div class="data_manual indent">
-            <table cellpadding="6">
+            <table style="width:auto;" cellpadding="6">
 <?php
         $vp = new VisPath();
         $i = 0;
@@ -675,7 +675,7 @@
                 continue;
 ?>
               <tr>
-                <td><?=_e($value['name']); ?>:</td>
+                <td style="text-align:right;"><?=_e($value['name']); ?>:</td>
                 <td><input type="text" name="manual[]" id="manual_<?=$key; ?>" value="<?=$_POST['manual'.($i++)]; ?>" /></td>
               </tr>
 <?php } ?>

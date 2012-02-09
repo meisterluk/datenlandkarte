@@ -128,7 +128,7 @@
         </h2>
         <div class="art-postcontent">
 
-          <img src="img/cc.png" alt="Creative Commons" width="32" style="float:left; margin:10px" />
+          <img src="theme/cc.png" alt="Creative Commons" width="32" style="float:left; margin:10px" />
           <p style="line-height:50px; vertical-align:middle">
             Die folgenden Daten unterstehen der <a href="http://creativecommons.org/licenses/by-sa/3.0/at/" target="_blank">Creative Commons Namensnennung-Weitergabe unter gleichen Bedingungen 3.0 Österreich Lizenz</a>.
           </p>

@@ -33,12 +33,12 @@
         $i = str_repeat(' ', (int)$indent);
 
         if (!is_array($keys)) return '0';
-        $out .= $i.'<table cellpadding="6">'."\n";
+        $out .= $i.'<table style="width:auto;" cellpadding="6">'."\n";
         foreach ($keys as $key => $value) {
             if (!is_int($key))
                 continue;
             $out .= $i.'  <tr>'."\n";
-            $out .= $i.'    <td>'._e($value['name']).':</td>'."\n";
+            $out .= $i.'    <td style="text-align:right;">'._e($value['name']).':</td>'."\n";
             $out .= $i.'    <td><input type="text" name="manual[]" '.
                 'id="manual_'.$key.'" /></td>'."\n";
             $out .= $i.'  </tr>'."\n";

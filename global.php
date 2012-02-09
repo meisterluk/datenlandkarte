@@ -163,7 +163,201 @@
             ),
             19 => array(
                 'name' => 'Kenia',
-                'filename' => 'kenia'
+                'filename' => 'kenia',
+				
+				0 => array(
+                    'name' => 'Counties',
+                    'filename' => 'federal',
+
+					0 => array(
+						'name' => 'Baringo',
+						'filename' => 'baringo'
+					),
+					1 => array(
+						'name' => 'Bomet',
+						'filename' => 'bomet'
+					),
+					2 => array(
+						'name' => 'Bungoma',
+						'filename' => 'bungoma'
+					),
+					3 => array(
+						'name' => 'Busia',
+						'filename' => 'busia'
+					),
+					4 => array(
+						'name' => 'Elgeyo Marakwet',
+						'filename' => 'elgeyo_marakwet'
+					),
+					5 => array(
+						'name' => 'Embu',
+						'filename' => 'embu'
+					),
+					6 => array(
+						'name' => 'Garissa',
+						'filename' => 'garissa'
+					),
+					7 => array(
+						'name' => 'Homa Bay',
+						'filename' => 'homa_bay'
+					),
+					8 => array(
+						'name' => 'Isiolo',
+						'filename' => 'isiolo'
+					),
+					9 => array(
+						'name' => 'Kajiado',
+						'filename' => 'kajiado'
+					),
+					10 => array(
+						'name' => 'Kakamega',
+						'filename' => 'kakamega'
+					),
+					11 => array(
+						'name' => 'Kericho',
+						'filename' => 'kericho'
+					),
+					12 => array(
+						'name' => 'Kiambu',
+						'filename' => 'kiambu'
+					),
+					13 => array(
+						'name' => 'Kilifi',
+						'filename' => 'kilifi'
+					),
+					14 => array(
+						'name' => 'Kirinyaga',
+						'filename' => 'kirinyaga'
+					),
+					15 => array(
+						'name' => 'Kisii',
+						'filename' => 'kisii'
+					),
+					16 => array(
+						'name' => 'Kisumu',
+						'filename' => 'kisumu'
+					),
+					17 => array(
+						'name' => 'Kitui',
+						'filename' => 'kitui'
+					),
+					18 => array(
+						'name' => 'Kwale ',
+						'filename' => 'kwale'
+					),
+					19 => array(
+						'name' => 'Laikipia',
+						'filename' => 'laikipia'
+					),
+					20 => array(
+						'name' => 'Lamu',
+						'filename' => 'lamu'
+					),
+					21 => array(
+						'name' => 'Machakos',
+						'filename' => 'machakos'
+					),
+					22 => array(
+						'name' => 'Makueni',
+						'filename' => 'makueni'
+					),
+					23 => array(
+						'name' => 'Mandera',
+						'filename' => 'mandera'
+					),
+					24 => array(
+						'name' => 'Marsabit',
+						'filename' => 'marsabit'
+					),
+					25 => array(
+						'name' => 'Meru',
+						'filename' => 'meru'
+					),
+					26 => array(
+						'name' => 'Migori',
+						'filename' => 'migori'
+					),
+					27 => array(
+						'name' => 'Mombasa',
+						'filename' => 'mombasa'
+					),
+					28 => array(
+						'name' => 'Muranga',
+						'filename' => 'muranga'
+					),
+					29 => array(
+						'name' => 'Nairobi',
+						'filename' => 'nairobi'
+					),
+					30 => array(
+						'name' => 'Nakuru',
+						'filename' => 'nakuru'
+					),
+					31 => array(
+						'name' => 'Nandi',
+						'filename' => 'nandi'
+					),
+					32 => array(
+						'name' => 'Narok',
+						'filename' => 'narok'
+					),
+					33 => array(
+						'name' => 'Nyamira',
+						'filename' => 'nyamira'
+					),
+					34 => array(
+						'name' => 'Nyandarua',
+						'filename' => 'nyandarua'
+					),
+					35 => array(
+						'name' => 'Nyeri',
+						'filename' => 'nyeri'
+					),
+					36 => array(
+						'name' => 'Samburu',
+						'filename' => 'samburu'
+					),
+					37 => array(
+						'name' => 'Siaya',
+						'filename' => 'siaya'
+					),
+					38 => array(
+						'name' => 'Taita Taveta',
+						'filename' => 'taita_taveta'
+					),
+					39 => array(
+						'name' => 'Tana River',
+						'filename' => 'tana_river'
+					),
+					40 => array(
+						'name' => 'Tharaka Nithi',
+						'filename' => 'tharaka_nithi'
+					),
+					41 => array(
+						'name' => 'Trans Nzoia',
+						'filename' => 'trans_nzoia'
+					),
+					42 => array(
+						'name' => 'Turkana',
+						'filename' => 'turkana'
+					),
+					43 => array(
+						'name' => 'Uasin Gishu',
+						'filename' => 'uasin_gishu'
+					),
+					44 => array(
+						'name' => 'Vihiga',
+						'filename' => 'vihiga'
+					),
+					45 => array(
+						'name' => 'Wajir',
+						'filename' => 'wajir'
+					),
+					46 => array(
+						'name' => 'West Pokot',
+						'filename' => 'west_pokot'
+					),
+				),				
             ),
             20 => array(
                 'name' => 'Lesotho',
@@ -290,31 +484,31 @@
             'name' => 'Europa',
             'filename' => 'europe',
 
-            1 => array(
+            0 => array(
                 'name' => 'Albanien',
                 'filename' => 'albania'
             ),
-            2 => array(
+            1 => array(
                 'name' => 'Andorra',
                 'filename' => 'andorra'
             ),
-            3 => array(
+            2 => array(
                 'name' => 'Belgien',
                 'filename' => 'belgium',
             ),
-            4 => array(
+            3 => array(
                 'name' => 'Bosnien und Herzegowina',
                 'filename' => 'bosna_herzegovina',
             ),
-            5 => array(
+            4 => array(
                 'name' => 'Bulgarien',
                 'filename' => 'bulgaria',
             ),
-            6 => array(
+            5 => array(
                 'name' => 'Dänemark',
                 'filename' => 'danmark',
             ),
-            7 => array(
+            6 => array(
                 'name' => 'Deutschland',
                 'filename' => 'germany',
 
@@ -827,15 +1021,15 @@
                     )
                 )
             ),
-            8 => array(
+            7 => array(
                 'name' => 'Estland',
                 'filename' => 'estonia',
             ),
-            9 => array(
+            8 => array(
                 'name' => 'Finnland',
                 'filename' => 'finland',
             ),
-            10 => array(
+            9 => array(
                 'name' => 'Frankreich (Regionen)',
                 'filename' => 'french',
 
@@ -1008,79 +1202,79 @@
                     'filename' => 'rhne-alpes'
                 )
             ),
-            11 => array(
+            10 => array(
                 'name' => 'Griechenland',
                 'filename' => 'greece',
             ),
-            12 => array(
+            11 => array(
                 'name' => 'Irland',
                 'filename' => 'ireland',
             ),
-            13 => array(
+            12 => array(
                 'name' => 'Island',
                 'filename' => 'island',
             ),
-            14 => array(
+            13 => array(
                 'name' => 'Italien',
                 'filename' => 'italia',
             ),
-            15 => array(
+            14 => array(
                 'name' => 'Kasachstan',
                 'filename' => 'kazackhstan',
             ),
-            16 => array(
+            15 => array(
                 'name' => 'Kosovo',
                 'filename' => 'kosovo',
             ),
-            17 => array(
+            16 => array(
                 'name' => 'Kroatien',
                 'filename' => 'croatia',
             ),
-            18 => array(
+            17 => array(
                 'name' => 'Lettland',
                 'filename' => 'latvia',
             ),
-            19 => array(
+            18 => array(
                 'name' => 'Liechtenstein',
                 'filename' => 'liechtenstein',
             ),
-            20 => array(
+            19 => array(
                 'name' => 'Litauen',
                 'filename' => 'lithuania',
             ),
-            21 => array(
+            20 => array(
                 'name' => 'Luxemburg',
                 'filename' => 'luxembourg',
             ),
-            22 => array(
+            21 => array(
                 'name' => 'Malta',
                 'filename' => 'malta',
             ),
-            23 => array(
+            22 => array(
                 'name' => 'Mazedonien',
                 'filename' => 'macedonia',
             ),
-            24 => array(
+            23 => array(
                 'name' => 'Moldawien',
                 'filename' => 'moldavia',
             ),
-            25 => array(
+            24 => array(
                 'name' => 'Monaco',
                 'filename' => 'monaco',
             ),
-            26 => array(
+            25 => array(
                 'name' => 'Montenegro',
                 'filename' => 'montenegro',
             ),
-            27 => array(
+            26 => array(
                 'name' => 'Niederlande',
                 'filename' => 'netherlands',
             ),
-            28 => array(
+            27 => array(
                 'name' => 'Norwegen',
                 'filename' => 'norway',
             ),
-            29 => array(
+            28 => array(
                 'name' => 'Österreich',
                 'filename' => 'austria',
 
@@ -12307,31 +12501,31 @@
                     )
                 )
             ),
-            30 => array(
+            29 => array(
                 'name' => 'Polen',
                 'filename' => 'Poland',
             ),
-            31 => array(
+            30 => array(
                 'name' => 'Portugal',
                 'filename' => 'portugal',
             ),
-            32 => array(
+            31 => array(
                 'name' => 'Rumänien',
                 'filename' => 'romania',
             ),
-            33 => array(
+            32 => array(
                 'name' => 'Russland',
                 'filename' => 'russia',
             ),
-            34 => array(
+            33 => array(
                 'name' => 'San Marino',
                 'filename' => 'san_marino',
             ),
-            35 => array(
+            34 => array(
                 'name' => 'Schweden',
                 'filename' => 'sweden',
             ),
-            36 => array(
+            35 => array(
                 'name' => 'Schweiz',
                 'filename' => 'switzerland',
 
@@ -12440,43 +12634,43 @@
                     'filename' => 'zuerich'
                 )
             ),
-            37 => array(
+            36 => array(
                 'name' => 'Serbien',
                 'filename' => 'serbia',
             ),
-            38 => array(
+            37 => array(
                 'name' => 'Slowakei',
                 'filename' => 'slovakia',
             ),
-            39 => array(
+            38 => array(
                 'name' => 'Slowenien',
                 'filename' => 'slovenia',
             ),
-            40 => array(
+            39 => array(
                 'name' => 'Spanien',
                 'filename' => 'spain',
             ),
-            41 => array(
+            40 => array(
                 'name' => 'Tschechien',
                 'filename' => 'czech',
             ),
-            42 => array(
+            41 => array(
                 'name' => 'Türkei',
                 'filename' => 'turkey',
             ),
-            43 => array(
+            42 => array(
                 'name' => 'Ukraine',
                 'filename' => 'ukraine',
             ),
-            44 => array(
+            43 => array(
                 'name' => 'Ungarn',
                 'filename' => 'hungary',
             ),
-            45 => array(
+            44 => array(
                 'name' => 'Vatikanstadt',
                 'filename' => 'vatican_city',
             ),
-            46 => array(
+            45 => array(
                 'name' => 'Vereinigtes Königreich',
                 'filename' => 'united_kingdom',
 
@@ -12802,9 +12996,13 @@
                     'filename' => 'worcestershire'
                 )
             ),
-            47 => array(
+            46 => array(
                 'name' => 'Weißrussland',
                 'filename' => 'belarus',
+            ),
+            47 => array(
+                'name' => 'Zypern',
+                'filename' => 'zypern',
             )
         ),
         3 => array(
@@ -13724,7 +13922,7 @@
                 'filename' => 'wallis_et_futuna'
             ),
             227 => array(
-                'name' => 'Weißrussland (BY)',
+                'name' => 'Weissrussland (BY)',
                 'filename' => 'weissrussland'
             ),
             228 => array(
@@ -13967,7 +14165,7 @@
 
     // Autofill geo_hierarchy
     // ! Do not edit
-    foreach ($geo_hierarchy[2][29][1][0] as $bl)
+    foreach ($geo_hierarchy[2][28][1][0] as $bl)
     {
         if (is_array($bl)) // exclude filename & name
         {
@@ -13979,7 +14177,7 @@
             }
         }
     }
-    foreach ($geo_hierarchy[2][29][2][0] as $bl)
+    foreach ($geo_hierarchy[2][28][2][0] as $bl)
     {
         if (is_array($bl)) // exclude filename & name
         {

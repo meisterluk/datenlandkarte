@@ -193,7 +193,7 @@
 
           <h3 style="margin-top:15px;">Vorschau</h3>
           <p style="text-align:center">
-            <img src="<?=$files[1]; ?>" alt="Preview" style="max-width:80%" />
+            <img src="<?=$files[1]; ?>?time=<? echo date("His"); ?>" alt="Preview" style="max-width:80%" />
           </p>
 
           <div class="download" style="min-height:40px;">
