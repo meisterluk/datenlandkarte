@@ -3,8 +3,8 @@ README
 
 :project:       datenlandkarten
 :author:        meisterluk
-:date:          11.02.06
-:version:       2.4-bugfix
+:date:          12.02.09
+:version:       2.5-testing
 :license:       LGPL v3.0
 
 Setup
@@ -18,11 +18,6 @@ ToDos
 
 * default values
 * API.php
-
-* v2.2-coding
-* v2.3-ui
-* v2.4-bugfix
-* v2.5-testing
 
 Features
 --------
