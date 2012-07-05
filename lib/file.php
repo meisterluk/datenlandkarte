@@ -134,19 +134,38 @@
                 $now = time();
             $now = date(self::$timestamp, $now);
 
+            $subtitle   = FileManager::string2filename($data->subtitle);
+            $title      = FileManager::string2filename($data->title);
+            $visibility = (int)$data->visibility;
+            $dec        = FileManager::string2filename($data->dec);
+            $grad       = FileManager::string2filename($data->grad);
+            $apiversion = FileManager::string2filename($data->apiversion);
+            $author     = FileManager::string2filename($data->author);
+            $source     = FileManager::string2filename($data->source);
+
             $format = str_replace('%timestamp', $now, $format);
-            $format = str_replace('%subtitle', $data->subtitle, $format);
-            $format = str_replace('%title', $data->title, $format);
-            $format = str_replace('%visibility',
-                (int)$data->visibility, $format);
-            $format = str_replace('%dec', $data->dec, $format);
-            $format = str_replace('%grad', $data->grad, $format);
-            $format = str_replace('%apiversion',
-                $data->apiversion, $format);
-            $format = str_replace('%author', $data->author, $format);
-            $format = str_replace('%source', $data->source, $format);
+            $format = str_replace('%subtitle', $subtitle, $format);
+            $format = str_replace('%title', $title, $format);
+            $format = str_replace('%visibility', $visibility, $format);
+            $format = str_replace('%dec', $dec, $format);
+            $format = str_replace('%grad', $grad, $format);
+            $format = str_replace('%apiversion', $apiversion, $format);
+            $format = str_replace('%author', $author, $format);
+            $format = str_replace('%source', $source, $format);
 
             return $format;
+        }
+
+        //
+        // Take a string and return a string which can be used as filename.
+        // Note. This is not a bijective function.
+        //
+        // @param filename the filename to strip
+        // @return the filename which can be used in the filesystem
+        //
+        static public function string2filename($filename)
+        {
+            return preg_replace('/[^[:word:]]/', '', (string)$filename);
         }
 
         //
