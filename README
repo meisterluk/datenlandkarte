@@ -3,7 +3,7 @@ README
 
 :project:       datenlandkarten
 :author:        meisterluk
-:date:          12.02.09
+:date:          12.09.09
 :version:       2.5-testing
 :license:       LGPL v3.0
 
@@ -13,16 +13,13 @@ Setup
 1. Upload all files and folder
 2. Set a+w permission for upload folder.
 
-ToDos
------
+Contributions
+-------------
 
-* default values
-* API.php
+Thanks to the following persons for bug reports, patches and other
+contributions helping to improve this application:
 
-Features
---------
-
-* More global.php variables / configuration
+- PeterTheOne (bug reporting)
 
 Bugs
 ----
