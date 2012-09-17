@@ -311,21 +311,21 @@
             if ($r === false)
                 return $this->error->add('Konnte SVG Datei nicht schreiben', 3);
 
-            /*
-                // Usage of Image Imagick PHP API
+            // Use ImageMagick PHP API to convert SVG into PNG
+            $image = new Imagick($svg_file);
+            $image->setImageFormat('png');
 
-                $img = new Imagick($filename['svg']);
-                $img->writeImage($filename['png']);
-                $s = $img->getSize();
-                $img->scaleImage($s[0], $s[1]);
-                $img->writeImage($filename['bpng']);
-                $img->clear();
-                $img->destroy();
-            */
+            $fp = fopen($filebase.self::$extension_png, 'w');
+            fwrite($fp, $image);
+            fclose($fp);
 
-            exec('convert '.$svg_file.' '.$filebase.self::$extension_png);
-            exec('convert -scale 300% '.$svg_file.' '.
-                $filebase.self::$extension_big_png);
+            $image->scaleImage($image->getImageWidth() * 3,
+                               $image->getImageHeight() * 3);
+
+            $fp = fopen($filebase.self::$extension_big_png, 'w');
+            fwrite($fp, $image);
+            fclose($fp);
+
 
             $files = array();
             foreach (array( $filebase.self::$extension_svg,
