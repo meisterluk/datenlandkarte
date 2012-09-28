@@ -10,8 +10,11 @@ README
 Setup
 -----
 
-1. Upload all files and folder
-2. Set a+w permission for upload folder.
+1. `git clone https://github.com/meisterluk/datenlandkarte.git`
+2. `git submodule init`
+3. `git submodule update`
+4. Upload all files and folder
+5. Set a+w permission for upload folder.
 
 Contributions
 -------------
