@@ -21,12 +21,6 @@ contributions helping to improve this application:
 
 - PeterTheOne (bug reporting)
 
-Bugs
-----
-
-* The geo hierarchy might be more efficiently stored using an appropriate
-  data structure ([unknown kind]Tree?)
-
 Please report bugs to ...
 
     <admin @ lukas-prokop . at>
