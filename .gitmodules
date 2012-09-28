@@ -1,0 +1,6 @@
+[submodule "svgs"]
+	path = svgs
+	url = https://github.com/meisterluk/datenlandkarte-svgs.git
+[submodule "lib/unfuck.php"]
+	path = lib/unfuck.php
+	url = https://github.com/meisterluk/unfuck.php.git
