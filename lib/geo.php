@@ -219,7 +219,7 @@
             $this->vis_path = $vis_path;
 
             if (!$this->is_valid())
-                return $this->error->add('Invalid VisPath given: '
+                return $this->error->add('Invalider VisPath gegeben: '
                     .$vis_path, 3);
             return true;
         }
@@ -234,7 +234,7 @@
             $this->vis_path = self::$default;
 
             if (!$this->is_valid())
-                return $this->error->add('Default vis_path is invalid: '
+                return $this->error->add('Default VisPath ist invalid: '
                     .$vis_path, 2);
             return true;
         }
@@ -252,7 +252,8 @@
                 return false;
             if ($this->is_root())
             {
-                $this->error->add('Trying going up at VisPath root element', 1);
+                $this->error->add('Versuche über das Wurzelelement '
+                    .'von VisPath zu gehen', 1);
                 return NULL;
             }
 

@@ -156,7 +156,7 @@
         //
         // Export data to JSON
         //
-        // @return a string with JSON content
+        // @return a string with JSON content or false on error
         //
         public function export_json()
         {
