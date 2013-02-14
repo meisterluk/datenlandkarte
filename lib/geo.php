@@ -730,6 +730,7 @@
         {
             $out = '';
             $vp = new VisPath();
+            $in = ($vp->get_length() - 1);
             $vis_path = $this->next($vp);
 
             while ($vis_path !== NULL)
