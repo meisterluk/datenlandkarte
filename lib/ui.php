@@ -207,7 +207,7 @@
         public $title       = '';
         public $subtitle    = '';
         // 0 = private. 1 = CC-licensed. check out file.php.
-        public $visibility  = 0;
+        public $visibility  = 1;
         public $author      = '';
         public $source      = '';
         public $dec         = 2;
