@@ -380,9 +380,9 @@
     <li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
     <li class="active"><a class="active" href="http://www.datamaps.eu/erstellen/" title="Datenlandkarte erstellen"><span class="l"> </span><span class="r"> </span><span class="t">Datenlandkarte erstellen</span></a>
     </li>
-    <li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
+    <!--<li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
     <li><a href="http://www.datamaps.eu/rohdaten/" title="Rohdaten"><span class="l"> </span><span class="r"> </span><span class="t">Rohdaten</span></a>
-    </li>
+    </li>-->
     <li class="art-menu-li-separator"><span class="art-menu-separator"> </span></li>
     <li><a href="http://www.datamaps.eu/vorlagen/" title="Vorlagen"><span class="l"> </span><span class="r"> </span><span class="t">Vorlagen</span></a>
     </li>
