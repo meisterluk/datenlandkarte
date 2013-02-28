@@ -636,7 +636,7 @@
 <?php
         foreach ($formats as $key => $f)
         {
-            if ($_POST['format'] === $key)
+            if (array_key_exists('format', $_POST) && $_POST['format'] === $key)
                 echo str_repeat(' ', 20).'<option value="'.
                     _et($key).'" selected="selected">'._e($f).'</option>'."\n";
             else
@@ -671,12 +671,13 @@
         $vp = new VisPath();
         $i = 0;
         foreach ($g->get($vp) as $key => $value) {
+            $val = array_key_exists('manual'.($i++), $_POST) ? $_POST['manual'.($i++)] : '';
             if (!is_int($key))
                 continue;
 ?>
               <tr>
                 <td style="text-align:right;"><?=_e($value['name']); ?>:</td>
-                <td><input type="text" name="manual[]" id="manual_<?=$key; ?>" value="<?=$_POST['manual'.($i++)]; ?>" /></td>
+                <td><input type="text" name="manual[]" id="manual_<?=$key; ?>" value="<?=$val; ?>" /></td>
               </tr>
 <?php } ?>
             </table>
