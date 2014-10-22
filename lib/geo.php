@@ -607,7 +607,7 @@
         public function next(&$vis_path)
         {
             $top = NULL;
-            $current = &$this->get($vis_path);
+            $current = $this->get($vis_path);
             if ($current === NULL || $current === false)
                 return $current;
 
